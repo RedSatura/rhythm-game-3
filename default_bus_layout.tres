@@ -1,0 +1,14 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://bo2g8eq5bqrio"]
+
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_hwi82"]
+resource_name = "Delay"
+
+[resource]
+bus/1/name = &"Delayer"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectDelay_hwi82")
+bus/1/effect/0/enabled = true
