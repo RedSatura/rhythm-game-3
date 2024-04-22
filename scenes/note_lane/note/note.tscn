@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://chb7hawa2uvgu"]
+
+[ext_resource type="Script" path="res://scenes/note_lane/note/note.gd" id="1_7d4lo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mxjhr"]
+radius = 32.9848
+
+[node name="Note" type="Area2D"]
+z_index = 1
+script = ExtResource("1_7d4lo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_mxjhr")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(1, 1, 1, 0.501961)
+polygon = PackedVector2Array(0, 32, 24, 24, 32, 0, 24, -24, 0, -32, -24, -24, -32, 0, -24, 24)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1.90735e-06, 1.90735e-06)
+scale = Vector2(3.2, 3.2)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

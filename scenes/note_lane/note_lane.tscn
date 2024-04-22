@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxhghnc6fqebu"]
+
+[ext_resource type="Script" path="res://scenes/note_lane/note_lane.gd" id="1_ipfhx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tbutt"]
+radius = 48.0
+
+[node name="NoteLane" type="Node2D"]
+position = Vector2(64, 640)
+script = ExtResource("1_ipfhx")
+
+[node name="LaneBackground" type="Polygon2D" parent="."]
+color = Color(0.6, 0.356863, 0.223529, 0.501961)
+polygon = PackedVector2Array(-64, 80, 64, 80, 64, -640, -64, -640)
+
+[node name="NoteDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NoteDetector"]
+shape = SubResource("CircleShape2D_tbutt")
+
+[node name="Hitspot" type="Polygon2D" parent="."]
+color = Color(0.176471, 0.176471, 0.176471, 0.372549)
+polygon = PackedVector2Array(0, -48, -32, -32, -48, 0, -32, 32, 0, 48, 32, 32, 48, 0, 32, -32)
+
+[node name="HitspotFlashCooldown" type="Timer" parent="Hitspot"]
+wait_time = 0.1
+one_shot = true
+
+[node name="NoteSpawnPosition" type="Marker2D" parent="."]
+position = Vector2(0, -704)
+
+[node name="NoteCooldownTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="area_entered" from="NoteDetector" to="." method="_on_note_detector_area_entered"]
+[connection signal="area_exited" from="NoteDetector" to="." method="_on_note_detector_area_exited"]
+[connection signal="timeout" from="Hitspot/HitspotFlashCooldown" to="." method="_on_hitspot_flash_cooldown_timeout"]
+[connection signal="timeout" from="NoteCooldownTimer" to="." method="_on_note_cooldown_timer_timeout"]

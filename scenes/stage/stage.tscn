@@ -1,14 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=4 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="PackedScene" uid="uid://7kgmxl47vjji" path="res://scenes/conductor/conductor.tscn" id="1_ab623"]
 [ext_resource type="Script" path="res://test/test_label.gd" id="2_3ujy6"]
+[ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="3_0tmff"]
 
 [node name="Stage" type="Node2D"]
 
 [node name="Conductor" parent="." instance=ExtResource("1_ab623")]
 
-[node name="Label" type="Label" parent="."]
+[node name="NoteLanes" type="Node2D" parent="."]
+
+[node name="NoteLane" parent="NoteLanes" instance=ExtResource("3_0tmff")]
+
+[node name="NoteLane2" parent="NoteLanes" instance=ExtResource("3_0tmff")]
+position = Vector2(192, 640)
+lane_position = "CENTER_LEFT"
+
+[node name="NoteLane3" parent="NoteLanes" instance=ExtResource("3_0tmff")]
+position = Vector2(1088, 640)
+lane_position = "CENTER_RIGHT"
+
+[node name="NoteLane4" parent="NoteLanes" instance=ExtResource("3_0tmff")]
+position = Vector2(1216, 640)
+lane_position = "RIGHT"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
 offset_right = 192.0
 offset_bottom = 64.0
-text = "Current Beat: 0"
+text = "Current Beat: 0
+Measures Occured: 0"
 script = ExtResource("2_3ujy6")
+metadata/_edit_lock_ = true
