@@ -2,6 +2,7 @@ extends Node
 
 #send initial song data
 signal get_song_length(length)
+signal get_song_offset(offset)
 
 #send current song data
 signal get_song_position(position)

@@ -13,6 +13,7 @@ script = ExtResource("1_je8j5")
 
 [node name="Conductor" parent="." instance=ExtResource("1_ab623")]
 autoplay = false
+song_beat_delay = 1
 audio_offset = 0
 
 [node name="NoteLanes" type="Node2D" parent="."]
