@@ -1,5 +1,12 @@
 extends Node
 
-signal beat_occured(current_beat)
+#send initial song data
+signal get_song_length(length)
 
-signal measure_finished
+#send current song data
+signal get_song_position(position)
+
+signal beat_occured(current_beat)
+signal measure_occured
+
+signal note_hit(note_damage)

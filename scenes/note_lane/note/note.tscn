@@ -8,6 +8,7 @@ radius = 32.9848
 [node name="Note" type="Area2D"]
 z_index = 1
 script = ExtResource("1_7d4lo")
+note_speed = 500
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_mxjhr")

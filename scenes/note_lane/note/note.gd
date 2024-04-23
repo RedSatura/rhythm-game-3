@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var note_speed = 250
+@export var note_damage = 25
 
 func _ready():
 	pass

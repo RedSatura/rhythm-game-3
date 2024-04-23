@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnpmlrr13fqyq"]
+
+[ext_resource type="Script" path="res://scenes/bosses/boss/boss.gd" id="1_ty1tj"]
+
+[node name="Boss" type="Node2D"]
+script = ExtResource("1_ty1tj")
+
+[node name="BossSprite" type="Polygon2D" parent="."]
+color = Color(1, 0.443137, 0.992157, 0.607843)
+polygon = PackedVector2Array(0, -256, -256, 0, 0, 256, 256, 0)
+
+[node name="BossHealthbar" type="ProgressBar" parent="."]
+offset_left = -384.0
+offset_top = -312.0
+offset_right = 384.0
+offset_bottom = -280.0
+value = 100.0
+
+[node name="BossName" type="Label" parent="."]
+offset_left = -376.0
+offset_top = -344.0
+offset_right = 376.0
+offset_bottom = -313.0
+text = "Magenta Diamond
+"
+vertical_alignment = 1

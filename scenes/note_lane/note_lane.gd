@@ -10,6 +10,9 @@ extends Node2D
 
 var current_note = null
 
+func _ready():
+	pass
+
 func spawn_note():
 	var new_note = load("res://scenes/note_lane/note/note.tscn").instantiate()
 	add_child(new_note)
@@ -18,7 +21,7 @@ func spawn_note():
 func _on_note_cooldown_timer_timeout():
 	spawn_note()
 	
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	match lane_position:
 		"LEFT":
 			if Input.is_action_just_pressed("lane_left"):
@@ -37,13 +40,15 @@ func handle_input_on_note():
 	hitspot.color.r = 0.5
 	hitspot_flash_cooldown.start()
 	if current_note != null:
+		if "note_damage" in current_note:
+			SignalHandler.emit_signal("note_hit", current_note.note_damage)
 		current_note.queue_free()
 		current_note = null
 
 func _on_note_detector_area_entered(area):
 	current_note = area
 
-func _on_note_detector_area_exited(area):
+func _on_note_detector_area_exited(_area):
 	current_note = null
 
 func _on_hitspot_flash_cooldown_timeout():

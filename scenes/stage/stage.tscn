@@ -1,12 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=8 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="PackedScene" uid="uid://7kgmxl47vjji" path="res://scenes/conductor/conductor.tscn" id="1_ab623"]
-[ext_resource type="Script" path="res://test/test_label.gd" id="2_3ujy6"]
+[ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
+[ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
 [ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="3_0tmff"]
+[ext_resource type="PackedScene" uid="uid://dnpmlrr13fqyq" path="res://scenes/bosses/boss/boss.tscn" id="4_3kkbs"]
+[ext_resource type="Script" path="res://scenes/stage/ui/song_duration_bar.gd" id="4_w0wif"]
+[ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
 
 [node name="Stage" type="Node2D"]
+script = ExtResource("1_je8j5")
 
 [node name="Conductor" parent="." instance=ExtResource("1_ab623")]
+autoplay = false
+audio_offset = 0
 
 [node name="NoteLanes" type="Node2D" parent="."]
 
@@ -26,10 +33,28 @@ lane_position = "RIGHT"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_right = 192.0
-offset_bottom = 64.0
+[node name="BeatMeasureLabel" type="Label" parent="CanvasLayer"]
+offset_left = 272.0
+offset_top = 640.0
+offset_right = 464.0
+offset_bottom = 689.0
 text = "Current Beat: 0
 Measures Occured: 0"
 script = ExtResource("2_3ujy6")
-metadata/_edit_lock_ = true
+
+[node name="SongDurationBar" type="ProgressBar" parent="CanvasLayer"]
+offset_right = 1280.0
+offset_bottom = 16.0
+show_percentage = false
+script = ExtResource("4_w0wif")
+
+[node name="TimeElapsedLabel" type="Label" parent="CanvasLayer"]
+offset_left = 464.0
+offset_top = 640.0
+offset_right = 632.0
+offset_bottom = 696.0
+text = "TIme Elapsed: 0"
+script = ExtResource("6_ik5x7")
+
+[node name="Boss" parent="." instance=ExtResource("4_3kkbs")]
+position = Vector2(640, 360)

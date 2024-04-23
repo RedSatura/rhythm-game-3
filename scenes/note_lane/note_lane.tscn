@@ -31,7 +31,6 @@ position = Vector2(0, -704)
 
 [node name="NoteCooldownTimer" type="Timer" parent="."]
 wait_time = 2.0
-autostart = true
 
 [connection signal="area_entered" from="NoteDetector" to="." method="_on_note_detector_area_entered"]
 [connection signal="area_exited" from="NoteDetector" to="." method="_on_note_detector_area_exited"]
