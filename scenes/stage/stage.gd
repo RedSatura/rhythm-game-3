@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var conductor = $Conductor
+@onready var song_manager = $SongManager
 
 func _ready():
-	conductor.play_song()
+	song_manager.start_song()

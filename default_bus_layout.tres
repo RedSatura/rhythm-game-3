@@ -3,7 +3,6 @@
 [sub_resource type="AudioEffectDelay" id="AudioEffectDelay_hwi82"]
 resource_name = "Delay"
 dry = 0.0
-tap1_delay_ms = 750.0
 tap1_level_db = 0.0
 tap1_pan = 0.0
 tap2_active = false

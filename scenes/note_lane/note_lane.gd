@@ -10,13 +10,22 @@ extends Node2D
 
 var current_note = null
 
+enum LaneState {
+	ACTIVE,
+	DISABLED,
+}
+
+var lane_state = LaneState.ACTIVE
+
 func _ready():
-	pass
+	SignalHandler.connect("measure_occured", Callable(self, "measure_occured"))
 
 func spawn_note():
 	var new_note = load("res://scenes/note_lane/note/note.tscn").instantiate()
+	new_note.distance_to_target = Vector2(hitspot.position.x - note_spawn_position.position.x, hitspot.position.y - note_spawn_position.position.y)
 	add_child(new_note)
 	new_note.global_position = note_spawn_position.global_position
+	
 	
 func _on_note_cooldown_timer_timeout():
 	spawn_note()
@@ -53,3 +62,6 @@ func _on_note_detector_area_exited(_area):
 
 func _on_hitspot_flash_cooldown_timeout():
 	hitspot.color.r = 0.176
+
+func measure_occured():
+	spawn_note()

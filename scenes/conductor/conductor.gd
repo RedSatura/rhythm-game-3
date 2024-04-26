@@ -2,6 +2,7 @@ extends AudioStreamPlayer
 
 @export var bpm: int = 100
 @export var beats_in_measure: int = 4
+@export var starting_beat_in_measure = 1
 
 var song_position = 0.0
 var song_position_in_beats = 0
@@ -12,7 +13,7 @@ var last_reported_beat = 0
 
 var current_beat_in_measure = 1
 
-##Audio offset in miliseconds. Must range from 0 to 1500. 
+##Audio offset in milliseconds. Must range from 0 to 1500. 
 ##Does not work, so don't bother. 
 ##Just add a delay to the audio file itself.
 @export var audio_offset = 0
@@ -23,16 +24,16 @@ var time_off_beat = 0.0
 
 func _ready():
 	seconds_per_beat = 60.0 / bpm
+	current_beat_in_measure = starting_beat_in_measure
 	var effect = AudioServer.get_bus_effect(1, 0)
 	if effect:
 		effect.set_dry(0)
 		effect.set_tap1_active(true)
-		#if audio_offset <= 1.50:
-		#	effect.set_tap1_delay_ms(audio_offset)
+	if audio_offset <= 1.50:
+		effect.set_tap1_delay_ms(audio_offset)
 		effect.set_tap1_level_db(0)
 		effect.set_tap1_pan(0)
 		effect.set_tap2_active(false)
-		print(effect.get_tap1_delay_ms())
 
 func _physics_process(_delta):
 	if playing:
@@ -40,7 +41,7 @@ func _physics_process(_delta):
 		song_position -= AudioServer.get_output_latency()
 		song_position_in_beats = int(floor(song_position / seconds_per_beat)) + song_beat_delay
 		SignalHandler.emit_signal("get_song_position", song_position)
-		SignalHandler.emit_signal("get_song_offset", song_position - (audio_offset / 1000))
+		SignalHandler.emit_signal("get_song_offset", song_position - (audio_offset / 1000.0))
 		report_beat()
 		
 func report_beat():
@@ -63,7 +64,8 @@ func get_closest_beat(nth):
 func play_song():
 	seconds_per_beat = 60.0 / bpm
 	
-	#send out relevant song data
-	SignalHandler.emit_signal("get_song_length", stream.get_length())
-	
-	play()
+	if stream:
+		#send out relevant song data
+		SignalHandler.emit_signal("get_song_length", stream.get_length())
+		
+		play()
