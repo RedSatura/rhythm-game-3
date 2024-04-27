@@ -8,6 +8,7 @@ tap1_pan = 0.0
 tap2_active = false
 
 [resource]
+bus/0/volume_db = -80.0
 bus/1/name = &"Delayer"
 bus/1/solo = false
 bus/1/mute = false

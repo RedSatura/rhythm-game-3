@@ -7,16 +7,27 @@ BEATS_IN_MEASURE: 4
 STARTING_BEAT_IN_MEASURE: 7
 
 SONG_START
-s/1+23.1+4,s/2,
-s/1,s/2,s/3, This is a comment!
-s/3,
-s/3,
-s/2,
-s/1,
-s/3,
+s/r+,
+s/r+,
+s/r+,
+s/r+,
 
 
+
+d/1+4+,
 s/2,
-s/2,s/1, This is a comment!
+s/3+,
+s/4+,
+s/1+,
+s/r+,
+s/r+,
+s/r+,
+s/r+,
+s/r+,
+s/r+,
+s/r+,
+s/r+,
 SONG_END
+
+
 

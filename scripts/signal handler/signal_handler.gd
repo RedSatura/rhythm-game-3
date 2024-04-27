@@ -16,3 +16,6 @@ signal measure_occured
 signal note_hit(note_damage)
 
 signal note_missed
+
+#errors
+signal send_error(error)

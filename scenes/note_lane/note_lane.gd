@@ -8,7 +8,11 @@ extends Node2D
 @onready var hitspot = $Hitspot
 @onready var hitspot_flash_cooldown = $Hitspot/HitspotFlashCooldown
 
+@onready var lane_background = $LaneBackground
+
 var current_note = null
+
+var disabled_beats_left = 0
 
 enum LaneState {
 	ACTIVE,
@@ -18,6 +22,7 @@ enum LaneState {
 var lane_state = LaneState.ACTIVE
 
 func _ready():
+	SignalHandler.connect("beat_occured", Callable(self, "beat_occured"))
 	SignalHandler.connect("measure_occured", Callable(self, "measure_occured"))
 
 func spawn_note():
@@ -31,19 +36,20 @@ func _on_note_cooldown_timer_timeout():
 	spawn_note()
 	
 func _unhandled_input(_event):
-	match lane_position:
-		"LEFT":
-			if Input.is_action_just_pressed("lane_left"):
-				handle_input_on_note()
-		"CENTER_LEFT":
-			if Input.is_action_just_pressed("lane_center_left"):
-				handle_input_on_note()
-		"CENTER_RIGHT":
-			if Input.is_action_just_pressed("lane_center_right"):
-				handle_input_on_note()
-		"RIGHT":
-			if Input.is_action_just_pressed("lane_right"):
-				handle_input_on_note()
+	if lane_state == LaneState.ACTIVE:
+		match lane_position:
+			"LEFT":
+				if Input.is_action_just_pressed("lane_left"):
+					handle_input_on_note()
+			"CENTER_LEFT":
+				if Input.is_action_just_pressed("lane_center_left"):
+					handle_input_on_note()
+			"CENTER_RIGHT":
+				if Input.is_action_just_pressed("lane_center_right"):
+					handle_input_on_note()
+			"RIGHT":
+				if Input.is_action_just_pressed("lane_right"):
+					handle_input_on_note()
 				
 func handle_input_on_note():
 	hitspot.color.r = 0.5
@@ -64,4 +70,19 @@ func _on_hitspot_flash_cooldown_timeout():
 	hitspot.color.r = 0.176
 
 func measure_occured():
-	spawn_note()
+	pass
+	
+func beat_occured(_pos):
+	if disabled_beats_left > 0:
+		disabled_beats_left -= 1
+		if disabled_beats_left <= 0:
+			enable_lane()
+	
+func disable_lane(duration: int = 0):
+	lane_state = LaneState.DISABLED
+	lane_background.color = Color(0, 0)
+	disabled_beats_left = duration
+	
+func enable_lane():
+	lane_state = LaneState.ACTIVE
+	lane_background.color = Color(0.6, 0.357, 0.224, 0.502)

@@ -1,14 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=8 format=3 uid="uid://brjf80vt8yjyu"]
 
-[ext_resource type="PackedScene" uid="uid://7kgmxl47vjji" path="res://scenes/conductor/conductor.tscn" id="1_ab623"]
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
 [ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
-[ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="3_0tmff"]
 [ext_resource type="PackedScene" uid="uid://dnpmlrr13fqyq" path="res://scenes/bosses/boss/boss.tscn" id="4_3kkbs"]
 [ext_resource type="Script" path="res://scenes/stage/ui/song_duration_bar.gd" id="4_w0wif"]
+[ext_resource type="Script" path="res://test/error_label.gd" id="5_03do4"]
+[ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="6_0b2l7"]
 [ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
-[ext_resource type="Script" path="res://scenes/song_manager/song_manager.gd" id="8_4lwfp"]
-[ext_resource type="AudioStream" uid="uid://cwe28ralm6ldb" path="res://songs/music/Night of Nights.ogg" id="8_wcnf0"]
 
 [node name="Stage" type="Node2D"]
 script = ExtResource("1_je8j5")
@@ -38,31 +36,16 @@ offset_bottom = 696.0
 text = "TIme Elapsed: 0"
 script = ExtResource("6_ik5x7")
 
+[node name="ErrorLabel" type="Label" parent="CanvasLayer"]
+offset_left = 776.0
+offset_top = 8.0
+offset_right = 1272.0
+offset_bottom = 56.0
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("5_03do4")
+
 [node name="Boss" parent="." instance=ExtResource("4_3kkbs")]
 position = Vector2(640, 360)
 
-[node name="SongManager" type="Node2D" parent="."]
-script = ExtResource("8_4lwfp")
-file_path = "res://songs/test/test_song.msf"
-
-[node name="Conductor" parent="SongManager" instance=ExtResource("1_ab623")]
-stream = ExtResource("8_wcnf0")
-autoplay = false
-starting_beat_in_measure = 7
-song_beat_delay = 1
-
-[node name="NoteLanes" type="Node2D" parent="SongManager"]
-
-[node name="NoteLane" parent="SongManager/NoteLanes" instance=ExtResource("3_0tmff")]
-
-[node name="NoteLane2" parent="SongManager/NoteLanes" instance=ExtResource("3_0tmff")]
-position = Vector2(192, 640)
-lane_position = "CENTER_LEFT"
-
-[node name="NoteLane3" parent="SongManager/NoteLanes" instance=ExtResource("3_0tmff")]
-position = Vector2(1088, 640)
-lane_position = "CENTER_RIGHT"
-
-[node name="NoteLane4" parent="SongManager/NoteLanes" instance=ExtResource("3_0tmff")]
-position = Vector2(1216, 640)
-lane_position = "RIGHT"
+[node name="SongManager" parent="." instance=ExtResource("6_0b2l7")]

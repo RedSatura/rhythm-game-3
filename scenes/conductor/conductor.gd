@@ -29,8 +29,8 @@ func _ready():
 	if effect:
 		effect.set_dry(0)
 		effect.set_tap1_active(true)
-	if audio_offset <= 1.50:
-		effect.set_tap1_delay_ms(audio_offset)
+		if audio_offset <= 1.50:
+			effect.set_tap1_delay_ms(audio_offset)
 		effect.set_tap1_level_db(0)
 		effect.set_tap1_pan(0)
 		effect.set_tap2_active(false)
@@ -41,7 +41,7 @@ func _physics_process(_delta):
 		song_position -= AudioServer.get_output_latency()
 		song_position_in_beats = int(floor(song_position / seconds_per_beat)) + song_beat_delay
 		SignalHandler.emit_signal("get_song_position", song_position)
-		SignalHandler.emit_signal("get_song_offset", song_position - (audio_offset / 1000.0))
+		SignalHandler.emit_signal("get_song_offset", song_position)
 		report_beat()
 		
 func report_beat():
@@ -67,5 +67,7 @@ func play_song():
 	if stream:
 		#send out relevant song data
 		SignalHandler.emit_signal("get_song_length", stream.get_length())
-		
 		play()
+	else:
+		SignalHandler.emit_signal("send_error", "No audio stream found!")
+		
