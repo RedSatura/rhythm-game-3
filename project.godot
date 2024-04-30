@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Rhythm Game 3"
-run/main_scene="res://scenes/stage/stage.tscn"
+run/main_scene="res://scenes/title/title_screen.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 SignalHandler="*res://scripts/signal handler/signal_handler.gd"
+GlobalData="*res://scripts/global data/global_data.gd"
 
 [display]
 
@@ -52,3 +53,4 @@ lane_right={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

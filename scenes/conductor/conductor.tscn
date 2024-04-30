@@ -1,12 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://7kgmxl47vjji"]
+[gd_scene load_steps=2 format=3 uid="uid://7kgmxl47vjji"]
 
-[ext_resource type="AudioStream" uid="uid://cwe28ralm6ldb" path="res://songs/music/Night of Nights.ogg" id="1_5s03c"]
 [ext_resource type="Script" path="res://scenes/conductor/conductor.gd" id="1_jv58c"]
 
 [node name="Conductor" type="AudioStreamPlayer"]
-stream = ExtResource("1_5s03c")
 autoplay = true
 bus = &"Delayer"
 script = ExtResource("1_jv58c")
-bpm = 180
 audio_offset = 1500

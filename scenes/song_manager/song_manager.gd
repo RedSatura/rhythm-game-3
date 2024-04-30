@@ -5,6 +5,8 @@ extends Node2D
 var file = ""
 var line_content = ""
 
+var song_title = ""
+
 @onready var conductor = $Conductor
 @onready var note_lanes = $NoteLanes
 
@@ -12,7 +14,8 @@ var disabled = false
 
 func _ready():
 	SignalHandler.connect("beat_occured", Callable(self, "get_next_commands"))
-	if FileAccess.file_exists(file_path):
+	file_path = GlobalData.song_path
+	if FileAccess.file_exists(str(file_path)):
 		open_file()
 	else:
 		SignalHandler.emit_signal("send_error", "File does not exist!")
@@ -20,16 +23,60 @@ func _ready():
 func open_file():
 	file = FileAccess.open(file_path, FileAccess.READ)
 	var start_command_found = false
+	#Gets the song metadata type
+	#Ex. Gets SONG_TITLE from SONG_TITLE: Test Song
+	var metadata_type_regex = RegEx.new()
+	metadata_type_regex.compile(".*?(?=\\:)")
 	for x in 20:
 		if line_content != "SONG_START":
 			line_content = file.get_line().strip_edges()
+			
+			var result = metadata_type_regex.search(line_content)
+			if result != null:
+				process_song_metadata_type(result.get_string().strip_edges())
 		else:
 			start_command_found = true
+			start_song()
 			break
 			
 	if !start_command_found:
 		disabled = true
 		SignalHandler.emit_signal("send_error", "Starting song command not found after 20 lines.")
+		
+func process_song_metadata_type(type):
+	var metadata_data_regex = RegEx.new()
+	metadata_data_regex.compile("(?<=\\:).*")
+	var result = metadata_data_regex.search(line_content)
+	
+	if result != null:
+		result = result.get_string().strip_edges()
+		
+		match type:
+			#Chart metadata:
+			"TITLE":
+				song_title = result
+			"ARTIST":
+				pass
+			"MAPCREATOR":
+				pass
+			#Paths for files:
+			"AUDIO_SRC":
+				var audio_path = GlobalData.song_path.get_base_dir() + "/" + result
+				if FileAccess.file_exists(audio_path):
+					var audio = AudioStreamOggVorbis.load_from_file(audio_path)
+					conductor.stream = audio
+			#Song-related types:
+			"BPM":
+				conductor.bpm = int(result)
+			"BEAT_MODE":
+				conductor.beat_mode = int(result)
+			"BEATS_IN_MEASURE":
+				conductor.beats_in_measure = int(result)
+			"STARTING_BEAT_IN_MEASURE":
+				conductor.starting_beat_in_measure = int(result)
+			_:
+				pass
+	
 	
 func start_song():
 	if !disabled:

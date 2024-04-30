@@ -1,7 +1,13 @@
 extends AudioStreamPlayer
 
+##The song's bpm.
 @export var bpm: int = 100
+##The song's beat mode. 1 for quarter notes, 2 for eighth notes, and so on.
+##You can use 0.5 for half notes and 0.25 for whole notes.
+@export var beat_mode: float = 1.0
+##Controls how many beats in a measure.
 @export var beats_in_measure: int = 4
+##COntrols on what beat in the measure the song starts from.
 @export var starting_beat_in_measure = 1
 
 var song_position = 0.0
@@ -23,7 +29,7 @@ var closest_beat = 0
 var time_off_beat = 0.0
 
 func _ready():
-	seconds_per_beat = 60.0 / bpm
+	seconds_per_beat = 60.0 / (bpm * beat_mode)
 	current_beat_in_measure = starting_beat_in_measure
 	var effect = AudioServer.get_bus_effect(1, 0)
 	if effect:
@@ -62,7 +68,7 @@ func get_closest_beat(nth):
 	return Vector2(closest_beat, time_off_beat)
 
 func play_song():
-	seconds_per_beat = 60.0 / bpm
+	seconds_per_beat = 60.0 / (bpm * beat_mode)
 	
 	if stream:
 		#send out relevant song data
@@ -70,4 +76,3 @@ func play_song():
 		play()
 	else:
 		SignalHandler.emit_signal("send_error", "No audio stream found!")
-		

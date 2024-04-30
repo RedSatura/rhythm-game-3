@@ -86,3 +86,15 @@ func disable_lane(duration: int = 0):
 func enable_lane():
 	lane_state = LaneState.ACTIVE
 	lane_background.color = Color(0.6, 0.357, 0.224, 0.502)
+
+func _on_note_detector_input_event(viewport, event, shape_idx):
+	if event is InputEventScreenTouch:
+		match lane_position:
+			"LEFT":
+					handle_input_on_note()
+			"CENTER_LEFT":
+					handle_input_on_note()
+			"CENTER_RIGHT":
+					handle_input_on_note()
+			"RIGHT":
+					handle_input_on_note()

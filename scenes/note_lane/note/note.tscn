@@ -3,11 +3,12 @@
 [ext_resource type="Script" path="res://scenes/note_lane/note/note.gd" id="1_7d4lo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mxjhr"]
-radius = 32.9848
+radius = 16.0
 
 [node name="Note" type="Area2D"]
 z_index = 1
 script = ExtResource("1_7d4lo")
+note_speed = 1.25
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_mxjhr")
@@ -17,7 +18,19 @@ color = Color(1, 1, 1, 0.501961)
 polygon = PackedVector2Array(0, 32, 24, 24, 32, 0, 24, -24, 0, -32, -24, -24, -32, 0, -24, 24)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
 position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(3.2, 3.2)
+
+[node name="NoteInfo" type="Label" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 1)
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
