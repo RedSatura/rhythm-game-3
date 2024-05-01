@@ -53,6 +53,7 @@ size = Vector2i(800, 400)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+root_subfolder = "/storage/emulated/0"
 filters = PackedStringArray("*.msf", "*.txt")
 script = ExtResource("1_b3hli")
 
