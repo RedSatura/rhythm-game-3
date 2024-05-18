@@ -1,5 +1,8 @@
 extends Node
 
+#song validator
+signal send_song_to_validator(path)
+
 #send initial song data
 signal get_song_length(length)
 signal get_song_offset(offset)
@@ -19,3 +22,6 @@ signal note_missed
 
 #errors
 signal send_error(error)
+
+#status label (title screen)
+signal clear_status_label
