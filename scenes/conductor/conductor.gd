@@ -29,6 +29,7 @@ var closest_beat = 0
 var time_off_beat = 0.0
 
 func _ready():
+	prints(bpm, beat_mode, beats_in_measure, starting_beat_in_measure)
 	seconds_per_beat = 60.0 / (bpm * beat_mode)
 	current_beat_in_measure = starting_beat_in_measure
 	var effect = AudioServer.get_bus_effect(1, 0)

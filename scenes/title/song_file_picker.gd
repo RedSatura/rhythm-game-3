@@ -8,4 +8,5 @@ func _on_file_selected(path):
 
 func _on_open_file_pressed():
 	SignalHandler.emit_signal("clear_status_label")
+	SignalHandler.emit_signal("reset_to_defaults")
 	popup()

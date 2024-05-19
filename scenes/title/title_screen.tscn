@@ -37,7 +37,7 @@ offset_left = 16.0
 offset_top = 112.0
 offset_right = 272.0
 offset_bottom = 144.0
-text = "v0.0.1"
+text = "v0.1.0"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
@@ -82,6 +82,70 @@ offset_right = 208.0
 offset_bottom = 112.0
 text = "Open File"
 
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 608.0
+offset_right = 1264.0
+offset_bottom = 704.0
+grow_horizontal = 2
+grow_vertical = 0
+vertical_scroll_mode = 3
+metadata/_edit_group_ = true
+
+[node name="StatusLabel" type="Label" parent="ScrollContainer"]
+custom_minimum_size = Vector2(1248, 32)
+layout_mode = 2
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="SongInfo" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CurrentlyOpened" type="Label" parent="SongInfo"]
+offset_left = 16.0
+offset_top = 456.0
+offset_right = 201.0
+offset_bottom = 479.0
+text = "Currently Opened Song:"
+
+[node name="SongDataLabels" type="VBoxContainer" parent="SongInfo"]
+offset_left = 16.0
+offset_top = 488.0
+offset_right = 448.0
+offset_bottom = 592.0
+metadata/_edit_group_ = true
+
+[node name="Title" type="Label" parent="SongInfo/SongDataLabels"]
+layout_mode = 2
+text = "Title: "
+
+[node name="Artist" type="Label" parent="SongInfo/SongDataLabels"]
+layout_mode = 2
+text = "Artist: "
+
+[node name="MapCreator" type="Label" parent="SongInfo/SongDataLabels"]
+layout_mode = 2
+text = "Map Creator: "
+
+[node name="Difficulty" type="Label" parent="SongInfo/SongDataLabels"]
+layout_mode = 2
+text = "Difficulty: "
+
+[node name="PlaySong" type="Button" parent="SongInfo"]
+offset_left = 16.0
+offset_top = 608.0
+offset_right = 224.0
+offset_bottom = 656.0
+text = "Play Song!"
+
 [node name="Recent" type="Label" parent="."]
 visible = false
 offset_left = 392.0
@@ -104,25 +168,6 @@ layout_mode = 2
 [node name="SongValidator" type="Node2D" parent="."]
 script = ExtResource("3_oqavg")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 608.0
-offset_right = 1264.0
-offset_bottom = 704.0
-grow_horizontal = 2
-grow_vertical = 0
-vertical_scroll_mode = 3
-
-[node name="StatusLabel" type="Label" parent="ScrollContainer"]
-custom_minimum_size = Vector2(1248, 32)
-layout_mode = 2
-horizontal_alignment = 2
-vertical_alignment = 1
-autowrap_mode = 3
-
 [connection signal="file_selected" from="FileDialog" to="FileDialog" method="_on_file_selected"]
 [connection signal="pressed" from="Custom/OpenFile" to="FileDialog" method="_on_open_file_pressed"]
+[connection signal="pressed" from="SongInfo/PlaySong" to="." method="_on_play_song_pressed"]

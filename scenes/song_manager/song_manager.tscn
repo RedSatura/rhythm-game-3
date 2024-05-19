@@ -10,7 +10,6 @@ script = ExtResource("1_44a13")
 
 [node name="Conductor" parent="." instance=ExtResource("2_edcsv")]
 autoplay = false
-starting_beat_in_measure = 7
 song_beat_delay = 1
 
 [node name="NoteLanes" type="Node2D" parent="."]

@@ -16,76 +16,36 @@ var disabled = false
 
 func _ready():
 	SignalHandler.connect("beat_occured", Callable(self, "get_next_commands"))
-	file_path = GlobalData.song_path
-	if FileAccess.file_exists(str(file_path)):
-		open_file()
-	else:
-		SignalHandler.emit_signal("send_error", "File does not exist!")
-
-func open_file():
-	file = FileAccess.open(file_path, FileAccess.READ)
-	var start_command_found = false
-	#Gets the song metadata type
-	#Ex. Gets SONG_TITLE from SONG_TITLE: Test Song
-	var metadata_type_regex = RegEx.new()
-	metadata_type_regex.compile(".*?(?=\\:)")
-	for x in 20:
-		if line_content != "SONG_START":
-			line_content = file.get_line().strip_edges()
-			
-			var result = metadata_type_regex.search(line_content)
-			if result != null:
-				process_song_metadata_type(result.get_string().strip_edges())
-		else:
-			start_command_found = true
-			start_song()
-			break
-			
-	if !start_command_found:
-		disabled = true
-		SignalHandler.emit_signal("send_error", "Starting song command not found after 20 lines.")
-		
-func process_song_metadata_type(type):
-	var metadata_data_regex = RegEx.new()
-	metadata_data_regex.compile("(?<=\\:).*")
-	var result = metadata_data_regex.search(line_content)
 	
-	if result != null:
-		result = result.get_string().strip_edges()
-		
-		match type:
-			#Chart metadata:
-			"TITLE":
-				song_title = result
-			"ARTIST":
-				pass
-			"MAPCREATOR":
-				pass
-			#Paths for files:
-			"AUDIO_SRC":
-				var audio_path = GlobalData.song_path.get_base_dir() + "/" + result
-				if FileAccess.file_exists(audio_path):
-					var audio = AudioStreamOggVorbis.load_from_file(audio_path)
-					conductor.stream = audio
-			#Song-related types:
-			"BPM":
-				conductor.bpm = int(result)
-			"BEAT_MODE":
-				conductor.beat_mode = int(result)
-			"BEATS_IN_MEASURE":
-				conductor.beats_in_measure = int(result)
-			"STARTING_BEAT_IN_MEASURE":
-				conductor.starting_beat_in_measure = int(result)
-			_:
-				pass
-	
+func open_song_file(path):
+	file = FileAccess.open(path, FileAccess.READ)
+	line_content = ""
+	while line_content != "SONG_START":
+		line_content = file.get_line()
 	
 func start_song():
+	conductor.stream = AudioStreamOggVorbis.load_from_file(GlobalData.song_info["audio_src"])
+	conductor.bpm = GlobalData.song_info["bpm"]
+	conductor.beat_mode = GlobalData.song_info["beat_mode"]
+	conductor.beats_in_measure = GlobalData.song_info["beats_in_measure"]
+	conductor.starting_beat_in_measure = GlobalData.song_info["starting_beat_in_measure"]
+	open_song_file(GlobalData.song_path)
 	if !disabled:
 		conductor.play_song()
+		
+func end_song():
+	var tween = get_tree().create_tween()
+	tween.tween_property(conductor, "volume_db", -80, 5)
+	tween.connect("finished", Callable(self, "stop_song"))
+	
+func stop_song():
+	conductor.stop()
+	get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")
 	
 func get_next_commands(_beat_pos):
 	line_content = file.get_line().strip_edges()
+	if line_content == "SONG_END":
+		end_song()
 	get_commands()
 
 func get_commands():
@@ -123,6 +83,7 @@ func process_commands(commands):
 				"s":	#Spawn note.
 					#Parameters:
 					#Note lane number (int) - 1 for left, 2 for center left, 3 for center right, 4 for right.
+					#This has a delay depending on the note speed.
 					if parameter_result != [] && parameter_result != null:
 						if parameter_result.size() == 1:
 							var current_param = 1

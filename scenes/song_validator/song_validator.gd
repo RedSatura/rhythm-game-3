@@ -4,7 +4,7 @@ var file_path = "" #needed for audio_src, may fix it later
 
 var line_content = "" #The content of the currently active line in the song file.
 
-var song_info = { #defaults
+var default_song_info = { #defaults
 	#metadata
 	"title": "",
 	"artist": "",
@@ -19,8 +19,12 @@ var song_info = { #defaults
 	"starting_beat_in_measure": 1,
 }
 
+var song_info = {}
+
 func _ready():
 	SignalHandler.connect("send_song_to_validator", Callable(self, "validate_song"))
+	song_info = default_song_info
+	GlobalData.song_path = ""
 	
 func validate_song(path): #This is where song validation begins
 	check_file_existence(path)
@@ -28,9 +32,12 @@ func validate_song(path): #This is where song validation begins
 func check_file_existence(path): #Step 1: Checking file existence
 	if FileAccess.file_exists(path):
 		file_path = path
+		GlobalData.song_path = path
 		open_file(path)
 	else:
+		GlobalData.song_path = ""
 		SignalHandler.emit_signal("send_error", "File does not exist!")
+		return
 		
 func open_file(path): #Step 2: Opening file
 	var file = null
@@ -55,11 +62,12 @@ func open_file(path): #Step 2: Opening file
 				break
 		if !start_command_found:
 			SignalHandler.emit_signal("send_error", "Song starting command not found before 20 lines.")
+			return
 		else:
-			pass
+			validate_song_body(file)
 	else:
 		SignalHandler.emit_signal("send_error", "Error opening file!")
-	file.close()
+		return
 		
 func process_song_metadata_type(type): #Step 3: Getting data from headers
 	var metadata_data_regex = RegEx.new()
@@ -90,30 +98,45 @@ func process_song_metadata_type(type): #Step 3: Getting data from headers
 			#Song-related types:
 			"BPM":
 				if int(result) <= 0:
-					SignalHandler.emit_signal("send_error", "BPM was invalid, so it has been set to 100.")
+					SignalHandler.emit_signal("send_error", "BPM was invalid, so it will be set to 100 when played.")
 					song_info["bpm"] = 100
 				else:
 					song_info["bpm"] = int(result)
 			"BEAT_MODE":
 				if int(result) <= 0:
-					SignalHandler.emit_signal("send_error", "Beat mode was invalid, so it has been set to 1.")
+					SignalHandler.emit_signal("send_error", "Beat mode was invalid, so it will be set to 1 when played.")
 					song_info["beat_mode"] = 1
 				else:
 					song_info["beat_mode"] = int(result)
 			"BEATS_IN_MEASURE":
 				if int(result) <= 0:
-					SignalHandler.emit_signal("send_error", "Beats in measure was invalid, so it has been set to 4.")
+					SignalHandler.emit_signal("send_error", "Beats in measure was invalid, so it will be set to 4 when played.")
 					song_info["beats_in_measure"] = 4
 				else:
 					song_info["beats_in_measure"] = int(result)
 			"STARTING_BEAT_IN_MEASURE":
 				if int(result) <= 0:
-					SignalHandler.emit_signal("send_error", "Starting beat in measure was invalid, so it has been set to 1.")
+					SignalHandler.emit_signal("send_error", "Starting beat in measure was invalid, so it will be set to 1 when played.")
 					song_info["starting_beat_in_measure"] = 1
 				else:
 					song_info["starting_beat_in_measure"] = int(result)
 			_:
 				pass
 				
-func validate_song_body(): #Step 4: Validating song body and checking for SONG_END
-	pass
+func validate_song_body(file): #Step 4: Validating song body and checking for SONG_END
+	#Right now, it only checks for SONG_END, as any errors in the song body will just be ignored by the song manager.
+	var end_command_found = false
+	while file.get_position() < file.get_length():
+		line_content = file.get_line()
+		if line_content == "SONG_END":
+			end_command_found = true
+			
+	if !end_command_found:
+		SignalHandler.emit_signal("send_error", "Song ending command not found.")
+		return
+	else:
+		GlobalData.song_info = song_info
+		SignalHandler.emit_signal("song_validated")
+		SignalHandler.emit_signal("send_message", "Successfully validated!")
+		#The song information will be stored in the global script global_data.
+		#Get the song info from there.
