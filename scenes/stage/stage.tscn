@@ -54,4 +54,10 @@ offset_top = 32.0
 offset_right = 1264.0
 offset_bottom = 96.0
 
+[node name="SongStartTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="SongStartTimer" to="." method="_on_song_start_timer_timeout"]
