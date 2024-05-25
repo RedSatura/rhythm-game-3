@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4glp02ecl6x5"]
+[gd_scene load_steps=9 format=3 uid="uid://d4glp02ecl6x5"]
 
 [ext_resource type="Script" path="res://scenes/title/song_file_picker.gd" id="1_b3hli"]
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
@@ -15,6 +15,9 @@ font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_uqs5o"]
 font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_dvgvb"]
+font_size = 32
 
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_kubb5")
@@ -110,6 +113,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="CurrentlyOpened" type="Label" parent="SongInfo"]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 456.0
 offset_right = 201.0
@@ -117,6 +121,7 @@ offset_bottom = 479.0
 text = "Currently Opened Song:"
 
 [node name="SongDataLabels" type="VBoxContainer" parent="SongInfo"]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 488.0
 offset_right = 448.0
@@ -140,6 +145,7 @@ layout_mode = 2
 text = "Difficulty: "
 
 [node name="PlaySong" type="Button" parent="SongInfo"]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 608.0
 offset_right = 224.0
@@ -164,6 +170,20 @@ offset_bottom = 352.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Recent/ScrollContainer"]
 layout_mode = 2
+
+[node name="Editor" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Editor" type="Label" parent="Editor"]
+offset_left = 520.0
+offset_top = 328.0
+offset_right = 760.0
+offset_bottom = 373.0
+text = "Song Editor"
+label_settings = SubResource("LabelSettings_dvgvb")
 
 [node name="SongValidator" type="Node2D" parent="."]
 script = ExtResource("3_oqavg")
