@@ -1,9 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy0hcyuyxp8sr"]
+[gd_scene load_steps=7 format=3 uid="uid://cy0hcyuyxp8sr"]
 
 [ext_resource type="Script" path="res://scenes/editor/song_editor.gd" id="1_m8jub"]
+[ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
+[ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_46n4m"]
 font_size = 32
+
+[sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
+action = &"save"
+
+[sub_resource type="Shortcut" id="Shortcut_j002f"]
+events = [SubResource("InputEventAction_yfhqm")]
 
 [node name="SongEditor" type="Node2D"]
 script = ExtResource("1_m8jub")
@@ -14,16 +22,17 @@ offset_bottom = 720.0
 
 [node name="Editor" type="Label" parent="."]
 offset_left = 8.0
-offset_right = 568.0
+offset_right = 384.0
 offset_bottom = 64.0
 text = "Song Editor"
 label_settings = SubResource("LabelSettings_46n4m")
 vertical_alignment = 1
 
 [node name="CodeEdit" type="CodeEdit" parent="."]
+offset_left = 8.0
 offset_top = 64.0
-offset_right = 512.0
-offset_bottom = 720.0
+offset_right = 504.0
+offset_bottom = 704.0
 text = "TITLE:
 ARTIST:
 MAPCREATOR:
@@ -33,8 +42,124 @@ AUDIO_SRC:
 
 BPM:
 BEAT_MODE:
-BEATS_IN_MEASURE:
-
-
-"
+BEATS_IN_MEASURE:"
+caret_blink = true
+highlight_current_line = true
 symbol_lookup_on_click = true
+gutters_draw_line_numbers = true
+
+[node name="Open" type="Button" parent="."]
+offset_left = 392.0
+offset_top = 8.0
+offset_right = 440.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 12
+text = "Open"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(638, 159)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.msf", "*.txt")
+
+[node name="Save" type="Button" parent="."]
+offset_left = 456.0
+offset_top = 8.0
+offset_right = 504.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 12
+shortcut = SubResource("Shortcut_j002f")
+text = "Save*"
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Help" type="TabContainer" parent="."]
+offset_left = 520.0
+offset_top = 80.0
+offset_right = 1264.0
+offset_bottom = 432.0
+
+[node name="Song Editor" type="TabBar" parent="Help"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Help/Song Editor"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 17.0
+offset_right = 728.0
+offset_bottom = 305.0
+text = "Welcome to the Song Editor!
+You can edit your own .msf files here, though you can also just use plain text files.
+Happy editing! :)
+
+-RedSatura"
+
+[node name="Song Format" type="TabBar" parent="Help"]
+visible = false
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Help/Song Format"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 17.0
+offset_right = 728.0
+offset_bottom = 305.0
+horizontal_scroll_mode = 0
+
+[node name="Label" type="Label" parent="Help/Song Format/ScrollContainer"]
+custom_minimum_size = Vector2(704, 0)
+layout_mode = 2
+text = "This game uses a special format to play songs: .msf (Magenta Song Format) files.
+(Well, it's basically a text file so you can use that. I wanted to feel a bit fancy.)
+
+There are two parts to this file: the song head and the song body.
+The song head contains information about the song. This is the part of the file before the SONG_START command.
+The song body contains the actual commands to play the song. This is the part of the file between the SONG_START and SONG_END commands.
+
+A song validator exists to make sure that the file is written correctly. It starts from the start of the file and reads each line until it reaches the SONG_START command.
+
+If it does not see the SONG_START command before 20 lines from the start of the file, the file is considered invalid. 
+Likewise, if it does not see the SONG_END command, it is also considered invalid.
+
+The song manager (which is responsible for playing the song), starting on the line after the SONG_START command, reads the next line in the file every beat."
+autowrap_mode = 3
+
+[node name="Notes" type="TabBar" parent="Help"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Help/Notes"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 17.0
+offset_right = 728.0
+offset_bottom = 305.0
+text = "Notes use the s/ command."
+
+[node name="StatusLabel" type="Label" parent="."]
+offset_left = 520.0
+offset_top = 432.0
+offset_right = 1264.0
+offset_bottom = 464.0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TitleScreen" type="Button" parent="."]
+offset_left = 1216.0
+offset_top = 16.0
+offset_right = 1264.0
+offset_bottom = 64.0
+
+[node name="SongManager" parent="." instance=ExtResource("2_cdhk3")]
+position = Vector2(1408, 0)
+
+[node name="SongValidator" parent="." instance=ExtResource("3_28ch4")]
+
+[connection signal="text_changed" from="CodeEdit" to="." method="_on_code_edit_text_changed"]
+[connection signal="pressed" from="Open" to="." method="_on_open_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="TitleScreen" to="." method="_on_title_screen_pressed"]

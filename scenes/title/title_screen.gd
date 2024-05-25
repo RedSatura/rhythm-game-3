@@ -36,3 +36,6 @@ func reset_to_defaults():
 
 func _on_play_song_pressed():
 	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
+
+func _on_editor_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/editor/song_editor.tscn")

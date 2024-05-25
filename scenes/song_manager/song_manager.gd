@@ -3,6 +3,7 @@ extends Node2D
 ##TODO: Make song validator take over the work of file checking
 
 @export_file var file_path = ""
+@export var auto_mode = false
 
 var file = ""
 var line_content = ""

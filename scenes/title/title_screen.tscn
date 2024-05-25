@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://d4glp02ecl6x5"]
+[gd_scene load_steps=10 format=3 uid="uid://d4glp02ecl6x5"]
 
 [ext_resource type="Script" path="res://scenes/title/song_file_picker.gd" id="1_b3hli"]
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
-[ext_resource type="Script" path="res://scenes/song_validator/song_validator.gd" id="3_oqavg"]
+[ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_283yi"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_d8gpx"]
 font_size = 32
@@ -19,6 +19,9 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_dvgvb"]
 font_size = 32
 
+[sub_resource type="LabelSettings" id="LabelSettings_crr70"]
+font_size = 18
+
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_kubb5")
 
@@ -30,16 +33,15 @@ offset_bottom = 720.0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 328.0
-offset_bottom = 136.0
-text = "Rhythm Game 3
-By RedSatura"
+offset_bottom = 64.0
+text = "Rhythm Game 3"
 label_settings = SubResource("LabelSettings_d8gpx")
 
 [node name="VersionNumber" type="Label" parent="."]
 offset_left = 16.0
-offset_top = 112.0
+offset_top = 64.0
 offset_right = 272.0
-offset_bottom = 144.0
+offset_bottom = 88.0
 text = "v0.1.0"
 
 [node name="FileDialog" type="FileDialog" parent="."]
@@ -54,35 +56,35 @@ script = ExtResource("1_b3hli")
 
 [node name="Official" type="Label" parent="."]
 offset_left = 16.0
-offset_top = 200.0
+offset_top = 136.0
 offset_right = 226.0
-offset_bottom = 245.0
+offset_bottom = 181.0
 text = "Official Songs
 "
 label_settings = SubResource("LabelSettings_mcocw")
 
 [node name="Soon" type="Label" parent="Official"]
 layout_mode = 0
-offset_left = 256.0
+offset_left = 248.0
 offset_top = 16.0
-offset_right = 362.0
+offset_right = 354.0
 offset_bottom = 39.0
 text = "Coming Soon!"
 
 [node name="Custom" type="Label" parent="."]
 offset_left = 16.0
-offset_top = 328.0
+offset_top = 272.0
 offset_right = 236.0
-offset_bottom = 373.0
+offset_bottom = 317.0
 text = "Custom Songs
 "
 label_settings = SubResource("LabelSettings_033tt")
 
 [node name="OpenFile" type="Button" parent="Custom"]
 layout_mode = 0
-offset_top = 64.0
+offset_top = 56.0
 offset_right = 208.0
-offset_bottom = 112.0
+offset_bottom = 104.0
 text = "Open File"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
@@ -109,16 +111,9 @@ autowrap_mode = 3
 [node name="SongInfo" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+offset_top = -96.0
 offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="CurrentlyOpened" type="Label" parent="SongInfo"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 456.0
-offset_right = 201.0
-offset_bottom = 479.0
-text = "Currently Opened Song:"
+offset_bottom = -56.0
 
 [node name="SongDataLabels" type="VBoxContainer" parent="SongInfo"]
 layout_mode = 0
@@ -127,6 +122,10 @@ offset_top = 488.0
 offset_right = 448.0
 offset_bottom = 592.0
 metadata/_edit_group_ = true
+
+[node name="CurrentlyOpened" type="Label" parent="SongInfo/SongDataLabels"]
+layout_mode = 2
+text = "Currently Opened Song:"
 
 [node name="Title" type="Label" parent="SongInfo/SongDataLabels"]
 layout_mode = 2
@@ -147,9 +146,9 @@ text = "Difficulty: "
 [node name="PlaySong" type="Button" parent="SongInfo"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 608.0
+offset_top = 632.0
 offset_right = 224.0
-offset_bottom = 656.0
+offset_bottom = 680.0
 text = "Play Song!"
 
 [node name="Recent" type="Label" parent="."]
@@ -178,16 +177,35 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Editor" type="Label" parent="Editor"]
-offset_left = 520.0
-offset_top = 328.0
-offset_right = 760.0
-offset_bottom = 373.0
+layout_mode = 0
+offset_left = 528.0
+offset_top = 272.0
+offset_right = 768.0
+offset_bottom = 320.0
 text = "Song Editor"
 label_settings = SubResource("LabelSettings_dvgvb")
 
-[node name="SongValidator" type="Node2D" parent="."]
-script = ExtResource("3_oqavg")
+[node name="EditorButton" type="Button" parent="Editor"]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 328.0
+offset_right = 736.0
+offset_bottom = 376.0
+text = "Edit a Song"
+
+[node name="SongValidator" parent="." instance=ExtResource("3_283yi")]
+
+[node name="GodotCredit" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 640.0
+offset_right = 320.0
+offset_bottom = 703.0
+text = "By RedSatura
+Made with Godot 4.2"
+label_settings = SubResource("LabelSettings_crr70")
+vertical_alignment = 1
 
 [connection signal="file_selected" from="FileDialog" to="FileDialog" method="_on_file_selected"]
 [connection signal="pressed" from="Custom/OpenFile" to="FileDialog" method="_on_open_file_pressed"]
 [connection signal="pressed" from="SongInfo/PlaySong" to="." method="_on_play_song_pressed"]
+[connection signal="pressed" from="Editor/EditorButton" to="." method="_on_editor_button_pressed"]
