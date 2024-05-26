@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cy0hcyuyxp8sr"]
+[gd_scene load_steps=8 format=3 uid="uid://cy0hcyuyxp8sr"]
 
 [ext_resource type="Script" path="res://scenes/editor/song_editor.gd" id="1_m8jub"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_46n4m"]
 font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_xyeha"]
+font_size = 12
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
 action = &"save"
@@ -28,9 +31,18 @@ text = "Song Editor"
 label_settings = SubResource("LabelSettings_46n4m")
 vertical_alignment = 1
 
-[node name="CodeEdit" type="CodeEdit" parent="."]
+[node name="CurrentlyOpened" type="Label" parent="."]
 offset_left = 8.0
 offset_top = 64.0
+offset_right = 504.0
+offset_bottom = 120.0
+text = "Currently Opened File:"
+label_settings = SubResource("LabelSettings_xyeha")
+autowrap_mode = 3
+
+[node name="CodeEdit" type="CodeEdit" parent="."]
+offset_left = 8.0
+offset_top = 128.0
 offset_right = 504.0
 offset_bottom = 704.0
 text = "TITLE:
@@ -49,9 +61,9 @@ symbol_lookup_on_click = true
 gutters_draw_line_numbers = true
 
 [node name="Open" type="Button" parent="."]
-offset_left = 392.0
+offset_left = 328.0
 offset_top = 8.0
-offset_right = 440.0
+offset_right = 376.0
 offset_bottom = 56.0
 theme_override_font_sizes/font_size = 12
 text = "Open"
@@ -66,13 +78,21 @@ access = 2
 filters = PackedStringArray("*.msf", "*.txt")
 
 [node name="Save" type="Button" parent="."]
+offset_left = 392.0
+offset_top = 8.0
+offset_right = 440.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 12
+shortcut = SubResource("Shortcut_j002f")
+text = "Save*"
+
+[node name="Play" type="Button" parent="."]
 offset_left = 456.0
 offset_top = 8.0
 offset_right = 504.0
 offset_bottom = 56.0
 theme_override_font_sizes/font_size = 12
-shortcut = SubResource("Shortcut_j002f")
-text = "Save*"
+text = "Play"
 
 [node name="SubViewport" type="SubViewport" parent="."]
 
@@ -139,6 +159,15 @@ offset_right = 728.0
 offset_bottom = 305.0
 text = "Notes use the s/ command."
 
+[node name="Your First Song" type="TabBar" parent="Help"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Help/Your First Song"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="StatusLabel" type="Label" parent="."]
 offset_left = 520.0
 offset_top = 432.0
@@ -154,7 +183,7 @@ offset_right = 1264.0
 offset_bottom = 64.0
 
 [node name="SongManager" parent="." instance=ExtResource("2_cdhk3")]
-position = Vector2(1408, 0)
+position = Vector2(1536, 0)
 
 [node name="SongValidator" parent="." instance=ExtResource("3_28ch4")]
 
@@ -162,4 +191,5 @@ position = Vector2(1408, 0)
 [connection signal="pressed" from="Open" to="." method="_on_open_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="TitleScreen" to="." method="_on_title_screen_pressed"]

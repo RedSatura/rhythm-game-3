@@ -49,6 +49,8 @@ func _physics_process(_delta):
 		SignalHandler.emit_signal("get_song_position", song_position)
 		SignalHandler.emit_signal("get_song_offset", song_position)
 		report_beat()
+	else:
+		pass
 		
 func report_beat():
 	if last_reported_beat < song_position_in_beats:

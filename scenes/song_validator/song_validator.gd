@@ -21,6 +21,8 @@ var default_song_info = { #defaults
 
 var song_info = {}
 
+var current_line_in_file = 0
+
 func _ready():
 	SignalHandler.connect("send_song_to_validator", Callable(self, "validate_song"))
 	song_info = default_song_info
@@ -46,6 +48,7 @@ func open_file(path): #Step 2: Opening file
 		#lmao i spent ages on a bug just to add this one line
 		#apparently line content is set at SONG_START at the end, so you need to reset it for it to work again
 		line_content = "" 
+		current_line_in_file = 0
 		var start_command_found = false
 		#Gets the song metadata type
 		#Ex. Gets SONG_TITLE from SONG_TITLE: Test Song
@@ -53,6 +56,8 @@ func open_file(path): #Step 2: Opening file
 		metadata_type_regex.compile(".*?(?=\\:)")
 		for x in 20: #Number means starting lines checked
 			if line_content != "SONG_START":
+				SignalHandler.emit_signal("update_editor_line_color", current_line_in_file, Color.SLATE_GRAY)
+				current_line_in_file += 1
 				line_content = file.get_line().strip_edges()
 				var result = metadata_type_regex.search(line_content)
 				if result != null:
@@ -138,5 +143,6 @@ func validate_song_body(file): #Step 4: Validating song body and checking for SO
 		GlobalData.song_info = song_info
 		SignalHandler.emit_signal("song_validated")
 		SignalHandler.emit_signal("send_message", "Successfully validated!")
+		return
 		#The song information will be stored in the global script global_data.
 		#Get the song info from there.
