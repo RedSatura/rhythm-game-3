@@ -3,19 +3,23 @@ extends Node2D
 @onready var code_edit = $CodeEdit
 @onready var file_dialog = $FileDialog
 @onready var song_validator = $SongValidator
+@onready var song_manager = $SongManager
 
 @onready var open_button = $Open
 @onready var save_button = $Save
 @onready var play_button = $Play
 
-
 @onready var currently_opened = $CurrentlyOpened
 @onready var status_label = $StatusLabel
+
+@onready var song_manager_viewport = $SongManagerViewport
 
 var file = null
 var file_path = ""
 
 var highlights_cleared = false #used only when text is changed once. does not do anything else.
+
+var current_line_in_file = 0
 
 enum PlayButtonStatus {
 	IDLE,
@@ -29,7 +33,8 @@ func _ready():
 	SignalHandler.connect("send_message", Callable(self, "message_received"))
 	SignalHandler.connect("update_editor_line_color", Callable(self, "update_editor_line_color"))
 	SignalHandler.connect("song_validated", Callable(self, "process_song_validation"))
-	SignalHandler.connect("song_saved", Callable(self, "process_song_saving"))
+	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
+	song_manager_viewport.visible = false
 
 func _on_open_pressed():
 	file_dialog.popup()
@@ -70,16 +75,18 @@ func _on_code_edit_text_changed():
 func error_received(message):
 	status_label.modulate = Color.RED
 	status_label.text = str(message)
+	song_manager_viewport.visible = false
 	
 func message_received(message):
 	status_label.modulate = Color.WHITE
 	status_label.text = str(message)
 
 func _on_play_pressed(): #Validates and plays the file
+	current_line_in_file = 0
 	clear_highlights()
-	save_song()
 	match play_button_status:
 		PlayButtonStatus.IDLE:
+			save_song()
 			song_validator.validate_song(file_path)
 		PlayButtonStatus.PLAYING:
 			code_edit.editable = true
@@ -92,17 +99,23 @@ func clear_highlights():
 	
 func update_editor_line_color(line = 0, color = Color.SLATE_GRAY):
 	if line > 0:
-		if line < code_edit.get_line_count():
+		if line < code_edit.get_line_count(): #This removes the background for the previous line, then adds background to the current line
 			code_edit.set_line_background_color(line - 1, Color(0, 0, 0, 0))
 			code_edit.set_line_background_color(line, color)
 	else:
-		if line <= code_edit.get_line_count():
+		if line < code_edit.get_line_count():
 			code_edit.set_line_background_color(line, color)
 		
 func process_song_validation():
 	code_edit.editable = false
 	play_button.text = "Stop"
 	play_button_status = PlayButtonStatus.PLAYING
-
-func process_song_saving():
-	pass
+	SignalHandler.emit_signal("send_message", "Song validated, wait for a moment...")
+	song_manager_viewport.visible = true
+	song_manager_viewport.get_node("SubViewport").set_world_2d(get_world_2d())
+	current_line_in_file = song_validator.get_validator_lines_processed()
+	song_manager.get_node("SongStartTimer").start()
+	
+func process_beat(_pos):
+	update_editor_line_color(current_line_in_file, Color.SLATE_GRAY)
+	current_line_in_file += 1

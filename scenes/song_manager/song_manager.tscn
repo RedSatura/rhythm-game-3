@@ -28,3 +28,8 @@ lane_position = "CENTER_RIGHT"
 [node name="NoteLane4" parent="NoteLanes" instance=ExtResource("5_bwjw3")]
 position = Vector2(1216, 640)
 lane_position = "RIGHT"
+
+[node name="SongStartTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="SongStartTimer" to="." method="_on_song_start_timer_timeout"]

@@ -4,6 +4,7 @@ extends Node2D
 
 @export_file var file_path = ""
 @export var auto_mode = false
+@export var in_editor = false
 
 var file = ""
 var line_content = ""
@@ -13,26 +14,27 @@ var song_title = ""
 @onready var conductor = $Conductor
 @onready var note_lanes = $NoteLanes
 
+@onready var song_start_timer = $SongStartTimer
+
 var disabled = false
 
 func _ready():
 	SignalHandler.connect("beat_occured", Callable(self, "get_next_commands"))
-	
-func open_song_file(path):
-	file = FileAccess.open(path, FileAccess.READ)
-	line_content = ""
-	while line_content != "SONG_START":
-		line_content = file.get_line()
+	note_lanes.set_note_lane_auto_mode(auto_mode)
 	
 func start_song():
+	setup_file()
 	conductor.stream = AudioStreamOggVorbis.load_from_file(GlobalData.song_info["audio_src"])
 	conductor.bpm = GlobalData.song_info["bpm"]
 	conductor.beat_mode = GlobalData.song_info["beat_mode"]
 	conductor.beats_in_measure = GlobalData.song_info["beats_in_measure"]
 	conductor.starting_beat_in_measure = GlobalData.song_info["starting_beat_in_measure"]
-	open_song_file(GlobalData.song_path)
-	if !disabled:
+	if !disabled && conductor.stream:
 		conductor.play_song()
+		SignalHandler.emit_signal("send_message", "Playing!")
+		
+func setup_file():
+	file = FileAccess.open(GlobalData.song_path, FileAccess.READ)
 		
 func end_song():
 	var tween = get_tree().create_tween()
@@ -41,7 +43,8 @@ func end_song():
 	
 func stop_song():
 	conductor.stop()
-	get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")
+	if !in_editor:
+		get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")
 	
 func get_next_commands(_beat_pos):
 	line_content = file.get_line().strip_edges()
@@ -105,3 +108,6 @@ func process_commands(commands):
 					SignalHandler.emit_signal("send_error", "Unrecognized command type.")
 	else:
 		pass
+
+func _on_song_start_timer_timeout():
+	start_song()

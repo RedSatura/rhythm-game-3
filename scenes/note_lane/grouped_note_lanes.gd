@@ -35,3 +35,9 @@ func disable_lane(lane_number, duration):
 			note_lane_4.disable_lane(duration)
 		_:
 			pass
+			
+func set_note_lane_auto_mode(status = false):
+	note_lane_1.auto_mode = status
+	note_lane_2.auto_mode = status
+	note_lane_3.auto_mode = status
+	note_lane_4.auto_mode = status

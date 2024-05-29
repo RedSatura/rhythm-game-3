@@ -94,8 +94,6 @@ offset_bottom = 56.0
 theme_override_font_sizes/font_size = 12
 text = "Play"
 
-[node name="SubViewport" type="SubViewport" parent="."]
-
 [node name="Help" type="TabContainer" parent="."]
 offset_left = 520.0
 offset_top = 80.0
@@ -184,8 +182,35 @@ offset_bottom = 64.0
 
 [node name="SongManager" parent="." instance=ExtResource("2_cdhk3")]
 position = Vector2(1536, 0)
+auto_mode = true
+in_editor = true
 
 [node name="SongValidator" parent="." instance=ExtResource("3_28ch4")]
+
+[node name="Preview" type="Label" parent="."]
+offset_left = 944.0
+offset_top = 488.0
+offset_right = 1104.0
+offset_bottom = 519.0
+text = "Preview"
+vertical_alignment = 1
+
+[node name="SongManagerViewport" type="SubViewportContainer" parent="."]
+offset_left = 944.0
+offset_top = 520.0
+offset_right = 1264.0
+offset_bottom = 700.0
+
+[node name="SubViewport" type="SubViewport" parent="SongManagerViewport"]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="SongManagerViewport/SubViewport"]
+position = Vector2(2176, 360)
+zoom = Vector2(0.25, 0.25)
 
 [connection signal="text_changed" from="CodeEdit" to="." method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="Open" to="." method="_on_open_pressed"]
