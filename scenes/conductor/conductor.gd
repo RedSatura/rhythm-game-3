@@ -71,6 +71,9 @@ func get_closest_beat(nth):
 
 func play_song():
 	seconds_per_beat = 60.0 / (bpm * beat_mode)
+	song_position = 0.0
+	song_position_in_beats = 0
+	last_reported_beat = 0
 	
 	if stream:
 		#send out relevant song data

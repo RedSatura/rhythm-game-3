@@ -1,7 +1,8 @@
 extends Node2D
 
 @onready var code_edit = $CodeEdit
-@onready var file_dialog = $FileDialog
+@onready var song_picker = $SongPicker
+@onready var new_song_saver = $NewSongSaver
 @onready var song_validator = $SongValidator
 @onready var song_manager = $SongManager
 
@@ -37,7 +38,7 @@ func _ready():
 	song_manager_viewport.visible = false
 
 func _on_open_pressed():
-	file_dialog.popup()
+	song_picker.popup()
 
 func _on_save_pressed():
 	save_song()
@@ -50,9 +51,10 @@ func save_song():
 		file.flush() #HOURS OF MY LIFE, WASTED.
 		SignalHandler.emit_signal("send_message", "File saved!")
 	else:
+		new_song_saver.popup()
 		SignalHandler.emit_signal("send_error", "No existing file to save on.")
 
-func _on_file_dialog_file_selected(path):
+func _on_song_picker_file_selected(path):
 	if FileAccess.file_exists(path):
 		file = FileAccess.open(path, FileAccess.READ)
 		if file != null:
@@ -90,8 +92,13 @@ func _on_play_pressed(): #Validates and plays the file
 			song_validator.validate_song(file_path)
 		PlayButtonStatus.PLAYING:
 			code_edit.editable = true
+			open_button.disabled = false
+			save_button.disabled = false
 			play_button.text = "Play"
 			play_button_status = PlayButtonStatus.IDLE
+			song_manager.stop_song()
+			song_manager_viewport.visible = false
+			current_line_in_file = 0
 				
 func clear_highlights():
 	for x in code_edit.get_line_count():
@@ -108,14 +115,23 @@ func update_editor_line_color(line = 0, color = Color.SLATE_GRAY):
 		
 func process_song_validation():
 	code_edit.editable = false
+	open_button.disabled = true
+	save_button.disabled = true
 	play_button.text = "Stop"
 	play_button_status = PlayButtonStatus.PLAYING
 	SignalHandler.emit_signal("send_message", "Song validated, wait for a moment...")
 	song_manager_viewport.visible = true
 	song_manager_viewport.get_node("SubViewport").set_world_2d(get_world_2d())
 	current_line_in_file = song_validator.get_validator_lines_processed()
+	song_manager.current_line_in_file = current_line_in_file
 	song_manager.get_node("SongStartTimer").start()
 	
 func process_beat(_pos):
 	update_editor_line_color(current_line_in_file, Color.SLATE_GRAY)
 	current_line_in_file += 1
+
+func _on_new_song_saver_confirmed():
+	var new_file = FileAccess.open("user://test2.msf", FileAccess.WRITE)
+	new_file.store_string(code_edit.text)
+	new_file.flush()
+	SignalHandler.emit_signal("send_message", "New file created and saved.")

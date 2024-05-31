@@ -68,7 +68,7 @@ offset_bottom = 56.0
 theme_override_font_sizes/font_size = 12
 text = "Open"
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="SongPicker" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 1
 size = Vector2i(638, 159)
@@ -76,6 +76,12 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.msf", "*.txt")
+
+[node name="NewSongSaver" type="FileDialog" parent="."]
+initial_position = 1
+size = Vector2i(638, 159)
+access = 2
+filters = PackedStringArray(".msf")
 
 [node name="Save" type="Button" parent="."]
 offset_left = 392.0
@@ -214,7 +220,8 @@ zoom = Vector2(0.25, 0.25)
 
 [connection signal="text_changed" from="CodeEdit" to="." method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="Open" to="." method="_on_open_pressed"]
-[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="SongPicker" to="." method="_on_song_picker_file_selected"]
+[connection signal="confirmed" from="NewSongSaver" to="." method="_on_new_song_saver_confirmed"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="TitleScreen" to="." method="_on_title_screen_pressed"]
