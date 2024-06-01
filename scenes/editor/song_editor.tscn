@@ -134,7 +134,7 @@ offset_bottom = 305.0
 horizontal_scroll_mode = 0
 
 [node name="Label" type="Label" parent="Help/Song Format/ScrollContainer"]
-custom_minimum_size = Vector2(704, 0)
+custom_minimum_size = Vector2(712, 0)
 layout_mode = 2
 text = "This game uses a special format to play songs: .msf (Magenta Song Format) files.
 (Well, it's basically a text file so you can use that. I wanted to feel a bit fancy.)
@@ -148,29 +148,91 @@ A song validator exists to make sure that the file is written correctly. It star
 If it does not see the SONG_START command before 20 lines from the start of the file, the file is considered invalid. 
 Likewise, if it does not see the SONG_END command, it is also considered invalid.
 
-The song manager (which is responsible for playing the song), starting on the line after the SONG_START command, reads the next line in the file every beat."
+An audio file must also exist. If it does not find one (or the audio path is invalid), the file is considered invalid.
+Setting up an audio file is explained in the Headers section.
+
+The song manager (which is responsible for playing the song), starting on the line after the SONG_START command, reads the next line in the file every beat, until it reaches the SONG_END command, where it stops reading the file."
 autowrap_mode = 3
 
-[node name="Notes" type="TabBar" parent="Help"]
+[node name="Headers" type="TabBar" parent="Help"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Help/Notes"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Help/Headers"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 17.0
 offset_right = 728.0
 offset_bottom = 305.0
-text = "Notes use the s/ command."
 
-[node name="Your First Song" type="TabBar" parent="Help"]
+[node name="Label" type="Label" parent="Help/Headers/ScrollContainer"]
+custom_minimum_size = Vector2(712, 0)
+layout_mode = 2
+text = "The first part of the msf file is the head. This contains all the information about the song.
+The default file when opening the editor contains some examples of headers.
+
+Headers must be in UPPERCASE and end with a colon. Spaces between a header and the colon will make the validator ignore the header.
+
+Anything to the right of a header will be read and processed by the validator. If invalid, it will either default to a set value or throw an invalid error.
+
+Some headers can be omitted. However, the only header that cannot be omitted is the AUDIO_SRC header, as it needs an audio file in order to work.
+
+The following headers are for informational purposes:
+The TITLE header is the song's title.
+The ARTIST header is the song's composer.
+The MAPCREATOR header is the author of the current script.
+The DIFFICULTY header is the song's difficulty. There is no set difficulty rating for this game yet, so this is irrelevant.
+
+The following headers are for sourcing files:
+The AUDIO_SRC header is the file path to the audio file. This cannot be omitted and will throw an error if it is.
+The audio file must be in an .ogg format. Usage of any other format leads to unexpected behavior.
+The path is relative to the current directory the file is in. For example, if a song named \"test.ogg\" is in the same folder as the file, the resulting header would simply be \"AUDIO_SRC: test.ogg\".
+If the song mentioned above were placed in a folder named \"song\" below the current file, the resulting header would be \"AUDIO_SRC: song/test.ogg\".
+Using \"../\" for accessing parent directories will not work.
+
+The following headers are options for the song:
+The BPM header is the song's bpm (beats per minute).
+The BEAT_MODE header is the song's beat mode. This is set at a default of 1 for quarter beats.
+You can modify this by changing its default value by a factor of 2.
+This means using a value of 2, 4, and so on for eighth and sixteenth notes.
+Likewise, using 0.5 and 0.25 results in half and whole notes.
+Using anything that is not by a factor of 2 results in unexpected behavior.
+The BEATS_IN_MEASURE header is the number of beats in a measure. Irrelevant for now."
+autowrap_mode = 3
+
+[node name="Commands" type="TabBar" parent="Help"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Help/Your First Song"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Help/Commands"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 16.0
+offset_top = 17.0
+offset_right = 728.0
+offset_bottom = 305.0
+
+[node name="Label" type="Label" parent="Help/Commands/ScrollContainer"]
+custom_minimum_size = Vector2(712, 0)
+layout_mode = 2
+text = "Commands are located within the song body, between SONG_START and SONG_END.
+They are executed in order from left to right, when the song manager reaches their line in the file.
+
+The syntax of a command is [command identifier]/[parameters]+,
+Any errors are simply ignored.
+
+Commands always start with a command identifier. This comes before the / (forward slash). Command parameters are placed on the right side of the / and are separated by a + (plus sign).
+Commands must end with a comma (,). Anything to the right of a comma is ignored. This is useful for commenting.
+
+You can chain commands by simply typing another regular command after a comma.
+
+The first basic command is the spawn note command. Its command identifier is \"s\". This takes one parameter, the lane in which it spawns in.
+1 for the leftmost lane, 2 for the center-left, 3 for the center-right, and 4 for the rightmost lane.
+You can instead use \"r\" to randomly place a note. 
+Notes have a delay until they reach the hit area. Using the default settings has a four-beat delay from spawning until reaching the hit area. This may vary when using different settings.
+
+Simply put, spawning a note on lane 1 is \"s/1+,\", while spawning randomly will be \"s/r+,\".
+"
+autowrap_mode = 3
 
 [node name="StatusLabel" type="Label" parent="."]
 offset_left = 520.0
@@ -189,7 +251,6 @@ offset_bottom = 64.0
 [node name="SongManager" parent="." instance=ExtResource("2_cdhk3")]
 position = Vector2(1536, 0)
 auto_mode = true
-in_editor = true
 
 [node name="SongValidator" parent="." instance=ExtResource("3_28ch4")]
 
@@ -221,7 +282,7 @@ zoom = Vector2(0.25, 0.25)
 [connection signal="text_changed" from="CodeEdit" to="." method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="Open" to="." method="_on_open_pressed"]
 [connection signal="file_selected" from="SongPicker" to="." method="_on_song_picker_file_selected"]
-[connection signal="confirmed" from="NewSongSaver" to="." method="_on_new_song_saver_confirmed"]
+[connection signal="file_selected" from="NewSongSaver" to="." method="_on_new_song_saver_file_selected"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="TitleScreen" to="." method="_on_title_screen_pressed"]

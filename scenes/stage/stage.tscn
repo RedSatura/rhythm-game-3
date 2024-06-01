@@ -37,6 +37,7 @@ text = "TIme Elapsed: 0"
 script = ExtResource("6_ik5x7")
 
 [node name="SongManager" parent="." instance=ExtResource("6_0b2l7")]
+in_editor = false
 
 [node name="Button" type="Button" parent="."]
 process_mode = 3

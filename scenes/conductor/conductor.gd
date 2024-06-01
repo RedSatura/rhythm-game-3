@@ -74,6 +74,7 @@ func play_song():
 	song_position = 0.0
 	song_position_in_beats = 0
 	last_reported_beat = 0
+	volume_db = 0
 	
 	if stream:
 		#send out relevant song data

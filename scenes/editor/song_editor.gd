@@ -130,8 +130,8 @@ func process_beat(_pos):
 	update_editor_line_color(current_line_in_file, Color.SLATE_GRAY)
 	current_line_in_file += 1
 
-func _on_new_song_saver_confirmed():
-	var new_file = FileAccess.open("user://test2.msf", FileAccess.WRITE)
+func _on_new_song_saver_file_selected(path):
+	var new_file = FileAccess.open(path, FileAccess.WRITE)
 	new_file.store_string(code_edit.text)
 	new_file.flush()
 	SignalHandler.emit_signal("send_message", "New file created and saved.")

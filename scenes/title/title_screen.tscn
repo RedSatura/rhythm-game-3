@@ -42,7 +42,7 @@ offset_left = 16.0
 offset_top = 64.0
 offset_right = 272.0
 offset_bottom = 88.0
-text = "v0.1.0"
+text = "v0.2.0"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
@@ -109,6 +109,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="SongInfo" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = -96.0

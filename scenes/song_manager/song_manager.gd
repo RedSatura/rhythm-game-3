@@ -37,10 +37,18 @@ func start_song():
 		SignalHandler.emit_signal("send_message", "Playing!")
 		
 func setup_file():
-	file = null
-	file = FileAccess.open(GlobalData.song_path, FileAccess.READ)
-	for x in current_line_in_file:
-		file.get_line() #no need to use strip_edges since it isn't used anyway
+	if in_editor:
+		file = null
+		file = FileAccess.open(GlobalData.song_path, FileAccess.READ)
+		for x in current_line_in_file:
+			file.get_line() #no need to use strip_edges since it isn't used anyway
+	else:
+		file = FileAccess.open(GlobalData.song_path, FileAccess.READ)
+		for x in 20:
+			line_content = file.get_line()
+			current_line_in_file += 1
+			if line_content == "SONG_START":
+				break
 		
 func end_song():
 	var tween = get_tree().create_tween()
