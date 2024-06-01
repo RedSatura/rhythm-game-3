@@ -1,8 +1,8 @@
 extends Node2D
 
-##TODO: Make song validator take over the work of file checking
-
 @export_file var file_path = ""
+@export var auto_mode = false
+@export var in_editor = false
 
 var file = ""
 var line_content = ""
@@ -12,40 +12,64 @@ var song_title = ""
 @onready var conductor = $Conductor
 @onready var note_lanes = $NoteLanes
 
+@onready var song_start_timer = $SongStartTimer
+
 var disabled = false
 
+var current_line_in_file = 0
+
 func _ready():
-	SignalHandler.connect("beat_occured", Callable(self, "get_next_commands"))
-	
-func open_song_file(path):
-	file = FileAccess.open(path, FileAccess.READ)
-	line_content = ""
-	while line_content != "SONG_START":
-		line_content = file.get_line()
+	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
+	note_lanes.set_note_lane_auto_mode(auto_mode)
+	if !in_editor:
+		song_start_timer.start()
 	
 func start_song():
-	conductor.stream = AudioStreamOggVorbis.load_from_file(GlobalData.song_info["audio_src"])
+	setup_file()
+	if FileAccess.file_exists(GlobalData.song_info["audio_src"]):
+		conductor.stream = AudioStreamOggVorbis.load_from_file(GlobalData.song_info["audio_src"])
 	conductor.bpm = GlobalData.song_info["bpm"]
 	conductor.beat_mode = GlobalData.song_info["beat_mode"]
 	conductor.beats_in_measure = GlobalData.song_info["beats_in_measure"]
 	conductor.starting_beat_in_measure = GlobalData.song_info["starting_beat_in_measure"]
-	open_song_file(GlobalData.song_path)
-	if !disabled:
+	if !disabled && conductor.stream:
 		conductor.play_song()
+		SignalHandler.emit_signal("send_message", "Playing!")
+		
+func setup_file():
+	if in_editor:
+		file = null
+		file = FileAccess.open(GlobalData.song_path, FileAccess.READ)
+		for x in current_line_in_file:
+			file.get_line() #no need to use strip_edges since it isn't used anyway
+	else:
+		file = FileAccess.open(GlobalData.song_path, FileAccess.READ)
+		for x in 20:
+			line_content = file.get_line()
+			current_line_in_file += 1
+			if line_content == "SONG_START":
+				break
 		
 func end_song():
 	var tween = get_tree().create_tween()
 	tween.tween_property(conductor, "volume_db", -80, 5)
 	tween.connect("finished", Callable(self, "stop_song"))
+	return
 	
 func stop_song():
 	conductor.stop()
-	get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")
+	conductor.stream = null
+	if !in_editor:
+		get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")
+	current_line_in_file = 0
 	
 func get_next_commands(_beat_pos):
 	line_content = file.get_line().strip_edges()
+	current_line_in_file += 1
 	if line_content == "SONG_END":
+		SignalHandler.emit_signal("send_message", "Song ended.")
 		end_song()
+		return
 	get_commands()
 
 func get_commands():
@@ -83,6 +107,7 @@ func process_commands(commands):
 				"s":	#Spawn note.
 					#Parameters:
 					#Note lane number (int) - 1 for left, 2 for center left, 3 for center right, 4 for right.
+					#You can use r for random note placement.
 					#This has a delay depending on the note speed.
 					if parameter_result != [] && parameter_result != null:
 						if parameter_result.size() == 1:
@@ -104,3 +129,9 @@ func process_commands(commands):
 					SignalHandler.emit_signal("send_error", "Unrecognized command type.")
 	else:
 		pass
+		
+func process_beat(pos):
+	get_next_commands(pos)
+
+func _on_song_start_timer_timeout():
+	start_song()

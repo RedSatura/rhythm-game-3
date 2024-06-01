@@ -29,7 +29,6 @@ var closest_beat = 0
 var time_off_beat = 0.0
 
 func _ready():
-	prints(bpm, beat_mode, beats_in_measure, starting_beat_in_measure)
 	seconds_per_beat = 60.0 / (bpm * beat_mode)
 	current_beat_in_measure = starting_beat_in_measure
 	var effect = AudioServer.get_bus_effect(1, 0)
@@ -50,6 +49,8 @@ func _physics_process(_delta):
 		SignalHandler.emit_signal("get_song_position", song_position)
 		SignalHandler.emit_signal("get_song_offset", song_position)
 		report_beat()
+	else:
+		pass
 		
 func report_beat():
 	if last_reported_beat < song_position_in_beats:
@@ -70,6 +71,10 @@ func get_closest_beat(nth):
 
 func play_song():
 	seconds_per_beat = 60.0 / (bpm * beat_mode)
+	song_position = 0.0
+	song_position_in_beats = 0
+	last_reported_beat = 0
+	volume_db = 0
 	
 	if stream:
 		#send out relevant song data

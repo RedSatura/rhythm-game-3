@@ -4,6 +4,9 @@ extends Node
 signal send_song_to_validator(path)
 signal song_validated
 
+#file statuses
+signal song_saved
+
 #send initial song data
 signal get_song_length(length)
 signal get_song_offset(offset)
@@ -32,3 +35,6 @@ signal clear_status_label
 
 #title screen
 signal reset_to_defaults
+
+#song editor
+signal update_editor_line_color(line, color: Color)

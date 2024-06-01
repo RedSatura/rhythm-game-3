@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var lane_position = "LEFT"
+@export var auto_mode = false
 
 @onready var note_spawn_position = $NoteSpawnPosition
 @onready var note_cooldown_timer = $NoteCooldownTimer
@@ -36,7 +37,7 @@ func _on_note_cooldown_timer_timeout():
 	spawn_note()
 	
 func _unhandled_input(_event):
-	if lane_state == LaneState.ACTIVE:
+	if lane_state == LaneState.ACTIVE && !auto_mode:
 		match lane_position:
 			"LEFT":
 				if Input.is_action_just_pressed("lane_left"):
@@ -62,6 +63,12 @@ func handle_input_on_note():
 
 func _on_note_detector_area_entered(area):
 	current_note = area
+	if auto_mode:
+		if current_note != null:
+			if "note_damage" in current_note:
+				SignalHandler.emit_signal("note_hit", current_note.note_damage)
+			current_note.queue_free()
+			current_note = null
 
 func _on_note_detector_area_exited(_area):
 	current_note = null

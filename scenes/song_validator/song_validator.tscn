@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bltgltqli3hk0"]
+
+[ext_resource type="Script" path="res://scenes/song_validator/song_validator.gd" id="1_5rnmg"]
+
+[node name="SongValidator" type="Node2D"]
+script = ExtResource("1_5rnmg")

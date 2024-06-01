@@ -16,4 +16,4 @@ mono_crash.*.json
 
 *.ogg
 
-songs/music/
+songs

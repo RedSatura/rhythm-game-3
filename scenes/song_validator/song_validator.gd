@@ -21,6 +21,10 @@ var default_song_info = { #defaults
 
 var song_info = {}
 
+var current_line_in_file = 0
+
+var audio_src_valid = false
+
 func _ready():
 	SignalHandler.connect("send_song_to_validator", Callable(self, "validate_song"))
 	song_info = default_song_info
@@ -46,6 +50,7 @@ func open_file(path): #Step 2: Opening file
 		#lmao i spent ages on a bug just to add this one line
 		#apparently line content is set at SONG_START at the end, so you need to reset it for it to work again
 		line_content = "" 
+		current_line_in_file = 0
 		var start_command_found = false
 		#Gets the song metadata type
 		#Ex. Gets SONG_TITLE from SONG_TITLE: Test Song
@@ -53,6 +58,8 @@ func open_file(path): #Step 2: Opening file
 		metadata_type_regex.compile(".*?(?=\\:)")
 		for x in 20: #Number means starting lines checked
 			if line_content != "SONG_START":
+				SignalHandler.emit_signal("update_editor_line_color", current_line_in_file, Color.SLATE_GRAY)
+				current_line_in_file += 1
 				line_content = file.get_line().strip_edges()
 				var result = metadata_type_regex.search(line_content)
 				if result != null:
@@ -63,6 +70,8 @@ func open_file(path): #Step 2: Opening file
 		if !start_command_found:
 			SignalHandler.emit_signal("send_error", "Song starting command not found before 20 lines.")
 			return
+		if !audio_src_valid:
+			SignalHandler.emit_signal("send_error", "Invalid audio path!")
 		else:
 			validate_song_body(file)
 	else:
@@ -92,8 +101,10 @@ func process_song_metadata_type(type): #Step 3: Getting data from headers
 				var audio_path = file_path.get_base_dir() + "/" + result
 				if FileAccess.file_exists(audio_path):
 					song_info["audio_src"] = audio_path
-				else:
+					audio_src_valid = true
+				else: #why does this not work for some reason
 					SignalHandler.emit_signal("send_error", "Invalid audio path!")
+					audio_src_valid = false
 					return
 			#Song-related types:
 			"BPM":
@@ -137,6 +148,10 @@ func validate_song_body(file): #Step 4: Validating song body and checking for SO
 	else:
 		GlobalData.song_info = song_info
 		SignalHandler.emit_signal("song_validated")
-		SignalHandler.emit_signal("send_message", "Successfully validated!")
+		#SignalHandler.emit_signal("send_message", "Successfully validated!")
+		return
 		#The song information will be stored in the global script global_data.
 		#Get the song info from there.
+		
+func get_validator_lines_processed():
+	return current_line_in_file
