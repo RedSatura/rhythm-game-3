@@ -44,6 +44,7 @@ func _on_save_pressed():
 	save_song()
 		
 func save_song():
+	OS.request_permissions()
 	if FileAccess.file_exists(file_path):
 		file = FileAccess.open(file_path, FileAccess.WRITE)
 		file.store_string(code_edit.text)
@@ -131,6 +132,7 @@ func process_beat(_pos):
 	current_line_in_file += 1
 
 func _on_new_song_saver_file_selected(path):
+	print(OS.get_system_dir(2))
 	var new_file = FileAccess.open(path, FileAccess.WRITE)
 	new_file.store_string(code_edit.text)
 	new_file.flush()
