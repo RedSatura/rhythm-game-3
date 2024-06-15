@@ -1,6 +1,9 @@
 extends Node2D
 
 @onready var song_manager = $SongManager
+@onready var note_feedback_label = $NoteFeedbackLabel
+
+@export var in_editor = false
 
 var song_path = ""
 

@@ -20,7 +20,7 @@ signal get_hitspot_position(position)
 signal beat_occured(current_beat)
 signal measure_occured
 
-signal note_hit(note_damage)
+signal note_hit(grade)
 
 signal note_missed
 

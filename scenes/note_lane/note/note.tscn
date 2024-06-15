@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/note_lane/note/note.gd" id="1_7d4lo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mxjhr"]
-radius = 16.0
+radius = 8.0
 
 [node name="Note" type="Area2D"]
 z_index = 1

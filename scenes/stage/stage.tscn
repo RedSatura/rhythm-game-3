@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=8 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
 [ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
 [ext_resource type="Script" path="res://scenes/stage/ui/song_duration_bar.gd" id="4_w0wif"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="6_0b2l7"]
+[ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="6_26smg"]
 [ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3ikd6"]
+font_size = 32
 
 [node name="Stage" type="Node2D"]
 script = ExtResource("1_je8j5")
@@ -54,5 +58,23 @@ offset_right = 80.0
 offset_bottom = 96.0
 text = "||"
 
+[node name="NoteFeedbackLabel" type="Label" parent="."]
+visible = false
+offset_left = 448.0
+offset_top = 256.0
+offset_right = 856.0
+offset_bottom = 384.0
+text = "GOOD!
+Combo x0"
+label_settings = SubResource("LabelSettings_3ikd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_26smg")
+
+[node name="VisibilityTimer" type="Timer" parent="NoteFeedbackLabel"]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="timeout" from="NoteFeedbackLabel/VisibilityTimer" to="NoteFeedbackLabel" method="_on_visibility_timer_timeout"]

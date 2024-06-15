@@ -15,6 +15,9 @@ var current_note = null
 
 var disabled_beats_left = 0
 
+var perfect = false
+var good = false
+
 enum LaneState {
 	ACTIVE,
 	DISABLED,
@@ -25,6 +28,9 @@ var lane_state = LaneState.ACTIVE
 func _ready():
 	SignalHandler.connect("beat_occured", Callable(self, "beat_occured"))
 	SignalHandler.connect("measure_occured", Callable(self, "measure_occured"))
+	perfect = false
+	good = false
+	current_note = null
 
 func spawn_note():
 	var new_note = load("res://scenes/note_lane/note/note.tscn").instantiate()
@@ -56,22 +62,20 @@ func handle_input_on_note():
 	hitspot.color.r = 0.5
 	hitspot_flash_cooldown.start()
 	if current_note != null:
-		if "note_damage" in current_note:
-			SignalHandler.emit_signal("note_hit", current_note.note_damage)
+		if good:
+			SignalHandler.emit_signal("note_hit", "GOOD")
+		elif perfect:
+			SignalHandler.emit_signal("note_hit", "PERFECT")
 		current_note.queue_free()
 		current_note = null
 
 func _on_note_detector_area_entered(area):
 	current_note = area
-	if auto_mode:
-		if current_note != null:
-			if "note_damage" in current_note:
-				SignalHandler.emit_signal("note_hit", current_note.note_damage)
-			current_note.queue_free()
-			current_note = null
+	good = true
 
 func _on_note_detector_area_exited(_area):
 	current_note = null
+	good = false
 
 func _on_hitspot_flash_cooldown_timeout():
 	hitspot.color.r = 0.176
@@ -105,3 +109,16 @@ func _on_note_detector_input_event(_viewport, event, _shape_idx):
 					handle_input_on_note()
 			"RIGHT":
 					handle_input_on_note()
+
+func _on_perfect_area_area_entered(area):
+	good = false
+	perfect = true
+	if auto_mode:
+		if current_note != null:
+			SignalHandler.emit_signal("note_hit", "PERFECT")
+			current_note.queue_free()
+			current_note = null
+
+func _on_perfect_area_area_exited(area):
+	good = true
+	perfect = false
