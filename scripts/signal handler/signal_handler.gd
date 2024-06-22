@@ -4,6 +4,9 @@ extends Node
 signal send_song_to_validator(path)
 signal song_validated
 
+#song statuses
+signal song_ended
+
 #file statuses
 signal song_saved
 

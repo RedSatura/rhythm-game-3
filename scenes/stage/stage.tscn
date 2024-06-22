@@ -1,11 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=14 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
 [ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
 [ext_resource type="Script" path="res://scenes/stage/ui/song_duration_bar.gd" id="4_w0wif"]
+[ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="5_blj8g"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="6_0b2l7"]
 [ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="6_26smg"]
 [ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jgl2l"]
+font_size = 46
+
+[sub_resource type="LabelSettings" id="LabelSettings_02gkq"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_qc7nf"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_cmwtn"]
+font_size = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_v86rb"]
+font_size = 12
 
 [sub_resource type="LabelSettings" id="LabelSettings_3ikd6"]
 font_size = 32
@@ -26,6 +42,7 @@ Measures Occured: 0"
 script = ExtResource("2_3ujy6")
 
 [node name="SongDurationBar" type="ProgressBar" parent="CanvasLayer"]
+visible = false
 offset_right = 1280.0
 offset_bottom = 16.0
 show_percentage = false
@@ -40,8 +57,142 @@ offset_bottom = 696.0
 text = "TIme Elapsed: 0"
 script = ExtResource("6_ik5x7")
 
+[node name="Results" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 352.0
+offset_top = 64.0
+offset_right = 864.0
+offset_bottom = 640.0
+script = ExtResource("5_blj8g")
+
+[node name="Results" type="Label" parent="CanvasLayer/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 512.0
+offset_bottom = 128.0
+text = "Results"
+label_settings = SubResource("LabelSettings_jgl2l")
+
+[node name="Perfect" type="Label" parent="CanvasLayer/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 320.0
+offset_bottom = 192.0
+text = "Perfect: "
+label_settings = SubResource("LabelSettings_02gkq")
+vertical_alignment = 1
+
+[node name="PerfectResult" type="Label" parent="CanvasLayer/Results/Perfect"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+label_settings = SubResource("LabelSettings_qc7nf")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Good" type="Label" parent="CanvasLayer/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 256.0
+text = "Good: "
+label_settings = SubResource("LabelSettings_02gkq")
+vertical_alignment = 1
+
+[node name="GoodResult" type="Label" parent="CanvasLayer/Results/Good"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+label_settings = SubResource("LabelSettings_qc7nf")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Miss" type="Label" parent="CanvasLayer/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 256.0
+offset_right = 320.0
+offset_bottom = 320.0
+text = "Miss: "
+label_settings = SubResource("LabelSettings_02gkq")
+vertical_alignment = 1
+
+[node name="MissResult" type="Label" parent="CanvasLayer/Results/Miss"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+label_settings = SubResource("LabelSettings_qc7nf")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRate" type="Label" parent="CanvasLayer/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 384.0
+offset_right = 320.0
+offset_bottom = 448.0
+text = "Hit Rate: "
+label_settings = SubResource("LabelSettings_02gkq")
+vertical_alignment = 1
+
+[node name="HitRatePercentResult" type="Label" parent="CanvasLayer/Results/HitRate"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 48.0
+text = "0.00%"
+label_settings = SubResource("LabelSettings_cmwtn")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRateIntegerResult" type="Label" parent="CanvasLayer/Results/HitRate"]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 47.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "56/1203"
+label_settings = SubResource("LabelSettings_v86rb")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Grade" type="Label" parent="CanvasLayer/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 448.0
+offset_right = 320.0
+offset_bottom = 512.0
+text = "Grade: "
+label_settings = SubResource("LabelSettings_02gkq")
+vertical_alignment = 1
+
+[node name="GradeResult" type="Label" parent="CanvasLayer/Results/Grade"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+label_settings = SubResource("LabelSettings_qc7nf")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VisibilityTimer" type="Timer" parent="CanvasLayer/Results"]
+wait_time = 3.0
+one_shot = true
+
 [node name="SongManager" parent="." instance=ExtResource("6_0b2l7")]
 in_editor = false
+metadata/_edit_lock_ = true
 
 [node name="Button" type="Button" parent="."]
 process_mode = 3
@@ -75,6 +226,7 @@ script = ExtResource("6_26smg")
 wait_time = 1.5
 one_shot = true
 
+[connection signal="timeout" from="CanvasLayer/Results/VisibilityTimer" to="CanvasLayer/Results" method="_on_visiblity_timer_timeout"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="timeout" from="NoteFeedbackLabel/VisibilityTimer" to="NoteFeedbackLabel" method="_on_visibility_timer_timeout"]

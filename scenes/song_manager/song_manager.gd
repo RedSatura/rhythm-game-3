@@ -60,7 +60,7 @@ func stop_song():
 	conductor.stop()
 	conductor.stream = null
 	if !in_editor:
-		get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")
+		SignalHandler.emit_signal("song_ended")
 	current_line_in_file = 0
 	
 func get_next_commands(_beat_pos):

@@ -16,3 +16,10 @@ var song_info = { #defaults
 	"beats_in_measure": 4,
 	"starting_beat_in_measure": 1,
 }
+
+var result_data = {
+	"total_notes": 0,
+	"perfect": 0,
+	"good": 0,
+	"miss": 0,
+}

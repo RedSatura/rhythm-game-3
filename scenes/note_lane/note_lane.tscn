@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxhghnc6fqebu"]
+[gd_scene load_steps=5 format=3 uid="uid://cxhghnc6fqebu"]
 
 [ext_resource type="Script" path="res://scenes/note_lane/note_lane.gd" id="1_ipfhx"]
 
@@ -6,6 +6,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbutt"]
 radius = 40.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pm3ef"]
+size = Vector2(128, 16)
 
 [node name="NoteLane" type="Node2D"]
 position = Vector2(64, 640)
@@ -41,6 +44,13 @@ position = Vector2(0, -704)
 [node name="NoteCooldownTimer" type="Timer" parent="."]
 wait_time = 2.0
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 120)
+shape = SubResource("RectangleShape2D_pm3ef")
+
 [connection signal="area_entered" from="PerfectArea" to="." method="_on_perfect_area_area_entered"]
 [connection signal="area_exited" from="PerfectArea" to="." method="_on_perfect_area_area_exited"]
 [connection signal="timeout" from="Hitspot/HitspotFlashCooldown" to="." method="_on_hitspot_flash_cooldown_timeout"]
@@ -48,3 +58,4 @@ wait_time = 2.0
 [connection signal="area_exited" from="NoteDetector" to="." method="_on_note_detector_area_exited"]
 [connection signal="input_event" from="NoteDetector" to="." method="_on_note_detector_input_event"]
 [connection signal="timeout" from="NoteCooldownTimer" to="." method="_on_note_cooldown_timer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
