@@ -42,7 +42,7 @@ offset_left = 16.0
 offset_top = 64.0
 offset_right = 272.0
 offset_bottom = 88.0
-text = "v0.2.1"
+text = "v0.2.2"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"

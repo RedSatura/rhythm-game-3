@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="5_bwjw3"]
 
 [node name="SongManager" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_44a13")
 in_editor = true
 
