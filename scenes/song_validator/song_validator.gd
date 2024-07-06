@@ -82,7 +82,6 @@ func process_song_metadata_type(type: String) -> void: #Step 3: Getting data fro
 	var metadata_data_regex: RegEx = RegEx.new()
 	metadata_data_regex.compile("(?<=\\:).*")
 	var result: RegExMatch = metadata_data_regex.search(line_content)
-	print(result)
 	
 	if result != null:
 		var meatdata_content: String = result.get_string().strip_edges()

@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://c126fvxjjjxl7"]
+[gd_scene load_steps=5 format=3 uid="uid://c126fvxjjjxl7"]
 
 [ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="1_e0kd3"]
 [ext_resource type="Script" path="res://scenes/title/ui/options/options/options.gd" id="2_4wi5n"]
+[ext_resource type="PackedScene" uid="uid://ch1xcx3r1bwut" path="res://scenes/title/ui/options/options/handlers/controls/controls_option_handler.tscn" id="3_0bww4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dro7x"]
-bg_color = Color(0.360784, 0.360784, 0.360784, 1)
+bg_color = Color(0.7, 0.7, 0.7, 1)
+corner_radius_top_left = 16
+corner_radius_bottom_left = 16
 
 [node name="Options" type="Panel"]
 offset_right = 448.0
 offset_bottom = 720.0
+scale = Vector2(1.00291, 1)
 theme = ExtResource("1_e0kd3")
 theme_override_styles/panel = SubResource("StyleBoxFlat_dro7x")
 script = ExtResource("2_4wi5n")
@@ -41,3 +45,8 @@ offset_bottom = 63.0
 theme = ExtResource("1_e0kd3")
 theme_override_font_sizes/font_size = 16
 text = "Dark Mode"
+
+[node name="ControlsOptionHandler" parent="." instance=ExtResource("3_0bww4")]
+offset_top = 120.0
+offset_right = 439.0
+offset_bottom = 312.0

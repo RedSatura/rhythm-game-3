@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var status_label: Node = $ScrollContainer/StatusLabel
-@onready var song_info: Node = $SongInfo
+@onready var status_label: Node = $UI/ScrollContainer/StatusLabel
+@onready var song_info: Node = $UI/SongInfo
 
 func _ready() -> void:
 	SignalHandler.connect("send_error", Callable(self, "error_sent"))
@@ -26,10 +26,10 @@ func clear_status_label() -> void:
 	
 func song_validated() -> void:
 	song_info.visible = true
-	$SongInfo/SongDataLabels/Title.text = "Title: " + str(GlobalData.song_info["title"])
-	$SongInfo/SongDataLabels/Artist.text = "Artist: " + str(GlobalData.song_info["artist"])
-	$SongInfo/SongDataLabels/MapCreator.text = "Map Creator: " + str(GlobalData.song_info["mapcreator"])
-	$SongInfo/SongDataLabels/Difficulty.text = "Difficulty: " + str(GlobalData.song_info["difficulty"])
+	$UI/SongInfo/SongDataLabels/Title.text = str(GlobalData.song_info["title"])
+	$UI/SongInfo/SongDataLabels/Artist.text = "Artist: " + str(GlobalData.song_info["artist"])
+	$UI/SongInfo/SongDataLabels/MapCreator.text = "Map Creator: " + str(GlobalData.song_info["mapcreator"])
+	$UI/SongInfo/SongDataLabels/Difficulty.text = "Difficulty: " + str(GlobalData.song_info["difficulty"])
 	
 func reset_to_defaults() -> void:
 	song_info.visible = false
