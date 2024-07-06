@@ -1,8 +1,8 @@
 extends Node
 
-var song_path = ""
+var song_path: String = ""
 
-var song_info = { #defaults
+var song_info: Dictionary = { #defaults
 	#metadata
 	"title": "",
 	"artist": "",
@@ -17,7 +17,7 @@ var song_info = { #defaults
 	"starting_beat_in_measure": 1,
 }
 
-var result_data = {
+var result_data: Dictionary = {
 	"total_notes": 0,
 	"perfect": 0,
 	"good": 0,

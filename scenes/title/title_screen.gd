@@ -1,9 +1,9 @@
 extends Node2D
 
-@onready var status_label = $ScrollContainer/StatusLabel
-@onready var song_info = $SongInfo
+@onready var status_label: Node = $ScrollContainer/StatusLabel
+@onready var song_info: Node = $SongInfo
 
-func _ready():
+func _ready() -> void:
 	SignalHandler.connect("send_error", Callable(self, "error_sent"))
 	SignalHandler.connect("send_message", Callable(self, "message_sent"))
 	SignalHandler.connect("clear_status_label", Callable(self, "clear_status_label"))
@@ -12,30 +12,30 @@ func _ready():
 	OS.request_permissions()
 	song_info.visible = false
 
-func _on_song_file_picker_file_selected(path):
+func _on_song_file_picker_file_selected(path: String) -> void:
 	status_label.text = "Loading %s..." % [path]
 
-func error_sent(message):
+func error_sent(message: String) -> void:
 	status_label.text += str(message + '\n')
 	
-func message_sent(message):
+func message_sent(message: String) -> void:
 	status_label.text += str(message + '\n')
 
-func clear_status_label():
+func clear_status_label() -> void:
 	status_label.text = ""
 	
-func song_validated():
+func song_validated() -> void:
 	song_info.visible = true
 	$SongInfo/SongDataLabels/Title.text = "Title: " + str(GlobalData.song_info["title"])
 	$SongInfo/SongDataLabels/Artist.text = "Artist: " + str(GlobalData.song_info["artist"])
 	$SongInfo/SongDataLabels/MapCreator.text = "Map Creator: " + str(GlobalData.song_info["mapcreator"])
 	$SongInfo/SongDataLabels/Difficulty.text = "Difficulty: " + str(GlobalData.song_info["difficulty"])
 	
-func reset_to_defaults():
+func reset_to_defaults() -> void:
 	song_info.visible = false
 
-func _on_play_song_pressed():
+func _on_play_song_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
 
-func _on_editor_button_pressed():
+func _on_editor_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/editor/song_editor.tscn")

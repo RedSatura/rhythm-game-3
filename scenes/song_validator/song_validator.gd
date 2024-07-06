@@ -1,10 +1,10 @@
 extends Node2D
 
-var file_path = "" #needed for audio_src, may fix it later
+var file_path: String = "" #needed for audio_src, may fix it later
 
-var line_content = "" #The content of the currently active line in the song file.
+var line_content: String = "" #The content of the currently active line in the song file.
 
-var default_song_info = { #defaults
+var default_song_info: Dictionary = { #defaults
 	#metadata
 	"title": "",
 	"artist": "",
@@ -19,21 +19,21 @@ var default_song_info = { #defaults
 	"starting_beat_in_measure": 1,
 }
 
-var song_info = {}
+var song_info: Dictionary = {}
 
-var current_line_in_file = 0
+var current_line_in_file: int = 0
 
-var audio_src_valid = false
+var audio_src_valid: bool = false
 
-func _ready():
+func _ready() -> void:
 	SignalHandler.connect("send_song_to_validator", Callable(self, "validate_song"))
 	song_info = default_song_info
 	GlobalData.song_path = ""
 	
-func validate_song(path): #This is where song validation begins
+func validate_song(path: String) -> void: #This is where song validation begins
 	check_file_existence(path)
 	
-func check_file_existence(path): #Step 1: Checking file existence
+func check_file_existence(path: String) -> void: #Step 1: Checking file existence
 	if FileAccess.file_exists(path):
 		file_path = path
 		GlobalData.song_path = path
@@ -43,25 +43,25 @@ func check_file_existence(path): #Step 1: Checking file existence
 		SignalHandler.emit_signal("send_error", "File does not exist!")
 		return
 		
-func open_file(path): #Step 2: Opening file
-	var file = null
+func open_file(path: String) -> void: #Step 2: Opening file
+	var file: FileAccess = null
 	file = FileAccess.open(path, FileAccess.READ)
 	if file != null:
 		#lmao i spent ages on a bug just to add this one line
 		#apparently line content is set at SONG_START at the end, so you need to reset it for it to work again
 		line_content = "" 
 		current_line_in_file = 0
-		var start_command_found = false
+		var start_command_found: bool = false
 		#Gets the song metadata type
 		#Ex. Gets SONG_TITLE from SONG_TITLE: Test Song
-		var metadata_type_regex = RegEx.new()
+		var metadata_type_regex: RegEx = RegEx.new()
 		metadata_type_regex.compile(".*?(?=\\:)")
-		for x in 20: #Number means starting lines checked
+		for x: int in 20: #Number means starting lines checked
 			if line_content != "SONG_START":
 				SignalHandler.emit_signal("update_editor_line_color", current_line_in_file, Color.SLATE_GRAY)
 				current_line_in_file += 1
 				line_content = file.get_line().strip_edges()
-				var result = metadata_type_regex.search(line_content)
+				var result: RegExMatch = metadata_type_regex.search(line_content)
 				if result != null:
 					process_song_metadata_type(result.get_string().strip_edges())
 			else:
@@ -78,65 +78,66 @@ func open_file(path): #Step 2: Opening file
 		SignalHandler.emit_signal("send_error", "Error opening file!")
 		return
 		
-func process_song_metadata_type(type): #Step 3: Getting data from headers
-	var metadata_data_regex = RegEx.new()
+func process_song_metadata_type(type: String) -> void: #Step 3: Getting data from headers
+	var metadata_data_regex: RegEx = RegEx.new()
 	metadata_data_regex.compile("(?<=\\:).*")
-	var result = metadata_data_regex.search(line_content)
+	var result: RegExMatch = metadata_data_regex.search(line_content)
+	print(result)
 	
 	if result != null:
-		result = result.get_string().strip_edges()
+		var meatdata_content: String = result.get_string().strip_edges()
 		
 		match type:
 			#Chart metadata:
 			"TITLE":
-				song_info["title"] = str(result)
+				song_info["title"] = str(meatdata_content)
 			"ARTIST":
-				song_info["artist"] = str(result)
+				song_info["artist"] = str(meatdata_content)
 			"MAPCREATOR":
-				song_info["mapcreator"] = str(result)
+				song_info["mapcreator"] = str(meatdata_content)
 			"DIFFICULTY":
-				song_info["difficulty"] = int(result)
+				song_info["difficulty"] = int(meatdata_content)
 			#Paths for files:
 			"AUDIO_SRC":
-				var audio_path = file_path.get_base_dir() + "/" + result
+				var audio_path: String = file_path.get_base_dir() + "/" + meatdata_content
 				if FileAccess.file_exists(audio_path):
 					song_info["audio_src"] = audio_path
 					audio_src_valid = true
 				else: #why does this not work for some reason
-					SignalHandler.emit_signal("send_error", "Invalid audio path!")
+					SignalHandler.emit_signal("send_error", "Invalid audio path! Path: " + str(audio_path))
 					audio_src_valid = false
 					return
 			#Song-related types:
 			"BPM":
-				if int(result) <= 0:
+				if int(meatdata_content) <= 0:
 					SignalHandler.emit_signal("send_error", "BPM was invalid, so it will be set to 100 when played.")
 					song_info["bpm"] = 100
 				else:
-					song_info["bpm"] = int(result)
+					song_info["bpm"] = int(meatdata_content)
 			"BEAT_MODE":
-				if int(result) <= 0:
+				if int(meatdata_content) <= 0:
 					SignalHandler.emit_signal("send_error", "Beat mode was invalid, so it will be set to 1 when played.")
 					song_info["beat_mode"] = 1
 				else:
-					song_info["beat_mode"] = int(result)
+					song_info["beat_mode"] = int(meatdata_content)
 			"BEATS_IN_MEASURE":
-				if int(result) <= 0:
+				if int(meatdata_content) <= 0:
 					SignalHandler.emit_signal("send_error", "Beats in measure was invalid, so it will be set to 4 when played.")
 					song_info["beats_in_measure"] = 4
 				else:
-					song_info["beats_in_measure"] = int(result)
+					song_info["beats_in_measure"] = int(meatdata_content)
 			"STARTING_BEAT_IN_MEASURE":
-				if int(result) <= 0:
+				if int(meatdata_content) <= 0:
 					SignalHandler.emit_signal("send_error", "Starting beat in measure was invalid, so it will be set to 1 when played.")
 					song_info["starting_beat_in_measure"] = 1
 				else:
-					song_info["starting_beat_in_measure"] = int(result)
+					song_info["starting_beat_in_measure"] = int(meatdata_content)
 			_:
 				pass
 				
-func validate_song_body(file): #Step 4: Validating song body and checking for SONG_END
+func validate_song_body(file: FileAccess) -> void: #Step 4: Validating song body and checking for SONG_END
 	#Right now, it only checks for SONG_END, as any errors in the song body will just be ignored by the song manager.
-	var end_command_found = false
+	var end_command_found: bool = false
 	while file.get_position() < file.get_length():
 		line_content = file.get_line()
 		if line_content == "SONG_END":
@@ -153,5 +154,5 @@ func validate_song_body(file): #Step 4: Validating song body and checking for SO
 		#The song information will be stored in the global script global_data.
 		#Get the song info from there.
 		
-func get_validator_lines_processed():
+func get_validator_lines_processed() -> int:
 	return current_line_in_file
