@@ -42,6 +42,9 @@ signal reset_to_defaults
 #song editor
 signal update_editor_line_color(line: int, color: Color)
 
+#themes
+signal change_theme(theme: Theme)
+
 #region title_screen
 signal toggle_show_title_screen_options(status: bool)
 #endregion

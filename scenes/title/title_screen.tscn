@@ -37,7 +37,6 @@ theme = ExtResource("2_lpb5x")
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
-theme = ExtResource("2_lpb5x")
 
 [node name="Title" type="Label" parent="UI"]
 layout_mode = 0
@@ -45,7 +44,6 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 328.0
 offset_bottom = 64.0
-theme = ExtResource("2_lpb5x")
 text = "Rhythm Game 3"
 
 [node name="VersionNumber" type="Label" parent="UI"]
@@ -54,7 +52,6 @@ offset_left = 16.0
 offset_top = 56.0
 offset_right = 272.0
 offset_bottom = 90.0
-theme = ExtResource("2_lpb5x")
 theme_override_font_sizes/font_size = 24
 text = "v0.2.2"
 
@@ -64,7 +61,6 @@ offset_left = 16.0
 offset_top = 136.0
 offset_right = 216.0
 offset_bottom = 181.0
-theme = ExtResource("2_lpb5x")
 text = "Official Songs
 "
 
@@ -83,7 +79,6 @@ offset_left = 16.0
 offset_top = 184.0
 offset_right = 236.0
 offset_bottom = 229.0
-theme = ExtResource("2_lpb5x")
 text = "Custom Songs
 "
 
@@ -173,7 +168,6 @@ offset_left = 520.0
 offset_top = 184.0
 offset_right = 760.0
 offset_bottom = 232.0
-theme = ExtResource("2_lpb5x")
 text = "Song Editor"
 
 [node name="EditorButton" type="Button" parent="UI/Editor"]
@@ -182,7 +176,6 @@ offset_left = 520.0
 offset_top = 232.0
 offset_right = 728.0
 offset_bottom = 280.0
-theme = ExtResource("2_lpb5x")
 text = "Edit a Song"
 
 [node name="Settings" type="Control" parent="UI"]

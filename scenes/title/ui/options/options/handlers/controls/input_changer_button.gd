@@ -5,5 +5,5 @@ extends Button
 func _ready() -> void:
 	self.text = OS.get_keycode_string(InputMap.action_get_events(input_action_name)[0].physical_keycode)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

@@ -1,6 +1,5 @@
-[gd_scene load_steps=9 format=3 uid="uid://cin78nuhqwsys"]
+[gd_scene load_steps=8 format=3 uid="uid://cin78nuhqwsys"]
 
-[ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="1_f75p5"]
 [ext_resource type="Texture2D" uid="uid://iegg4jkk2xqy" path="res://assets/icons/gear-svgrepo-com.svg" id="2_wnct7"]
 [ext_resource type="Script" path="res://scenes/title/ui/options/options_button/options_button.gd" id="3_qvpar"]
 
@@ -19,7 +18,6 @@ z_as_relative = false
 offset_right = 64.0
 offset_bottom = 64.0
 pivot_offset = Vector2(32, 32)
-theme = ExtResource("1_f75p5")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_dlllc")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_3xsmy")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_fixdl")

@@ -1,20 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://c126fvxjjjxl7"]
+[gd_scene load_steps=3 format=3 uid="uid://c126fvxjjjxl7"]
 
-[ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="1_e0kd3"]
 [ext_resource type="Script" path="res://scenes/title/ui/options/options/options.gd" id="2_4wi5n"]
 [ext_resource type="PackedScene" uid="uid://ch1xcx3r1bwut" path="res://scenes/title/ui/options/options/handlers/controls/controls_option_handler.tscn" id="3_0bww4"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dro7x"]
-bg_color = Color(0.7, 0.7, 0.7, 1)
-corner_radius_top_left = 16
-corner_radius_bottom_left = 16
 
 [node name="Options" type="Panel"]
 offset_right = 448.0
 offset_bottom = 720.0
 scale = Vector2(1.00291, 1)
-theme = ExtResource("1_e0kd3")
-theme_override_styles/panel = SubResource("StyleBoxFlat_dro7x")
 script = ExtResource("2_4wi5n")
 
 [node name="Options" type="Label" parent="."]
@@ -23,7 +15,6 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 128.0
 offset_bottom = 61.0
-theme = ExtResource("1_e0kd3")
 text = "Options
 "
 
@@ -33,16 +24,14 @@ offset_left = 16.0
 offset_top = 64.0
 offset_right = 104.0
 offset_bottom = 95.0
-theme = ExtResource("1_e0kd3")
 theme_override_font_sizes/font_size = 22
 text = "Display"
 
-[node name="CheckButton" type="CheckButton" parent="Display"]
+[node name="DarkMode" type="CheckButton" parent="Display"]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 352.0
 offset_bottom = 63.0
-theme = ExtResource("1_e0kd3")
 theme_override_font_sizes/font_size = 16
 text = "Dark Mode"
 
@@ -50,3 +39,5 @@ text = "Dark Mode"
 offset_top = 120.0
 offset_right = 439.0
 offset_bottom = 312.0
+
+[connection signal="toggled" from="Display/DarkMode" to="." method="_on_dark_mode_toggled"]

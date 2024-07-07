@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://ch1xcx3r1bwut"]
+[gd_scene load_steps=3 format=3 uid="uid://ch1xcx3r1bwut"]
 
-[ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="1_6sngy"]
 [ext_resource type="Script" path="res://scenes/title/ui/options/options/handlers/controls/controls_option_handler.gd" id="2_u6ooy"]
 [ext_resource type="PackedScene" uid="uid://b454pq7tnb4lv" path="res://scenes/title/ui/options/options/handlers/controls/input_changer_button.tscn" id="3_bncf2"]
 
@@ -9,7 +8,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 384.0
 offset_bottom = 200.0
-theme = ExtResource("1_6sngy")
 script = ExtResource("2_u6ooy")
 
 [node name="Controls" type="Label" parent="."]

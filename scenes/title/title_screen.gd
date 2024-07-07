@@ -9,6 +9,7 @@ func _ready() -> void:
 	SignalHandler.connect("clear_status_label", Callable(self, "clear_status_label"))
 	SignalHandler.connect("song_validated", Callable(self, "song_validated"))
 	SignalHandler.connect("reset_to_defaults", Callable(self, "reset_to_defaults"))
+	SignalHandler.connect("change_theme", Callable(self, "change_theme"))
 	OS.request_permissions()
 	song_info.visible = false
 
@@ -39,3 +40,8 @@ func _on_play_song_pressed() -> void:
 
 func _on_editor_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/editor/song_editor.tscn")
+	
+func change_theme(theme_path: String) -> void:
+	var new_theme: Theme = load(theme_path)
+	$UI.theme = new_theme
+	
