@@ -25,11 +25,11 @@ position = Vector2(192, 640)
 lane_position = "CENTER_LEFT"
 
 [node name="NoteLane3" parent="NoteLanes" instance=ExtResource("5_bwjw3")]
-position = Vector2(1088, 640)
+position = Vector2(320, 640)
 lane_position = "CENTER_RIGHT"
 
 [node name="NoteLane4" parent="NoteLanes" instance=ExtResource("5_bwjw3")]
-position = Vector2(1216, 640)
+position = Vector2(448, 640)
 lane_position = "RIGHT"
 
 [node name="SongStartTimer" type="Timer" parent="."]

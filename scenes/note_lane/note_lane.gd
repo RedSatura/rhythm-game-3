@@ -9,7 +9,7 @@ extends Node2D
 @onready var hitspot: Node = $Hitspot
 @onready var hitspot_flash_cooldown: Node = $Hitspot/HitspotFlashCooldown
 
-@onready var lane_background: Node = $LaneBackground
+@onready var lane_background: Node = $UI/LaneBackground
 
 var current_note: Area2D = null
 
@@ -31,6 +31,7 @@ func _ready() -> void:
 	perfect = false
 	good = false
 	current_note = null
+	$UI.theme = GlobalData.global_settings["theme"]
 
 func spawn_note() -> void:
 	var new_note: Node = load("res://scenes/note_lane/note/note.tscn").instantiate()
@@ -110,7 +111,7 @@ func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_id
 			"RIGHT":
 					handle_input_on_note()
 
-func _on_perfect_area_area_entered(area: Area2D) -> void:
+func _on_perfect_area_area_entered(_area: Area2D) -> void:
 	good = false
 	perfect = true
 	if auto_mode:
@@ -119,9 +120,9 @@ func _on_perfect_area_area_entered(area: Area2D) -> void:
 			current_note.queue_free()
 			current_note = null
 
-func _on_perfect_area_area_exited(area: Area2D) -> void:
+func _on_perfect_area_area_exited(_area: Area2D) -> void:
 	good = true
 	perfect = false
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
+func _on_area_2d_area_entered(_area: Area2D) -> void:
 	SignalHandler.emit_signal("note_hit", "MISS")

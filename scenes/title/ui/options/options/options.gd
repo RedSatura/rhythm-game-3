@@ -6,6 +6,8 @@ var current_theme_path: String = ""
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalHandler.connect("toggle_show_title_screen_options", Callable(self, "toggle_options_visibility"))
+	if GlobalData.global_settings["theme_name"] == "dark":
+		$Display/DarkMode.button_pressed = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -21,12 +23,10 @@ func toggle_options_visibility(status: bool) -> void:
 
 func _on_dark_mode_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		current_theme_path = "res://styles/dark_theme.tres"
 		var new_theme: Theme = load("res://styles/dark_theme.tres")
-		set_theme(new_theme)
-		SignalHandler.emit_signal("change_theme", current_theme_path)
+		GlobalData.global_settings["theme_name"] = "dark"
+		SignalHandler.emit_signal("change_theme", new_theme)
 	else:
-		current_theme_path = "res://styles/default_theme.tres"
 		var new_theme: Theme = load("res://styles/default_theme.tres")
-		set_theme(new_theme)
-		SignalHandler.emit_signal("change_theme", current_theme_path)
+		GlobalData.global_settings["theme_name"] = "light"
+		SignalHandler.emit_signal("change_theme", new_theme)

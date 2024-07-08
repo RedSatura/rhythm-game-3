@@ -11,7 +11,13 @@ func _ready() -> void:
 	SignalHandler.connect("reset_to_defaults", Callable(self, "reset_to_defaults"))
 	SignalHandler.connect("change_theme", Callable(self, "change_theme"))
 	OS.request_permissions()
+	$UI/Custom/OpenFile.grab_focus()
 	song_info.visible = false
+	if GlobalData.global_settings["theme"] == null:
+		GlobalData.global_settings["theme"] = load("res://styles/default_theme.tres")
+		$UI.theme = GlobalData.global_settings["theme"]
+	else:
+		$UI.theme = GlobalData.global_settings["theme"]
 
 func _on_song_file_picker_file_selected(path: String) -> void:
 	status_label.text = "Loading %s..." % [path]
@@ -41,7 +47,7 @@ func _on_play_song_pressed() -> void:
 func _on_editor_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/editor/song_editor.tscn")
 	
-func change_theme(theme_path: String) -> void:
-	var new_theme: Theme = load(theme_path)
-	$UI.theme = new_theme
+func change_theme(theme: Theme) -> void:
+	$UI.theme = theme
+	GlobalData.global_settings["theme"] = theme
 	

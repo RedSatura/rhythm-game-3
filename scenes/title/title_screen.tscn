@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4glp02ecl6x5"]
+[gd_scene load_steps=9 format=3 uid="uid://d4glp02ecl6x5"]
 
 [ext_resource type="Script" path="res://scenes/title/song_file_picker.gd" id="1_b3hli"]
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
 [ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="2_lpb5x"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_283yi"]
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="4_ltbla"]
 [ext_resource type="PackedScene" uid="uid://cin78nuhqwsys" path="res://scenes/title/ui/options/options_button/options_button.tscn" id="5_g1xjh"]
 [ext_resource type="PackedScene" uid="uid://c126fvxjjjxl7" path="res://scenes/title/ui/options/options/options.tscn" id="6_tu506"]
 
@@ -31,7 +32,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("2_lpb5x")
+theme = ExtResource("4_ltbla")
 
 [node name="Panel" type="Panel" parent="UI"]
 layout_mode = 0
@@ -87,6 +88,10 @@ layout_mode = 0
 offset_top = 48.0
 offset_right = 208.0
 offset_bottom = 96.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../Editor/EditorButton")
+focus_neighbor_bottom = NodePath("../../SongInfo/PlaySong")
 text = "Open a File"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI"]
@@ -154,6 +159,10 @@ offset_left = 16.0
 offset_top = 512.0
 offset_right = 224.0
 offset_bottom = 560.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../Custom/OpenFile")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
 text = "Play Song!"
 
 [node name="Editor" type="Control" parent="UI"]
@@ -176,6 +185,10 @@ offset_left = 520.0
 offset_top = 232.0
 offset_right = 728.0
 offset_bottom = 280.0
+focus_neighbor_left = NodePath("../../Custom/OpenFile")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../Settings/OptionsButton")
+focus_neighbor_bottom = NodePath(".")
 text = "Edit a Song"
 
 [node name="Settings" type="Control" parent="UI"]

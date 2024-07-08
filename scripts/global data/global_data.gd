@@ -17,9 +17,7 @@ var song_info: Dictionary = { #defaults
 	"starting_beat_in_measure": 1,
 }
 
-var result_data: Dictionary = {
-	"total_notes": 0,
-	"perfect": 0,
-	"good": 0,
-	"miss": 0,
+var global_settings: Dictionary = {
+	"theme": null,
+	"theme_name": "light",
 }

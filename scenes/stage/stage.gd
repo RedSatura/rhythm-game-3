@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var song_manager: Node = $SongManager
-@onready var note_feedback_label: Node = $NoteFeedbackLabel
+@onready var note_feedback_label: Node = $CanvasLayer/UI/NoteFeedbackLabel
 
 @export var in_editor: bool = false
 
@@ -16,7 +16,7 @@ func _on_button_pressed() -> void:
 func _on_pause_button_pressed() -> void:
 	pause_song()
 		
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("pause"):
 		pause_song()
 

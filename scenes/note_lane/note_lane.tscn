@@ -14,11 +14,23 @@ size = Vector2(128, 16)
 position = Vector2(64, 640)
 script = ExtResource("1_ipfhx")
 
-[node name="LaneBackground" type="Polygon2D" parent="."]
-color = Color(0.6, 0.356863, 0.223529, 0.501961)
-polygon = PackedVector2Array(-64, 80, 64, 80, 64, -640, -64, -640)
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -64.0
+offset_top = -640.0
+offset_right = -64.0
+offset_bottom = -640.0
+metadata/_edit_group_ = true
+
+[node name="LaneBackground" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 720.0
+color = Color(0.819608, 0.819608, 0.819608, 0.384314)
 
 [node name="PerfectArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]
@@ -33,6 +45,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="NoteDetector" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoteDetector"]

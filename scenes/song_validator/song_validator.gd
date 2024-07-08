@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var highlighting_color: Color = Color.LIGHT_PINK
+
 var file_path: String = "" #needed for audio_src, may fix it later
 
 var line_content: String = "" #The content of the currently active line in the song file.
@@ -58,7 +60,7 @@ func open_file(path: String) -> void: #Step 2: Opening file
 		metadata_type_regex.compile(".*?(?=\\:)")
 		for x: int in 20: #Number means starting lines checked
 			if line_content != "SONG_START":
-				SignalHandler.emit_signal("update_editor_line_color", current_line_in_file, Color.SLATE_GRAY)
+				SignalHandler.emit_signal("update_editor_line_color", current_line_in_file, highlighting_color)
 				current_line_in_file += 1
 				line_content = file.get_line().strip_edges()
 				var result: RegExMatch = metadata_type_regex.search(line_content)

@@ -1,19 +1,21 @@
 extends Node2D
 
-@onready var code_edit: Node = $CodeEdit
+@export var highlighting_color: Color = Color.LIGHT_PINK
+
+@onready var code_edit: Node = $UI/CodeEdit
 @onready var song_picker: Node = $SongPicker
 @onready var new_song_saver: Node = $NewSongSaver
 @onready var song_validator: Node = $SongValidator
 @onready var song_manager: Node = $SongManager
 
-@onready var open_button: Node = $Open
-@onready var save_button: Node = $Save
-@onready var play_button: Node = $Play
+@onready var open_button: Node = $UI/Open
+@onready var save_button: Node = $UI/Save
+@onready var play_button: Node = $UI/Play
 
-@onready var currently_opened: Node = $CurrentlyOpened
-@onready var status_label: Node = $StatusLabel
+@onready var currently_opened: Node = $UI/CurrentlyOpened
+@onready var status_label: Node = $UI/StatusLabel
 
-@onready var song_manager_viewport: Node = $SongManagerViewport
+@onready var song_manager_viewport: Node = $UI/SongManagerViewport
 
 var file: FileAccess = null
 var file_path: String = ""
@@ -36,6 +38,9 @@ func _ready() -> void:
 	SignalHandler.connect("song_validated", Callable(self, "process_song_validation"))
 	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
 	song_manager_viewport.visible = false
+	song_validator.highlighting_color = highlighting_color
+	$UI.theme = GlobalData.global_settings["theme"]
+	code_edit.grab_focus()
 
 func _on_open_pressed() -> void:
 	song_picker.popup()
@@ -105,7 +110,7 @@ func clear_highlights() -> void:
 	for x: int in code_edit.get_line_count():
 		code_edit.set_line_background_color(x, Color(0, 0, 0, 0))
 	
-func update_editor_line_color(line: int = 0, color: Color = Color.SLATE_GRAY) -> void:
+func update_editor_line_color(line: int = 0, color: Color = highlighting_color) -> void:
 	if line > 0:
 		if line < code_edit.get_line_count(): #This removes the background for the previous line, then adds background to the current line
 			code_edit.set_line_background_color(line - 1, Color(0, 0, 0, 0))
@@ -128,7 +133,7 @@ func process_song_validation() -> void:
 	song_manager.get_node("SongStartTimer").start()
 	
 func process_beat(_pos: int) -> void:
-	update_editor_line_color(current_line_in_file, Color.SLATE_GRAY)
+	update_editor_line_color(current_line_in_file, highlighting_color)
 	current_line_in_file += 1
 
 func _on_new_song_saver_file_selected(path: String) -> void:
