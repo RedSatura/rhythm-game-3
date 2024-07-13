@@ -58,24 +58,21 @@ func open_file(path: String) -> void: #Step 2: Opening file
 		#Ex. Gets SONG_TITLE from SONG_TITLE: Test Song
 		var metadata_type_regex: RegEx = RegEx.new()
 		metadata_type_regex.compile(".*?(?=\\:)")
-		for x: int in 20: #Number means starting lines checked
+		for x: int in 20: #Number means starting lines checked TODO: (i should fix this magic number)
 			if line_content != "SONG_START":
+				if x == 19: #TODO: wtf???
+					SignalHandler.emit_signal("send_error", "Song starting command not found before 20 lines.")
+					return
 				SignalHandler.emit_signal("update_editor_line_color", current_line_in_file, highlighting_color)
 				current_line_in_file += 1
 				line_content = file.get_line().strip_edges()
 				var result: RegExMatch = metadata_type_regex.search(line_content)
 				if result != null:
 					process_song_metadata_type(result.get_string().strip_edges())
-			else:
-				start_command_found = true
-				break
-		if !start_command_found:
-			SignalHandler.emit_signal("send_error", "Song starting command not found before 20 lines.")
-			return
 		if !audio_src_valid:
 			SignalHandler.emit_signal("send_error", "Invalid audio path!")
-		else:
-			validate_song_body(file)
+			return
+		validate_song_body(file)
 	else:
 		SignalHandler.emit_signal("send_error", "Error opening file!")
 		return
@@ -104,8 +101,7 @@ func process_song_metadata_type(type: String) -> void: #Step 3: Getting data fro
 				if FileAccess.file_exists(audio_path):
 					song_info["audio_src"] = audio_path
 					audio_src_valid = true
-				else: #why does this not work for some reason
-					SignalHandler.emit_signal("send_error", "Invalid audio path! Path: " + str(audio_path))
+				else: #why does this not work for some reason (EDIT: prob works now)
 					audio_src_valid = false
 					return
 			#Song-related types:

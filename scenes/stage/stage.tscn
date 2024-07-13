@@ -73,6 +73,7 @@ one_shot = true
 
 [node name="BeatMeasureLabel" type="Label" parent="CanvasLayer/UI"]
 visible = false
+layout_mode = 0
 offset_left = 272.0
 offset_top = 640.0
 offset_right = 464.0
@@ -83,6 +84,7 @@ script = ExtResource("2_3ujy6")
 
 [node name="SongDurationBar" type="ProgressBar" parent="CanvasLayer/UI"]
 visible = false
+layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 16.0
 show_percentage = false
@@ -90,6 +92,7 @@ script = ExtResource("4_w0wif")
 
 [node name="TimeElapsedLabel" type="Label" parent="CanvasLayer/UI"]
 visible = false
+layout_mode = 0
 offset_left = 464.0
 offset_top = 640.0
 offset_right = 632.0

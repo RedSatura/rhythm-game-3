@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://difwrn3vbn48p"]
+[gd_resource type="Theme" load_steps=28 format=3 uid="uid://difwrn3vbn48p"]
 
 [ext_resource type="FontFile" uid="uid://rus7wdnt30ev" path="res://assets/fonts/nunito/Nunito-Regular.ttf" id="1_s3xx5"]
 
@@ -94,8 +94,43 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkwx0"]
+resource_local_to_scene = true
+bg_color = Color(0.77, 0.77, 0.77, 1)
+border_color = Color(0.8, 0.321569, 0.321569, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_catht"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7vpxe"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qyme"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lllta"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7nge"]
 bg_color = Color(0.858824, 0.858824, 0.858824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2mgn8"]
+bg_color = Color(0.54902, 0.54902, 0.54902, 1)
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_161ae"]
+bg_color = Color(0.360784, 0.360784, 0.360784, 1)
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i103v"]
 bg_color = Color(0.77, 0.77, 0.77, 1)
@@ -136,6 +171,7 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 
 [resource]
+resource_local_to_scene = true
 default_font = ExtResource("1_s3xx5")
 default_font_size = 32
 Button/colors/font_color = Color(0, 0, 0, 1)
@@ -177,12 +213,24 @@ CodeEdit/font_sizes/font_size = 20
 CodeEdit/styles/focus = SubResource("StyleBoxFlat_iditn")
 CodeEdit/styles/normal = SubResource("StyleBoxFlat_0tgsi")
 CodeEdit/styles/read_only = SubResource("StyleBoxFlat_11g8p")
-EditorDescLabel/base_type = &"Label"
-EditorDescLabel/colors/font_color = Color(1, 1, 1, 1)
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/fonts/font = ExtResource("1_s3xx5")
 LineEdit/font_sizes/font_size = 14
+MessageDisplay/base_type = &"Panel"
+MessageDisplay/styles/panel = SubResource("StyleBoxFlat_jkwx0")
+MessageDisplayButton/base_type = &"Button"
+MessageDisplayButton/colors/icon_focus_color = Color(0.360784, 0.360784, 0.360784, 1)
+MessageDisplayButton/colors/icon_hover_color = Color(0.09, 0.09, 0.09, 1)
+MessageDisplayButton/colors/icon_hover_pressed_color = Color(0.3, 0.3, 0.3, 1)
+MessageDisplayButton/colors/icon_normal_color = Color(0.3, 0.3, 0.3, 1)
+MessageDisplayButton/colors/icon_pressed_color = Color(0.77, 0.77, 0.77, 1)
+MessageDisplayButton/styles/focus = SubResource("StyleBoxFlat_catht")
+MessageDisplayButton/styles/hover = SubResource("StyleBoxFlat_7vpxe")
+MessageDisplayButton/styles/normal = SubResource("StyleBoxFlat_0qyme")
+MessageDisplayButton/styles/pressed = SubResource("StyleBoxFlat_lllta")
 Panel/styles/panel = SubResource("StyleBoxFlat_w7nge")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_2mgn8")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_161ae")
 TabBar/colors/font_selected_color = Color(0, 0, 0, 1)
 TabContainer/colors/font_hovered_color = Color(0, 0, 0, 1)
 TabContainer/colors/font_selected_color = Color(0, 0, 0, 1)

@@ -13,8 +13,8 @@ extends Node2D
 @onready var play_button: Node = $UI/Play
 
 @onready var currently_opened: Node = $UI/CurrentlyOpened
-@onready var status_label: Node = $UI/StatusLabel
 
+@onready var messages_container: Node = $UI/ScrollContainer/MessagesContainer
 @onready var song_manager_viewport: Node = $UI/SongManagerViewport
 
 var file: FileAccess = null
@@ -79,15 +79,6 @@ func _on_title_screen_pressed() -> void:
 func _on_code_edit_text_changed() -> void:
 	clear_highlights() #pls fix, this is terrible (clears every single line of highlighting every time text changes)
 	save_button.text = "Save*"
-	
-func error_received(message: String) -> void:
-	status_label.modulate = Color.RED
-	status_label.text = str(message)
-	song_manager_viewport.visible = false
-	
-func message_received(message: String) -> void:
-	status_label.modulate = Color.WHITE
-	status_label.text = str(message)
 
 func _on_play_pressed() -> void: #Validates and plays the file
 	current_line_in_file = 0
@@ -141,3 +132,13 @@ func _on_new_song_saver_file_selected(path: String) -> void:
 	new_file.store_string(code_edit.text)
 	new_file.flush()
 	SignalHandler.emit_signal("send_message", "New file created and saved.")
+
+func error_received(error: String) -> void:
+	var message_display: Node = load("res://scenes/ui/message_display/message_display.tscn").instantiate()
+	messages_container.add_child(message_display)
+	message_display.update_message(1, error)
+	
+func message_received(message: String) -> void:
+	var message_display: Node = load("res://scenes/ui/message_display/message_display.tscn").instantiate()
+	messages_container.add_child(message_display)
+	message_display.update_message(0, message)

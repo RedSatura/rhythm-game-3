@@ -16,7 +16,7 @@ script = ExtResource("1_m8jub")
 highlighting_color = Color(0.164706, 0.4, 1, 0.447059)
 
 [node name="SongManager" parent="." instance=ExtResource("2_cdhk3")]
-position = Vector2(1536, 0)
+position = Vector2(1920, 0)
 auto_mode = true
 
 [node name="SongValidator" parent="." instance=ExtResource("3_28ch4")]
@@ -283,16 +283,6 @@ Simply put, spawning a note on lane 1 is \"s/1+,\", while spawning randomly will
 "
 autowrap_mode = 3
 
-[node name="StatusLabel" type="Label" parent="UI"]
-layout_mode = 0
-offset_left = 520.0
-offset_top = 432.0
-offset_right = 1264.0
-offset_bottom = 464.0
-theme_override_font_sizes/font_size = 20
-horizontal_alignment = 2
-vertical_alignment = 1
-
 [node name="TitleScreen" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 1216.0
@@ -302,31 +292,42 @@ offset_bottom = 64.0
 
 [node name="Preview" type="Label" parent="UI"]
 layout_mode = 0
-offset_left = 944.0
-offset_top = 472.0
-offset_right = 1048.0
-offset_bottom = 512.0
+offset_left = 520.0
+offset_top = 448.0
+offset_right = 624.0
+offset_bottom = 488.0
 theme_override_font_sizes/font_size = 28
 text = "Preview"
 vertical_alignment = 1
 
 [node name="SongManagerViewport" type="SubViewportContainer" parent="UI"]
 layout_mode = 0
-offset_left = 944.0
-offset_top = 520.0
-offset_right = 1264.0
+offset_left = 520.0
+offset_top = 488.0
+offset_right = 856.0
 offset_bottom = 700.0
 
 [node name="SubViewport" type="SubViewport" parent="UI/SongManagerViewport"]
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
 snap_2d_vertices_to_pixel = true
-size = Vector2i(320, 180)
+size = Vector2i(336, 212)
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="UI/SongManagerViewport/SubViewport"]
 position = Vector2(2176, 360)
 zoom = Vector2(0.25, 0.25)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI"]
+layout_mode = 0
+offset_left = 984.0
+offset_top = 448.0
+offset_right = 1264.0
+offset_bottom = 704.0
+horizontal_scroll_mode = 0
+
+[node name="MessagesContainer" type="VBoxContainer" parent="UI/ScrollContainer"]
+layout_mode = 2
 
 [node name="SongPicker" type="FileDialog" parent="."]
 title = "Open a File"
