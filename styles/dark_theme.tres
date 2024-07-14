@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://8awncr10kw81"]
+[gd_resource type="Theme" load_steps=27 format=3 uid="uid://8awncr10kw81"]
 
 [ext_resource type="FontFile" uid="uid://rus7wdnt30ev" path="res://assets/fonts/nunito/Nunito-Regular.ttf" id="1_17m2y"]
 
@@ -94,7 +94,37 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q21vs"]
+resource_local_to_scene = true
+bg_color = Color(0.21, 0.21, 0.21, 1)
+border_color = Color(0.8, 0.321569, 0.321569, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kk3ba"]
+bg_color = Color(0.21, 0.21, 0.21, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4cjo"]
+bg_color = Color(0.21, 0.21, 0.21, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5xvo"]
+bg_color = Color(0.360784, 0.360784, 0.360784, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqp0n"]
+bg_color = Color(0.21, 0.21, 0.21, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7nge"]
+bg_color = Color(0.09, 0.09, 0.09, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7wvm"]
 bg_color = Color(0.09, 0.09, 0.09, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i103v"]
@@ -181,7 +211,21 @@ EditorDescLabel/colors/font_color = Color(1, 1, 1, 1)
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/fonts/font = ExtResource("1_17m2y")
 LineEdit/font_sizes/font_size = 14
+MessageDisplay/base_type = &"Panel"
+MessageDisplay/styles/panel = SubResource("StyleBoxFlat_q21vs")
+MessageDisplayButton/base_type = &"Button"
+MessageDisplayButton/colors/icon_focus_color = Color(0.54902, 0.54902, 0.54902, 1)
+MessageDisplayButton/colors/icon_hover_color = Color(0.54902, 0.54902, 0.54902, 1)
+MessageDisplayButton/colors/icon_hover_pressed_color = Color(0.54902, 0.54902, 0.54902, 1)
+MessageDisplayButton/colors/icon_normal_color = Color(0.54902, 0.54902, 0.54902, 1)
+MessageDisplayButton/colors/icon_pressed_color = Color(0.360784, 0.360784, 0.360784, 1)
+MessageDisplayButton/styles/focus = SubResource("StyleBoxFlat_kk3ba")
+MessageDisplayButton/styles/hover = SubResource("StyleBoxFlat_g4cjo")
+MessageDisplayButton/styles/normal = SubResource("StyleBoxFlat_e5xvo")
+MessageDisplayButton/styles/pressed = SubResource("StyleBoxFlat_jqp0n")
 Panel/styles/panel = SubResource("StyleBoxFlat_w7nge")
+StageBackground/base_type = &"Panel"
+StageBackground/styles/panel = SubResource("StyleBoxFlat_n7wvm")
 TabBar/colors/font_selected_color = Color(0, 0, 0, 1)
 TabContainer/colors/font_hovered_color = Color(1, 1, 1, 1)
 TabContainer/colors/font_selected_color = Color(1, 1, 1, 1)

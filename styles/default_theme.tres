@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=28 format=3 uid="uid://difwrn3vbn48p"]
+[gd_resource type="Theme" load_steps=29 format=3 uid="uid://difwrn3vbn48p"]
 
 [ext_resource type="FontFile" uid="uid://rus7wdnt30ev" path="res://assets/fonts/nunito/Nunito-Regular.ttf" id="1_s3xx5"]
 
@@ -132,6 +132,9 @@ corner_radius_bottom_left = 4
 bg_color = Color(0.360784, 0.360784, 0.360784, 1)
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvyis"]
+bg_color = Color(0.360784, 0.360784, 0.360784, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i103v"]
 bg_color = Color(0.77, 0.77, 0.77, 1)
 corner_radius_top_left = 8
@@ -231,6 +234,8 @@ MessageDisplayButton/styles/pressed = SubResource("StyleBoxFlat_lllta")
 Panel/styles/panel = SubResource("StyleBoxFlat_w7nge")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_2mgn8")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_161ae")
+StageBackground/base_type = &"Panel"
+StageBackground/styles/panel = SubResource("StyleBoxFlat_hvyis")
 TabBar/colors/font_selected_color = Color(0, 0, 0, 1)
 TabContainer/colors/font_hovered_color = Color(0, 0, 0, 1)
 TabContainer/colors/font_selected_color = Color(0, 0, 0, 1)

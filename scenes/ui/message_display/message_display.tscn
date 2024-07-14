@@ -1,14 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://cy85e4p5x5mih"]
+[gd_scene load_steps=3 format=3 uid="uid://cy85e4p5x5mih"]
 
 [ext_resource type="Script" path="res://scenes/ui/message_display/message_display.gd" id="1_j1xp5"]
-[ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="1_p0pwj"]
 [ext_resource type="Texture2D" uid="uid://ccsbubttjrcs8" path="res://assets/icons/close-bold-svgrepo-com.svg" id="3_i7tex"]
 
 [node name="MessageDisplay" type="Panel"]
 custom_minimum_size = Vector2(240, 64)
 offset_right = 240.0
 offset_bottom = 64.0
-theme = ExtResource("1_p0pwj")
 theme_type_variation = &"MessageDisplay"
 script = ExtResource("1_j1xp5")
 

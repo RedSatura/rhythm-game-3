@@ -36,6 +36,7 @@ theme_override_font_sizes/font_size = 16
 text = "Dark Mode"
 
 [node name="Sound" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 15.9536
 offset_top = 335.0
