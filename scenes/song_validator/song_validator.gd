@@ -53,7 +53,6 @@ func open_file(path: String) -> void: #Step 2: Opening file
 		#apparently line content is set at SONG_START at the end, so you need to reset it for it to work again
 		line_content = "" 
 		current_line_in_file = 0
-		var start_command_found: bool = false
 		#Gets the song metadata type
 		#Ex. Gets SONG_TITLE from SONG_TITLE: Test Song
 		var metadata_type_regex: RegEx = RegEx.new()

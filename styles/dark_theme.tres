@@ -209,6 +209,7 @@ CodeEdit/styles/read_only = SubResource("StyleBoxFlat_in7t5")
 EditorDescLabel/base_type = &"Label"
 EditorDescLabel/colors/font_color = Color(1, 1, 1, 1)
 Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(1, 1, 1, 1)
 Label/fonts/font = ExtResource("1_17m2y")
 LineEdit/font_sizes/font_size = 14
 MessageDisplay/base_type = &"Panel"

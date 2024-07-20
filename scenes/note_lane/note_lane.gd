@@ -6,10 +6,10 @@ extends Node2D
 @onready var note_spawn_position: Node = $NoteSpawnPosition
 @onready var note_cooldown_timer: Node = $NoteCooldownTimer
 
-@onready var hitspot: Node = $Hitspot
-@onready var hitspot_flash_cooldown: Node = $Hitspot/HitspotFlashCooldown
+@onready var note_detector: Node = $NoteDetector
 
 @onready var lane_background: Node = $UI/LaneBackground
+@onready var note_detector_background: Node = $UI/NoteDetectorBackground
 
 var current_note: Area2D = null
 
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 func spawn_note() -> void:
 	var new_note: Node = load("res://scenes/note_lane/note/note.tscn").instantiate()
-	new_note.distance_to_target = Vector2(hitspot.position.x - note_spawn_position.position.x, hitspot.position.y - note_spawn_position.position.y)
+	new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
 	add_child(new_note)
 	new_note.global_position = note_spawn_position.global_position
 	
@@ -60,8 +60,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 					handle_input_on_note()
 				
 func handle_input_on_note() -> void:
-	hitspot.color.r = 0.5
-	hitspot_flash_cooldown.start()
 	if current_note != null:
 		if good:
 			SignalHandler.emit_signal("note_hit", "GOOD")
@@ -77,9 +75,6 @@ func _on_note_detector_area_entered(area: Area2D) -> void:
 func _on_note_detector_area_exited(_area: Area2D) -> void:
 	current_note = null
 	good = false
-
-func _on_hitspot_flash_cooldown_timeout() -> void:
-	hitspot.color.r = 0.176
 
 func measure_occured() -> void:
 	pass

@@ -25,7 +25,7 @@ func show_results() -> void:
 	$Miss/MissResult.text = str(miss)
 	var hit_rate: float = (float(perfect + good) / total_notes) * 100
 	$HitRate/HitRatePercentResult.text = "%3.2f" % hit_rate + '%' 
-	$HitRate/HitRateIntegerResult.text = str(perfect + good) + '/' + str(total_notes)
+	$HitRate/HitRateIntegerResult.text = str(perfect + good) + ' / ' + str(total_notes)
 	
 func process_note_hit(grade: String) -> void:
 	total_notes += 1

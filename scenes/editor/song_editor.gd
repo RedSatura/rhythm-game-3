@@ -39,7 +39,6 @@ func _ready() -> void:
 	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
 	song_manager_viewport.visible = false
 	song_validator.highlighting_color = highlighting_color
-	$UI.theme = GlobalData.global_settings["theme"]
 	code_edit.grab_focus()
 
 func _on_open_pressed() -> void:

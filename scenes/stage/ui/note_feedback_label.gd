@@ -14,16 +14,16 @@ func process_note_hit(grade: String) -> void:
 	match grade:
 		"PERFECT":
 			combo += 1
-			update_label("PERFECT")
+			update_label("Perfect!")
 		"GOOD":
 			combo += 1
-			update_label("GOOD")
+			update_label("Good")
 		"MISS":
 			combo = 0
-			update_label("MISS")
+			update_label("Miss")
 
-func update_label(grade: String) -> void:
-	self.text = str(grade) + "!\nCombo x%d" % [combo]
+func update_label(message: String) -> void:
+	self.text = str(message) + "\nCombo x%d" % [combo]
 	self.visible = true
 	$VisibilityTimer.start()
 
