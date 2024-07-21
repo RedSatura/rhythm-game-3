@@ -37,6 +37,7 @@ func _ready() -> void:
 	SignalHandler.connect("update_editor_line_color", Callable(self, "update_editor_line_color"))
 	SignalHandler.connect("song_validated", Callable(self, "process_song_validation"))
 	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
+	$UI.theme = GlobalData.global_settings["theme"]
 	song_manager_viewport.visible = false
 	song_validator.highlighting_color = highlighting_color
 	code_edit.grab_focus()

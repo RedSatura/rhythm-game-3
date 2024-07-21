@@ -10,7 +10,9 @@ func _ready() -> void:
 	SignalHandler.connect("song_validated", Callable(self, "song_validated"))
 	SignalHandler.connect("reset_to_defaults", Callable(self, "reset_to_defaults"))
 	SignalHandler.connect("change_theme", Callable(self, "change_theme"))
+	
 	OS.request_permissions()
+	
 	$UI/Custom/OpenFile.grab_focus()
 	song_info.visible = false
 	if GlobalData.global_settings["theme"] == null:
@@ -18,6 +20,8 @@ func _ready() -> void:
 		$UI.theme = GlobalData.global_settings["theme"]
 	else:
 		$UI.theme = GlobalData.global_settings["theme"]
+		
+	
 
 func _on_song_file_picker_file_selected(path: String) -> void:
 	status_label.text = "Loading %s..." % [path]

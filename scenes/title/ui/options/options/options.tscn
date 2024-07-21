@@ -50,4 +50,22 @@ offset_top = 136.0
 offset_right = 439.0
 offset_bottom = 328.0
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 239.304
+offset_top = 664.0
+offset_right = 437.304
+offset_bottom = 693.0
+theme_override_font_sizes/font_size = 20
+text = "Created by RedSatura"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 231.327
+offset_top = 688.0
+offset_right = 435.327
+offset_bottom = 712.0
+theme_override_font_sizes/font_size = 16
+text = "Made with Godot Engine 4.2"
+
 [connection signal="toggled" from="Display/DarkMode" to="." method="_on_dark_mode_toggled"]

@@ -353,12 +353,14 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.msf", "*.txt")
+show_hidden_files = true
 
 [node name="NewSongSaver" type="FileDialog" parent="."]
 initial_position = 1
 size = Vector2i(800, 400)
 access = 2
 filters = PackedStringArray(".msf")
+show_hidden_files = true
 
 [connection signal="text_changed" from="UI/CodeEdit" to="." method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="UI/Open" to="." method="_on_open_pressed"]

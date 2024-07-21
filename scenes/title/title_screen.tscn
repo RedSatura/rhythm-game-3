@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://d4glp02ecl6x5"]
+[gd_scene load_steps=8 format=3 uid="uid://d4glp02ecl6x5"]
 
 [ext_resource type="Script" path="res://scenes/title/song_file_picker.gd" id="1_b3hli"]
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
 [ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="2_lpb5x"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_283yi"]
-[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="4_ad4ms"]
 [ext_resource type="PackedScene" uid="uid://cin78nuhqwsys" path="res://scenes/title/ui/options/options_button/options_button.tscn" id="5_g1xjh"]
 [ext_resource type="PackedScene" uid="uid://c126fvxjjjxl7" path="res://scenes/title/ui/options/options/options.tscn" id="6_tu506"]
 
@@ -32,7 +31,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("4_ad4ms")
 
 [node name="Panel" type="Panel" parent="UI"]
 layout_mode = 0
@@ -54,7 +52,7 @@ offset_top = 56.0
 offset_right = 272.0
 offset_bottom = 90.0
 theme_override_font_sizes/font_size = 24
-text = "v0.2.2"
+text = "v0.3.0"
 
 [node name="Official" type="Label" parent="UI"]
 layout_mode = 0

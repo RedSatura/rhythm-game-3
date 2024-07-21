@@ -26,7 +26,9 @@ func _on_dark_mode_toggled(toggled_on: bool) -> void:
 		var new_theme: Theme = load("res://styles/dark_theme.tres")
 		GlobalData.global_settings["theme_name"] = "dark"
 		SignalHandler.emit_signal("change_theme", new_theme)
+		DataSaver.save_data()
 	else:
 		var new_theme: Theme = load("res://styles/default_theme.tres")
 		GlobalData.global_settings["theme_name"] = "light"
 		SignalHandler.emit_signal("change_theme", new_theme)
+		DataSaver.save_data()
