@@ -352,6 +352,7 @@ size = Vector2i(800, 400)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+root_subfolder = "/storage/emulated/0"
 filters = PackedStringArray("*.msf", "*.txt")
 show_hidden_files = true
 
@@ -359,6 +360,7 @@ show_hidden_files = true
 initial_position = 1
 size = Vector2i(800, 400)
 access = 2
+root_subfolder = "/storage/emulated/0"
 filters = PackedStringArray(".msf")
 show_hidden_files = true
 
