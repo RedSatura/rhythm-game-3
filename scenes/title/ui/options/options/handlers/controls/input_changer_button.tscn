@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b454pq7tnb4lv"]
+
+[ext_resource type="Script" path="res://scenes/title/ui/options/options/handlers/controls/input_changer_button.gd" id="1_k0qo8"]
+
+[node name="InputChangerButton" type="Button"]
+offset_right = 112.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "D"
+script = ExtResource("1_k0qo8")

@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy85e4p5x5mih"]
+
+[ext_resource type="Script" path="res://scenes/ui/message_display/message_display.gd" id="1_j1xp5"]
+[ext_resource type="Texture2D" uid="uid://ccsbubttjrcs8" path="res://assets/icons/close-bold-svgrepo-com.svg" id="3_i7tex"]
+
+[node name="MessageDisplay" type="Panel"]
+custom_minimum_size = Vector2(240, 64)
+offset_right = 240.0
+offset_bottom = 64.0
+theme_type_variation = &"MessageDisplay"
+script = ExtResource("1_j1xp5")
+
+[node name="Message" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 232.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 16
+text = "ERROR: Invalid audio path."
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Close" type="Button" parent="."]
+layout_mode = 0
+offset_left = 240.0
+offset_right = 280.0
+offset_bottom = 64.0
+theme_type_variation = &"MessageDisplayButton"
+icon = ExtResource("3_i7tex")
+icon_alignment = 1
+expand_icon = true
+
+[node name="FadeTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="FadeBar" type="ProgressBar" parent="."]
+visible = false
+layout_mode = 0
+offset_top = 60.0
+offset_right = 240.0
+offset_bottom = 64.0
+value = 50.0
+show_percentage = false
+
+[connection signal="pressed" from="Close" to="." method="_on_close_pressed"]
+[connection signal="timeout" from="FadeTimer" to="." method="_on_fade_timer_timeout"]

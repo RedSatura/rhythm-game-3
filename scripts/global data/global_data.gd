@@ -1,8 +1,8 @@
 extends Node
 
-var song_path = ""
+var song_path: String = ""
 
-var song_info = { #defaults
+var song_info: Dictionary = { #defaults
 	#metadata
 	"title": "",
 	"artist": "",
@@ -17,9 +17,14 @@ var song_info = { #defaults
 	"starting_beat_in_measure": 1,
 }
 
-var result_data = {
-	"total_notes": 0,
-	"perfect": 0,
-	"good": 0,
-	"miss": 0,
+##TODO implement whtever this is its late
+var global_settings: Dictionary = {
+	"theme": load("res://styles/default_theme.tres"),
+	"theme_name": "light",
+	#KEY BINDS
+	"key_lane_left": 68,
+	"key_lane_center_left": 70,
+	"key_lane_center_right": 74,
+	"key_lane_right": 75,
+	"key_pause": 80,
 }

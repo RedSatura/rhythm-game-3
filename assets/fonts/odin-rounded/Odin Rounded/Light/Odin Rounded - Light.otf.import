@@ -1,0 +1,33 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://by8014mq0ss0"
+path="res://.godot/imported/Odin Rounded - Light.otf-8694bd877aee016cbd668f581b8500be.fontdata"
+
+[deps]
+
+source_file="res://assets/fonts/odin-rounded/Odin Rounded/Light/Odin Rounded - Light.otf"
+dest_files=["res://.godot/imported/Odin Rounded - Light.otf-8694bd877aee016cbd668f581b8500be.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

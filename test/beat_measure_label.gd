@@ -1,13 +1,13 @@
 extends Label
 
-var measure = 0
+var measure: int = 0
 
-func _ready():
+func _ready() -> void:
 	SignalHandler.connect("beat_occured", Callable(self, "update_text"))
 	SignalHandler.connect("measure_occured", Callable(self, "measure_occured"))
 	
-func update_text(beat):
+func update_text(beat: int) -> void:
 	self.text = "Current Beat: %d\nMeasures Occured: %d" % [beat, measure]
 	
-func measure_occured():
+func measure_occured() -> void:
 	measure += 1

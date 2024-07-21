@@ -1,14 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cy0hcyuyxp8sr"]
+[gd_scene load_steps=12 format=3 uid="uid://cy0hcyuyxp8sr"]
 
 [ext_resource type="Script" path="res://scenes/editor/song_editor.gd" id="1_m8jub"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_46n4m"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_xyeha"]
-font_size = 12
+[ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
 action = &"save"
@@ -16,35 +11,62 @@ action = &"save"
 [sub_resource type="Shortcut" id="Shortcut_j002f"]
 events = [SubResource("InputEventAction_yfhqm")]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5agte"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_meuqb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n18v5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oule7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jn6ve"]
+
 [node name="SongEditor" type="Node2D"]
 script = ExtResource("1_m8jub")
+highlighting_color = Color(0.164706, 0.4, 1, 0.447059)
 
-[node name="Panel" type="Panel" parent="."]
+[node name="SongManager" parent="." instance=ExtResource("2_cdhk3")]
+position = Vector2(1920, 0)
+auto_mode = true
+
+[node name="SongValidator" parent="." instance=ExtResource("3_28ch4")]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="Editor" type="Label" parent="."]
+[node name="Editor" type="Label" parent="UI"]
+layout_mode = 0
 offset_left = 8.0
 offset_right = 384.0
 offset_bottom = 64.0
 text = "Song Editor"
-label_settings = SubResource("LabelSettings_46n4m")
 vertical_alignment = 1
 
-[node name="CurrentlyOpened" type="Label" parent="."]
+[node name="CurrentlyOpened" type="Label" parent="UI"]
+layout_mode = 0
 offset_left = 8.0
 offset_top = 64.0
 offset_right = 504.0
 offset_bottom = 120.0
+theme_override_font_sizes/font_size = 12
 text = "Currently Opened File:"
-label_settings = SubResource("LabelSettings_xyeha")
 autowrap_mode = 3
 
-[node name="CodeEdit" type="CodeEdit" parent="."]
+[node name="CodeEdit" type="CodeEdit" parent="UI"]
+layout_mode = 0
 offset_left = 8.0
 offset_top = 128.0
 offset_right = 504.0
 offset_bottom = 704.0
+focus_mode = 1
 text = "TITLE:
 ARTIST:
 MAPCREATOR:
@@ -60,82 +82,104 @@ highlight_current_line = true
 symbol_lookup_on_click = true
 gutters_draw_line_numbers = true
 
-[node name="Open" type="Button" parent="."]
+[node name="Open" type="Button" parent="UI"]
+layout_mode = 0
 offset_left = 328.0
 offset_top = 8.0
 offset_right = 376.0
 offset_bottom = 56.0
-theme_override_font_sizes/font_size = 12
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Save")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Save")
+focus_previous = NodePath(".")
+theme_override_font_sizes/font_size = 14
 text = "Open"
 
-[node name="SongPicker" type="FileDialog" parent="."]
-title = "Open a File"
-initial_position = 1
-size = Vector2i(800, 400)
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.msf", "*.txt")
-
-[node name="NewSongSaver" type="FileDialog" parent="."]
-initial_position = 1
-size = Vector2i(800, 400)
-access = 2
-filters = PackedStringArray(".msf")
-
-[node name="Save" type="Button" parent="."]
+[node name="Save" type="Button" parent="UI"]
+layout_mode = 0
 offset_left = 392.0
 offset_top = 8.0
 offset_right = 440.0
 offset_bottom = 56.0
-theme_override_font_sizes/font_size = 12
+focus_neighbor_left = NodePath("../Open")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Play")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Play")
+focus_previous = NodePath("../Open")
+theme_override_font_sizes/font_size = 14
 shortcut = SubResource("Shortcut_j002f")
 text = "Save*"
 
-[node name="Play" type="Button" parent="."]
+[node name="Play" type="Button" parent="UI"]
+layout_mode = 0
 offset_left = 456.0
 offset_top = 8.0
 offset_right = 504.0
 offset_bottom = 56.0
-theme_override_font_sizes/font_size = 12
+focus_neighbor_left = NodePath("../Save")
+focus_neighbor_top = NodePath(".")
+focus_next = NodePath("../Help")
+focus_previous = NodePath("../Save")
+theme_override_font_sizes/font_size = 14
 text = "Play"
 
-[node name="Help" type="TabContainer" parent="."]
+[node name="Help" type="TabContainer" parent="UI"]
+layout_mode = 0
 offset_left = 520.0
 offset_top = 80.0
 offset_right = 1264.0
 offset_bottom = 432.0
+focus_neighbor_left = NodePath("../Play")
+focus_neighbor_bottom = NodePath(".")
 
-[node name="Song Editor" type="TabBar" parent="Help"]
+[node name="Song Editor" type="TabBar" parent="UI/Help"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../../Play")
+focus_neighbor_top = NodePath("../../TitleScreen")
+focus_neighbor_right = NodePath("../Song Format")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Song Format")
+focus_previous = NodePath("../../Play")
 
-[node name="Label" type="Label" parent="Help/Song Editor"]
+[node name="Label" type="Label" parent="UI/Help/Song Editor"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 17.0
+offset_top = 22.0
 offset_right = 728.0
-offset_bottom = 305.0
+offset_bottom = 310.0
+theme_override_font_sizes/font_size = 18
 text = "Welcome to the Song Editor!
 You can edit your own .msf files here, though you can also just use plain text files.
 Happy editing! :)
 
 -RedSatura"
 
-[node name="Song Format" type="TabBar" parent="Help"]
+[node name="Song Format" type="TabBar" parent="UI/Help"]
 visible = false
 layout_mode = 2
+focus_neighbor_left = NodePath("../Song Editor")
+focus_neighbor_top = NodePath("../../TitleScreen")
+focus_neighbor_right = NodePath("../Headers")
+focus_neighbor_bottom = NodePath("ScrollContainer")
+focus_next = NodePath("../Headers")
+focus_previous = NodePath("../Song Editor")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Help/Song Format"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Help/Song Format"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 17.0
-offset_right = 728.0
-offset_bottom = 305.0
+offset_top = 22.0
+offset_right = 736.0
+offset_bottom = 278.0
 horizontal_scroll_mode = 0
+metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="Help/Song Format/ScrollContainer"]
-custom_minimum_size = Vector2(712, 0)
+[node name="Label" type="Label" parent="UI/Help/Song Format/ScrollContainer"]
+custom_minimum_size = Vector2(696, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "This game uses a special format to play songs: .msf (Magenta Song Format) files.
 (Well, it's basically a text file so you can use that. I wanted to feel a bit fancy.)
 
@@ -154,20 +198,28 @@ Setting up an audio file is explained in the Headers section.
 The song manager (which is responsible for playing the song), starting on the line after the SONG_START command, reads the next line in the file every beat, until it reaches the SONG_END command, where it stops reading the file."
 autowrap_mode = 3
 
-[node name="Headers" type="TabBar" parent="Help"]
+[node name="Headers" type="TabBar" parent="UI/Help"]
 visible = false
 layout_mode = 2
+focus_neighbor_left = NodePath("../Song Format")
+focus_neighbor_top = NodePath("../../TitleScreen")
+focus_neighbor_right = NodePath("../Commands")
+focus_neighbor_bottom = NodePath("ScrollContainer")
+focus_next = NodePath("../Commands")
+focus_previous = NodePath("../Song Format")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Help/Headers"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Help/Headers"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 17.0
-offset_right = 728.0
-offset_bottom = 305.0
+offset_top = 22.0
+offset_right = 736.0
+offset_bottom = 278.0
+metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="Help/Headers/ScrollContainer"]
-custom_minimum_size = Vector2(712, 0)
+[node name="Label" type="Label" parent="UI/Help/Headers/ScrollContainer"]
+custom_minimum_size = Vector2(696, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "The first part of the msf file is the head. This contains all the information about the song.
 The default file when opening the editor contains some examples of headers.
 
@@ -200,20 +252,26 @@ Using anything that is not by a factor of 2 results in unexpected behavior.
 The BEATS_IN_MEASURE header is the number of beats in a measure. Irrelevant for now."
 autowrap_mode = 3
 
-[node name="Commands" type="TabBar" parent="Help"]
+[node name="Commands" type="TabBar" parent="UI/Help"]
 visible = false
 layout_mode = 2
+focus_neighbor_left = NodePath("../Headers")
+focus_neighbor_top = NodePath("../../TitleScreen")
+focus_neighbor_right = NodePath("../../TitleScreen")
+focus_neighbor_bottom = NodePath(".")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Help/Commands"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Help/Commands"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 17.0
-offset_right = 728.0
-offset_bottom = 305.0
+offset_top = 22.0
+offset_right = 736.0
+offset_bottom = 278.0
+metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="Help/Commands/ScrollContainer"]
-custom_minimum_size = Vector2(712, 0)
+[node name="Label" type="Label" parent="UI/Help/Commands/ScrollContainer"]
+custom_minimum_size = Vector2(696, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Commands are located within the song body, between SONG_START and SONG_END.
 They are executed in order from left to right, when the song manager reaches their line in the file.
 
@@ -227,62 +285,87 @@ You can chain commands by simply typing another regular command after a comma.
 
 The first basic command is the spawn note command. Its command identifier is \"s\". This takes one parameter, the lane in which it spawns in.
 1 for the leftmost lane, 2 for the center-left, 3 for the center-right, and 4 for the rightmost lane.
-You can instead use \"r\" to randomly place a note. 
+You can instead use 0 to randomly place a note. 
 Notes have a delay until they reach the hit area. Using the default settings has a four-beat delay from spawning until reaching the hit area. This may vary when using different settings.
 
-Simply put, spawning a note on lane 1 is \"s/1+,\", while spawning randomly will be \"s/r+,\".
+Simply put, spawning a note on lane 1 is \"s/1+,\", while spawning randomly will be \"s/0+,\".
 "
 autowrap_mode = 3
 
-[node name="StatusLabel" type="Label" parent="."]
-offset_left = 520.0
-offset_top = 432.0
-offset_right = 1264.0
-offset_bottom = 464.0
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="TitleScreen" type="Button" parent="."]
+[node name="TitleScreen" type="Button" parent="UI"]
+layout_mode = 0
 offset_left = 1216.0
-offset_top = 16.0
-offset_right = 1264.0
+offset_right = 1280.0
 offset_bottom = 64.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5agte")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_meuqb")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_n18v5")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_oule7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jn6ve")
+icon = ExtResource("5_xkohr")
+icon_alignment = 1
+expand_icon = true
 
-[node name="SongManager" parent="." instance=ExtResource("2_cdhk3")]
-position = Vector2(1536, 0)
-auto_mode = true
-
-[node name="SongValidator" parent="." instance=ExtResource("3_28ch4")]
-
-[node name="Preview" type="Label" parent="."]
-offset_left = 944.0
-offset_top = 488.0
-offset_right = 1104.0
-offset_bottom = 519.0
+[node name="Preview" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 448.0
+offset_right = 624.0
+offset_bottom = 488.0
+theme_override_font_sizes/font_size = 28
 text = "Preview"
 vertical_alignment = 1
 
-[node name="SongManagerViewport" type="SubViewportContainer" parent="."]
-offset_left = 944.0
-offset_top = 520.0
-offset_right = 1264.0
+[node name="SongManagerViewport" type="SubViewportContainer" parent="UI"]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 488.0
+offset_right = 856.0
 offset_bottom = 700.0
 
-[node name="SubViewport" type="SubViewport" parent="SongManagerViewport"]
+[node name="SubViewport" type="SubViewport" parent="UI/SongManagerViewport"]
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
 snap_2d_vertices_to_pixel = true
-size = Vector2i(320, 180)
+size = Vector2i(336, 212)
 render_target_update_mode = 4
 
-[node name="Camera2D" type="Camera2D" parent="SongManagerViewport/SubViewport"]
+[node name="Camera2D" type="Camera2D" parent="UI/SongManagerViewport/SubViewport"]
 position = Vector2(2176, 360)
 zoom = Vector2(0.25, 0.25)
 
-[connection signal="text_changed" from="CodeEdit" to="." method="_on_code_edit_text_changed"]
-[connection signal="pressed" from="Open" to="." method="_on_open_pressed"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI"]
+layout_mode = 0
+offset_left = 984.0
+offset_top = 448.0
+offset_right = 1264.0
+offset_bottom = 704.0
+horizontal_scroll_mode = 0
+
+[node name="MessagesContainer" type="VBoxContainer" parent="UI/ScrollContainer"]
+layout_mode = 2
+
+[node name="SongPicker" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(800, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.msf", "*.txt")
+show_hidden_files = true
+
+[node name="NewSongSaver" type="FileDialog" parent="."]
+initial_position = 1
+size = Vector2i(800, 400)
+access = 2
+filters = PackedStringArray(".msf")
+show_hidden_files = true
+
+[connection signal="text_changed" from="UI/CodeEdit" to="." method="_on_code_edit_text_changed"]
+[connection signal="pressed" from="UI/Open" to="." method="_on_open_pressed"]
+[connection signal="pressed" from="UI/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="UI/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="UI/TitleScreen" to="." method="_on_title_screen_pressed"]
 [connection signal="file_selected" from="SongPicker" to="." method="_on_song_picker_file_selected"]
 [connection signal="file_selected" from="NewSongSaver" to="." method="_on_new_song_saver_file_selected"]
-[connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="TitleScreen" to="." method="_on_title_screen_pressed"]

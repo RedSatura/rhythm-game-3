@@ -1,39 +1,70 @@
-[gd_scene load_steps=14 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=10 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
 [ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
+[ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="3_fb8qo"]
+[ext_resource type="Texture2D" uid="uid://cr543j8pmsdcb" path="res://assets/icons/pause-svgrepo-com.svg" id="4_hqsi5"]
 [ext_resource type="Script" path="res://scenes/stage/ui/song_duration_bar.gd" id="4_w0wif"]
 [ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="5_blj8g"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="6_0b2l7"]
 [ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="6_26smg"]
 [ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_jgl2l"]
-font_size = 46
-
-[sub_resource type="LabelSettings" id="LabelSettings_02gkq"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_qc7nf"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_cmwtn"]
-font_size = 38
-
-[sub_resource type="LabelSettings" id="LabelSettings_v86rb"]
-font_size = 12
-
-[sub_resource type="LabelSettings" id="LabelSettings_3ikd6"]
-font_size = 32
-
 [node name="Stage" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_je8j5")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="BeatMeasureLabel" type="Label" parent="CanvasLayer"]
+[node name="Background" type="Panel" parent="UI"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_type_variation = &"StageBackground"
+
+[node name="Button" type="Button" parent="UI"]
+process_mode = 3
+layout_mode = 0
+offset_left = 1216.0
+offset_right = 1280.0
+offset_bottom = 64.0
+focus_mode = 0
+icon = ExtResource("3_fb8qo")
+flat = true
+expand_icon = true
+
+[node name="PauseButton" type="Button" parent="UI"]
+process_mode = 3
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+focus_mode = 0
+icon = ExtResource("4_hqsi5")
+flat = true
+expand_icon = true
+
+[node name="NoteFeedbackLabel" type="Label" parent="UI"]
 visible = false
+layout_mode = 0
+offset_left = 448.0
+offset_top = 256.0
+offset_right = 856.0
+offset_bottom = 384.0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_26smg")
+
+[node name="VisibilityTimer" type="Timer" parent="UI/NoteFeedbackLabel"]
+wait_time = 1.5
+one_shot = true
+
+[node name="BeatMeasureLabel" type="Label" parent="UI"]
+visible = false
+layout_mode = 0
 offset_left = 272.0
 offset_top = 640.0
 offset_right = 464.0
@@ -42,15 +73,17 @@ text = "Current Beat: 0
 Measures Occured: 0"
 script = ExtResource("2_3ujy6")
 
-[node name="SongDurationBar" type="ProgressBar" parent="CanvasLayer"]
+[node name="SongDurationBar" type="ProgressBar" parent="UI"]
 visible = false
+layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 16.0
 show_percentage = false
 script = ExtResource("4_w0wif")
 
-[node name="TimeElapsedLabel" type="Label" parent="CanvasLayer"]
+[node name="TimeElapsedLabel" type="Label" parent="UI"]
 visible = false
+layout_mode = 0
 offset_left = 464.0
 offset_top = 640.0
 offset_right = 632.0
@@ -58,155 +91,117 @@ offset_bottom = 696.0
 text = "TIme Elapsed: 0"
 script = ExtResource("6_ik5x7")
 
-[node name="Results" type="Control" parent="CanvasLayer"]
-visible = false
+[node name="Results" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 352.0
+offset_left = 384.0
 offset_top = 64.0
-offset_right = 864.0
+offset_right = 896.0
 offset_bottom = 640.0
 script = ExtResource("5_blj8g")
 
-[node name="Results" type="Label" parent="CanvasLayer/Results"]
+[node name="Results" type="Label" parent="UI/Results"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 64.0
 offset_right = 512.0
 offset_bottom = 128.0
+theme_override_font_sizes/font_size = 40
 text = "Results"
-label_settings = SubResource("LabelSettings_jgl2l")
 
-[node name="Perfect" type="Label" parent="CanvasLayer/Results"]
+[node name="Perfect" type="Label" parent="UI/Results"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 128.0
 offset_right = 320.0
 offset_bottom = 192.0
 text = "Perfect: "
-label_settings = SubResource("LabelSettings_02gkq")
 vertical_alignment = 1
 
-[node name="PerfectResult" type="Label" parent="CanvasLayer/Results/Perfect"]
+[node name="PerfectResult" type="Label" parent="UI/Results/Perfect"]
 layout_mode = 0
 offset_left = 256.0
 offset_right = 384.0
 offset_bottom = 64.0
 text = "0"
-label_settings = SubResource("LabelSettings_qc7nf")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Good" type="Label" parent="CanvasLayer/Results"]
+[node name="Good" type="Label" parent="UI/Results"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 192.0
 offset_right = 320.0
 offset_bottom = 256.0
 text = "Good: "
-label_settings = SubResource("LabelSettings_02gkq")
 vertical_alignment = 1
 
-[node name="GoodResult" type="Label" parent="CanvasLayer/Results/Good"]
+[node name="GoodResult" type="Label" parent="UI/Results/Good"]
 layout_mode = 0
 offset_left = 256.0
 offset_right = 384.0
 offset_bottom = 64.0
 text = "0"
-label_settings = SubResource("LabelSettings_qc7nf")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Miss" type="Label" parent="CanvasLayer/Results"]
+[node name="Miss" type="Label" parent="UI/Results"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 256.0
 offset_right = 320.0
 offset_bottom = 320.0
 text = "Miss: "
-label_settings = SubResource("LabelSettings_02gkq")
 vertical_alignment = 1
 
-[node name="MissResult" type="Label" parent="CanvasLayer/Results/Miss"]
+[node name="MissResult" type="Label" parent="UI/Results/Miss"]
 layout_mode = 0
 offset_left = 256.0
 offset_right = 384.0
 offset_bottom = 64.0
 text = "0"
-label_settings = SubResource("LabelSettings_qc7nf")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="HitRate" type="Label" parent="CanvasLayer/Results"]
+[node name="HitRate" type="Label" parent="UI/Results"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 384.0
 offset_right = 288.0
 offset_bottom = 448.0
 text = "Hit Rate: "
-label_settings = SubResource("LabelSettings_02gkq")
 vertical_alignment = 1
 
-[node name="HitRatePercentResult" type="Label" parent="CanvasLayer/Results/HitRate"]
+[node name="HitRatePercentResult" type="Label" parent="UI/Results/HitRate"]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "12.00%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRateIntegerResult" type="Label" parent="UI/Results/HitRate"]
 layout_mode = 0
 offset_left = 224.0
+offset_top = 64.0
 offset_right = 384.0
-offset_bottom = 64.0
-label_settings = SubResource("LabelSettings_cmwtn")
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 16
+text = "4 / 4"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="HitRateIntegerResult" type="Label" parent="CanvasLayer/Results/HitRate"]
-layout_mode = 0
-offset_left = 256.0
-offset_top = 47.0
-offset_right = 384.0
-offset_bottom = 64.0
-label_settings = SubResource("LabelSettings_v86rb")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="VisibilityTimer" type="Timer" parent="CanvasLayer/Results"]
+[node name="VisibilityTimer" type="Timer" parent="UI/Results"]
 wait_time = 3.0
 one_shot = true
 
-[node name="SongManager" parent="." instance=ExtResource("6_0b2l7")]
+[node name="SongManager" parent="UI" instance=ExtResource("6_0b2l7")]
+position = Vector2(384, 0)
 in_editor = false
 metadata/_edit_lock_ = true
 
-[node name="Button" type="Button" parent="."]
-process_mode = 3
-offset_left = 1200.0
-offset_top = 32.0
-offset_right = 1264.0
-offset_bottom = 96.0
-
-[node name="PauseButton" type="Button" parent="."]
-process_mode = 3
-offset_left = 16.0
-offset_top = 32.0
-offset_right = 80.0
-offset_bottom = 96.0
-text = "||"
-
-[node name="NoteFeedbackLabel" type="Label" parent="."]
-visible = false
-offset_left = 448.0
-offset_top = 256.0
-offset_right = 856.0
-offset_bottom = 384.0
-text = "GOOD!
-Combo x0"
-label_settings = SubResource("LabelSettings_3ikd6")
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("6_26smg")
-
-[node name="VisibilityTimer" type="Timer" parent="NoteFeedbackLabel"]
-wait_time = 1.5
-one_shot = true
-
-[connection signal="timeout" from="CanvasLayer/Results/VisibilityTimer" to="CanvasLayer/Results" method="_on_visiblity_timer_timeout"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]
-[connection signal="timeout" from="NoteFeedbackLabel/VisibilityTimer" to="NoteFeedbackLabel" method="_on_visibility_timer_timeout"]
+[connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="timeout" from="UI/NoteFeedbackLabel/VisibilityTimer" to="UI/NoteFeedbackLabel" method="_on_visibility_timer_timeout"]
+[connection signal="timeout" from="UI/Results/VisibilityTimer" to="UI/Results" method="_on_visiblity_timer_timeout"]

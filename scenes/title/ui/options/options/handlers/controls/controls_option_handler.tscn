@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch1xcx3r1bwut"]
+
+[ext_resource type="Script" path="res://scenes/title/ui/options/options/handlers/controls/controls_option_handler.gd" id="2_u6ooy"]
+[ext_resource type="PackedScene" uid="uid://b454pq7tnb4lv" path="res://scenes/title/ui/options/options/handlers/controls/input_changer_button.tscn" id="3_bncf2"]
+
+[node name="ControlsOptionHandler" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 384.0
+offset_bottom = 200.0
+script = ExtResource("2_u6ooy")
+
+[node name="Controls" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 135.0
+offset_bottom = 39.0
+theme_override_font_sizes/font_size = 22
+text = "Controls
+"
+
+[node name="LeftLane" type="Label" parent="Controls"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 72.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 16
+text = "Left Lane"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/LeftLane" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+input_action_name = "lane_left"
+
+[node name="CenterLeftLane" type="Label" parent="Controls"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 118.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 16
+text = "Center Left Lane"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/CenterLeftLane" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+text = "F"
+input_action_name = "lane_center_left"
+
+[node name="CenterRightLane" type="Label" parent="Controls"]
+layout_mode = 0
+offset_top = 96.0
+offset_right = 130.0
+offset_bottom = 128.0
+scale = Vector2(1, 0.987555)
+theme_override_font_sizes/font_size = 16
+text = "Center Right Lane"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/CenterRightLane" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+text = "J"
+input_action_name = "lane_center_right"
+
+[node name="RightLane" type="Label" parent="Controls"]
+layout_mode = 0
+offset_top = 128.0
+offset_right = 154.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 16
+text = "Right Lane"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/RightLane" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+text = "K"
+input_action_name = "lane_right"
+
+[node name="Pause" type="Label" parent="Controls"]
+layout_mode = 0
+offset_top = 160.0
+offset_right = 44.0
+offset_bottom = 192.0
+theme_override_font_sizes/font_size = 16
+text = "Pause"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/Pause" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+text = "P"
+input_action_name = "pause"
