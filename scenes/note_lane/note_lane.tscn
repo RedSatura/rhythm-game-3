@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxhghnc6fqebu"]
+[gd_scene load_steps=8 format=3 uid="uid://cxhghnc6fqebu"]
 
 [ext_resource type="Script" path="res://scenes/note_lane/note_lane.gd" id="1_ipfhx"]
+[ext_resource type="Shader" path="res://scenes/note_lane/hit_feedback_background_shader.gdshader" id="2_ridbf"]
 [ext_resource type="Texture2D" uid="uid://bnj20qqck2yye" path="res://assets/textures/note_detector_bg.png" id="2_t7pny"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_33wlk"]
+shader = ExtResource("2_ridbf")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qbr3x"]
 
@@ -29,6 +33,14 @@ layout_mode = 0
 offset_right = 128.0
 offset_bottom = 720.0
 color = Color(0.819608, 0.819608, 0.819608, 0.384314)
+
+[node name="HitFeedbackBackground" type="ColorRect" parent="UI"]
+material = SubResource("ShaderMaterial_33wlk")
+layout_mode = 0
+offset_top = 384.0
+offset_right = 128.0
+offset_bottom = 720.0
+color = Color(0.878431, 0.254902, 0.254902, 0.439216)
 
 [node name="NoteDetectorBackground" type="TextureRect" parent="UI"]
 modulate = Color(0.54902, 0.54902, 0.54902, 1)

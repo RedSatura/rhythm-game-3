@@ -10,6 +10,7 @@ extends Node2D
 
 @onready var lane_background: Node = $UI/LaneBackground
 @onready var note_detector_background: Node = $UI/NoteDetectorBackground
+@onready var hit_feedback_background: Node = $UI/HitFeedbackBackground
 
 var current_note: Area2D = null
 

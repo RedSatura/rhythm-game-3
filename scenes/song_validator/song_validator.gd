@@ -145,7 +145,7 @@ func validate_song_body(file: FileAccess) -> void: #Step 4: Validating song body
 	else:
 		GlobalData.song_info = song_info
 		SignalHandler.emit_signal("song_validated")
-		#SignalHandler.emit_signal("send_message", "Successfully validated!")
+		SignalHandler.emit_signal("send_message", "Successfully validated!")
 		return
 		#The song information will be stored in the global script global_data.
 		#Get the song info from there.

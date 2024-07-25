@@ -10,7 +10,6 @@ var line_content: String = ""
 var song_title: String = ""
 
 @onready var conductor: Node = $Conductor
-@onready var note_lanes: Node = $NoteLanes
 
 @onready var song_start_timer: Node = $SongStartTimer
 
@@ -20,12 +19,15 @@ var current_line_in_file: int = 0
 
 func _ready() -> void:
 	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
-	note_lanes.set_note_lane_auto_mode(auto_mode)
 	if !in_editor:
 		song_start_timer.start()
 	
 func start_song() -> void:
 	setup_file()
+	#set note lane settings
+	if in_editor:
+		SignalHandler.emit_signal("set_note_lane_setting_auto_mode", true)
+	
 	if FileAccess.file_exists(GlobalData.song_info["audio_src"]):
 		conductor.stream = AudioStreamOggVorbis.load_from_file(GlobalData.song_info["audio_src"])
 	conductor.bpm = GlobalData.song_info["bpm"]
@@ -99,28 +101,24 @@ func process_commands(commands: Array) -> void:
 					if parameter_result != [] && parameter_result != null:
 						if parameter_result.size() == 2:
 							var cached_params: Array = [] #stores parameters
-							for y: RegExMatch in parameter_result: #get and convert parameters
-								cached_params.push_back(int(y.get_string()))
-							note_lanes.disable_lane(cached_params[0], cached_params[1])
+							for value: RegExMatch in parameter_result: #get and convert parameters
+								cached_params.push_back(int(value.get_string()))
+							SignalHandler.emit_signal("disable_lane", cached_params[0], cached_params[1])
 						else:
 							SignalHandler.emit_signal("send_error", "Too few or too many parameters!")
 				"s":	#Spawn note.
 					#Parameters:
 					#Note lane number (int) - 1 for left, 2 for center left, 3 for center right, 4 for right.
-					#You can use r for random note placement.
+					#You can use 0 for random note placement.
 					#This has a delay depending on the note speed.
 					if parameter_result != [] && parameter_result != null:
 						if parameter_result.size() == 1:
 							var current_param: int = 1
-							for y: RegExMatch in parameter_result:
+							for value: RegExMatch in parameter_result:
 								match current_param:
 									1:	#Param 1: Spawns note on numbered lane.
-										var value: String = y.get_string().strip_edges()
-										if value == "r":	#Random notes
-											note_lanes.spawn_note_on_lane(value)
-										else:
-											note_lanes.spawn_note_on_lane(int(value))
-											break
+										SignalHandler.emit_signal("spawn_note", int(value.get_string()))
+										break
 									_:
 										break
 						else:

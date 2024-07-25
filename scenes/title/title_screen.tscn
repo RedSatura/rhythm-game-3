@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scenes/title/song_file_picker.gd" id="1_b3hli"]
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
-[ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="2_lpb5x"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_283yi"]
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="3_qigky"]
 [ext_resource type="PackedScene" uid="uid://cin78nuhqwsys" path="res://scenes/title/ui/options/options_button/options_button.tscn" id="5_g1xjh"]
 [ext_resource type="PackedScene" uid="uid://c126fvxjjjxl7" path="res://scenes/title/ui/options/options/options.tscn" id="6_tu506"]
 
@@ -13,17 +13,6 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_kubb5")
 
-[node name="FileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-initial_position = 2
-size = Vector2i(800, 400)
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.msf", "*.txt")
-show_hidden_files = true
-script = ExtResource("1_b3hli")
-
 [node name="SongValidator" parent="." instance=ExtResource("3_283yi")]
 
 [node name="UI" type="Control" parent="."]
@@ -31,11 +20,13 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("3_qigky")
 
 [node name="Panel" type="Panel" parent="UI"]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
+metadata/_edit_lock_ = true
 
 [node name="Title" type="Label" parent="UI"]
 layout_mode = 0
@@ -98,22 +89,18 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 568.0
-offset_right = 1264.0
+offset_left = 984.0
+offset_top = 600.0
+offset_right = 1224.0
 offset_bottom = 664.0
 grow_horizontal = 2
 grow_vertical = 0
+horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 metadata/_edit_group_ = true
 
-[node name="StatusLabel" type="Label" parent="UI/ScrollContainer"]
-custom_minimum_size = Vector2(1248, 32)
+[node name="MessagesContainer" type="VBoxContainer" parent="UI/ScrollContainer"]
 layout_mode = 2
-theme = ExtResource("2_lpb5x")
-horizontal_alignment = 2
-vertical_alignment = 1
-autowrap_mode = 3
 
 [node name="SongInfo" type="Control" parent="UI"]
 visible = false
@@ -206,7 +193,19 @@ offset_left = 1216.0
 offset_right = 1280.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_rx4e8")
 
-[connection signal="file_selected" from="FileDialog" to="FileDialog" method="_on_file_selected"]
-[connection signal="pressed" from="UI/Custom/OpenFile" to="FileDialog" method="_on_open_file_pressed"]
+[node name="FileDialog" type="FileDialog" parent="UI"]
+mode = 2
+title = "Open a File"
+initial_position = 2
+size = Vector2i(800, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.msf", "*.txt")
+script = ExtResource("1_b3hli")
+
+[connection signal="pressed" from="UI/Custom/OpenFile" to="UI/FileDialog" method="_on_open_file_pressed"]
 [connection signal="pressed" from="UI/SongInfo/PlaySong" to="." method="_on_play_song_pressed"]
 [connection signal="pressed" from="UI/Editor/EditorButton" to="." method="_on_editor_button_pressed"]
+[connection signal="canceled" from="UI/FileDialog" to="." method="_on_file_dialog_canceled"]
+[connection signal="file_selected" from="UI/FileDialog" to="UI/FileDialog" method="_on_file_selected"]

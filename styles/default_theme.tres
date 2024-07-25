@@ -1,6 +1,9 @@
-[gd_resource type="Theme" load_steps=29 format=3 uid="uid://difwrn3vbn48p"]
+[gd_resource type="Theme" load_steps=30 format=3 uid="uid://difwrn3vbn48p"]
 
 [ext_resource type="FontFile" uid="uid://rus7wdnt30ev" path="res://assets/fonts/nunito/Nunito-Regular.ttf" id="1_s3xx5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_51j0b"]
+bg_color = Color(0.7, 0.7, 0.7, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8qojp"]
 content_margin_left = 4.0
@@ -176,6 +179,8 @@ corner_radius_top_right = 8
 resource_local_to_scene = true
 default_font = ExtResource("1_s3xx5")
 default_font_size = 32
+AcceptDialog/constants/buttons_separation = 16
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_51j0b")
 Button/colors/font_color = Color(0, 0, 0, 1)
 Button/colors/font_disabled_color = Color(0.7, 0.7, 0.7, 1)
 Button/colors/font_focus_color = Color(0, 0, 0, 1)
@@ -215,6 +220,8 @@ CodeEdit/font_sizes/font_size = 20
 CodeEdit/styles/focus = SubResource("StyleBoxFlat_iditn")
 CodeEdit/styles/normal = SubResource("StyleBoxFlat_0tgsi")
 CodeEdit/styles/read_only = SubResource("StyleBoxFlat_11g8p")
+FileDialog/colors/file_icon_color = Color(1, 1, 1, 1)
+FileDialog/colors/folder_icon_color = Color(0.7, 0.7, 0.7, 1)
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/fonts/font = ExtResource("1_s3xx5")
 LineEdit/font_sizes/font_size = 14
@@ -246,3 +253,5 @@ TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_rne88")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_20qrm")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_nbnjt")
 TextEdit/font_sizes/font_size = 14
+Window/colors/title_color = Color(1, 1, 1, 1)
+Window/font_sizes/title_font_size = 12

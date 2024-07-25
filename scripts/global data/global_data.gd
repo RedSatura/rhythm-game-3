@@ -17,7 +17,6 @@ var song_info: Dictionary = { #defaults
 	"starting_beat_in_measure": 1,
 }
 
-##TODO implement whtever this is its late
 var global_settings: Dictionary = {
 	"theme": load("res://styles/default_theme.tres"),
 	"theme_name": "light",

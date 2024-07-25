@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cy0hcyuyxp8sr"]
+[gd_scene load_steps=14 format=3 uid="uid://cy0hcyuyxp8sr"]
 
 [ext_resource type="Script" path="res://scenes/editor/song_editor.gd" id="1_m8jub"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
+[ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="4_57oav"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
+[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
 action = &"save"
@@ -26,7 +28,6 @@ script = ExtResource("1_m8jub")
 highlighting_color = Color(0.164706, 0.4, 1, 0.447059)
 
 [node name="SongManager" parent="." instance=ExtResource("2_cdhk3")]
-position = Vector2(1920, 0)
 auto_mode = true
 
 [node name="SongValidator" parent="." instance=ExtResource("3_28ch4")]
@@ -36,6 +37,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("4_57oav")
 
 [node name="Panel" type="Panel" parent="UI"]
 layout_mode = 0
@@ -332,11 +334,11 @@ render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="UI/SongManagerViewport/SubViewport"]
 position = Vector2(2176, 360)
-zoom = Vector2(0.25, 0.25)
+zoom = Vector2(0.3, 0.3)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI"]
 layout_mode = 0
-offset_left = 984.0
+offset_left = 976.0
 offset_top = 448.0
 offset_right = 1264.0
 offset_bottom = 704.0
@@ -344,6 +346,14 @@ horizontal_scroll_mode = 0
 
 [node name="MessagesContainer" type="VBoxContainer" parent="UI/ScrollContainer"]
 layout_mode = 2
+
+[node name="NoteLaneBackground" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 1536.0
+offset_right = 2816.0
+offset_bottom = 720.0
+theme_type_variation = &"StageBackground"
+metadata/_edit_lock_ = true
 
 [node name="SongPicker" type="FileDialog" parent="."]
 title = "Open a File"
@@ -361,6 +371,9 @@ size = Vector2i(800, 400)
 access = 2
 filters = PackedStringArray(".msf")
 show_hidden_files = true
+
+[node name="NoteLanes" parent="." instance=ExtResource("6_esn1d")]
+position = Vector2(1920, 0)
 
 [connection signal="text_changed" from="UI/CodeEdit" to="." method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="UI/Open" to="." method="_on_open_pressed"]

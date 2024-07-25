@@ -22,6 +22,7 @@ var current_beat_in_measure: int = 1
 ##Audio offset in milliseconds. Must range from 0 to 1500. 
 ##Does not work, so don't bother. 
 ##Just add a delay to the audio file itself.
+##Look, I tried.
 @export var audio_offset: float = 0
 
 #Determining how close to the beat an event is
