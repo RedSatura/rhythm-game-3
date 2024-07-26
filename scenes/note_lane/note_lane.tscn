@@ -40,7 +40,6 @@ layout_mode = 0
 offset_top = 384.0
 offset_right = 128.0
 offset_bottom = 720.0
-color = Color(0.878431, 0.254902, 0.254902, 0.439216)
 
 [node name="NoteDetectorBackground" type="TextureRect" parent="UI"]
 modulate = Color(0.54902, 0.54902, 0.54902, 1)
