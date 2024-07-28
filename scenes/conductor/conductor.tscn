@@ -7,4 +7,3 @@ process_mode = 1
 autoplay = true
 bus = &"Delayer"
 script = ExtResource("1_jv58c")
-audio_offset = 1500

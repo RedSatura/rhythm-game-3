@@ -8,6 +8,7 @@ func _ready() -> void:
 	SignalHandler.connect("toggle_show_title_screen_options", Callable(self, "toggle_options_visibility"))
 	if GlobalData.global_settings["theme_name"] == "dark":
 		$Display/DarkMode.button_pressed = true
+	$Sound/Volume/MasterVolumeSlider.value = GlobalData.global_settings["master_volume"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -32,3 +33,8 @@ func _on_dark_mode_toggled(toggled_on: bool) -> void:
 		GlobalData.global_settings["theme_name"] = "light"
 		SignalHandler.emit_signal("change_theme", new_theme)
 		DataSaver.save_data()
+
+func _on_global_volume_slider_value_changed(value: float) -> void:
+	#change master volume
+	#audio related stuff should be handled by the conductor or similar nodes
+	GlobalData.global_settings["master_volume"] = value

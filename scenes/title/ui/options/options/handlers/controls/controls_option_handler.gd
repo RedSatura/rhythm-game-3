@@ -49,3 +49,8 @@ func update_button_text() -> void:
 	center_right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_center_right"])
 	right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_right"])
 	pause.text = OS.get_keycode_string(GlobalData.global_settings["key_pause"])
+
+func _on_input_changer_button_focus_exited() -> void:
+	selected_button.button_pressed = false
+	selected_button.release_focus()
+	selected_button = null

@@ -29,18 +29,22 @@ var current_beat_in_measure: int = 1
 var closest_beat: int = 0
 var time_off_beat: float = 0.0
 
+@onready var master_bus: int = AudioServer.get_bus_index("Master")
+
 func _ready() -> void:
 	seconds_per_beat = 60.0 / (bpm * beat_mode)
 	current_beat_in_measure = starting_beat_in_measure
-	var effect: AudioEffect = AudioServer.get_bus_effect(1, 0)
-	if effect:
-		effect.set_dry(0)
-		effect.set_tap1_active(true)
-		if audio_offset <= 1.50:
-			effect.set_tap1_delay_ms(audio_offset)
-		effect.set_tap1_level_db(0)
-		effect.set_tap1_pan(0)
-		effect.set_tap2_active(false)
+	#kept here for reference purposes
+	#var effect: AudioEffect = AudioServer.get_bus_effect(1, 0)
+	#if effect:
+		#effect.set_dry(0)
+		#effect.set_tap1_active(true)
+		#if audio_offset <= 1.50:
+			#effect.set_tap1_delay_ms(audio_offset)
+		#effect.set_tap1_level_db(0)
+		#effect.set_tap1_pan(0)
+		#effect.set_tap2_active(false)
+	set_volume()
 
 func _physics_process(_delta: float) -> void:
 	if playing:
@@ -83,3 +87,6 @@ func play_song() -> void:
 		play()
 	else:
 		SignalHandler.emit_signal("send_error", "No audio stream found!")
+
+func set_volume() -> void:
+	AudioServer.set_bus_volume_db(master_bus, linear_to_db(GlobalData.global_settings["master_volume"]))
