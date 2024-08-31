@@ -128,6 +128,24 @@ focus_previous = NodePath("../Save")
 theme_override_font_sizes/font_size = 14
 text = "Play"
 
+[node name="From Beat" type="Label" parent="UI/Play"]
+layout_mode = 0
+offset_left = 56.0
+offset_right = 96.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 16
+text = "Beat"
+
+[node name="SpinBox" type="SpinBox" parent="UI/Play"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 24.0
+offset_right = 127.125
+offset_bottom = 52.0
+max_value = 9999.0
+rounded = true
+alignment = 2
+
 [node name="Help" type="TabContainer" parent="UI"]
 layout_mode = 0
 offset_left = 520.0

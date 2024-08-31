@@ -38,3 +38,4 @@ func _on_global_volume_slider_value_changed(value: float) -> void:
 	#change master volume
 	#audio related stuff should be handled by the conductor or similar nodes
 	GlobalData.global_settings["master_volume"] = value
+	DataSaver.save_data()

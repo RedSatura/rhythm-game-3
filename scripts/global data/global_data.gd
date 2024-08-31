@@ -27,5 +27,5 @@ var global_settings: Dictionary = {
 	"key_lane_right": 75,
 	"key_pause": 80,
 	#Audio settings
-	"master_volume": 100, 
+	"master_volume": 1.0, 
 }

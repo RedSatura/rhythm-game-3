@@ -5,6 +5,7 @@ extends Node2D
 @onready var messages_container: Node = $UI/ScrollContainer/MessagesContainer
 
 func _ready() -> void:
+	randomize()
 	SignalHandler.connect("send_error", Callable(self, "error_received"))
 	SignalHandler.connect("send_message", Callable(self, "message_received"))
 	SignalHandler.connect("clear_status_label", Callable(self, "clear_status_label"))
@@ -14,7 +15,6 @@ func _ready() -> void:
 	
 	OS.request_permissions()
 	
-	$UI/Custom/OpenFile.grab_focus()
 	song_info.visible = false
 	
 	if GlobalData.global_settings["theme"] == null:
@@ -55,3 +55,7 @@ func _on_editor_button_pressed() -> void:
 func change_theme(theme: Theme) -> void:
 	$UI.theme = theme
 	GlobalData.global_settings["theme"] = theme
+
+func _on_official_song_button_pressed() -> void:
+	SignalHandler.emit_signal("send_song_to_validator", "res://songs/official/0.4/gateway/gateway.msf")
+	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")

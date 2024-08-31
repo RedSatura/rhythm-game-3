@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4glp02ecl6x5"]
+[gd_scene load_steps=9 format=3 uid="uid://d4glp02ecl6x5"]
 
 [ext_resource type="Script" path="res://scenes/title/song_file_picker.gd" id="1_b3hli"]
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_283yi"]
 [ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="3_qigky"]
+[ext_resource type="PackedScene" uid="uid://pylb3er1nyx6" path="res://scenes/title/ui/official_song_button/official_song_button.tscn" id="4_7h62y"]
 [ext_resource type="PackedScene" uid="uid://cin78nuhqwsys" path="res://scenes/title/ui/options/options_button/options_button.tscn" id="5_g1xjh"]
 [ext_resource type="PackedScene" uid="uid://c126fvxjjjxl7" path="res://scenes/title/ui/options/options/options.tscn" id="6_tu506"]
 
@@ -43,32 +44,39 @@ offset_top = 56.0
 offset_right = 272.0
 offset_bottom = 90.0
 theme_override_font_sizes/font_size = 24
-text = "v0.3.0"
+text = "v0.4.0"
 
 [node name="Official" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 136.0
+offset_top = 144.0
 offset_right = 216.0
-offset_bottom = 181.0
+offset_bottom = 189.0
 text = "Official Songs
 "
 
-[node name="Soon" type="Label" parent="UI/Official"]
+[node name="Label" type="Label" parent="UI/Official"]
 layout_mode = 0
-offset_left = 208.0
-offset_top = 16.0
-offset_right = 314.0
-offset_bottom = 39.0
-theme_override_font_sizes/font_size = 16
-text = "Coming Soon!"
+offset_top = 64.0
+offset_right = 34.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 24
+text = "0.4"
+
+[node name="OfficialSongButton" parent="UI/Official/Label" instance=ExtResource("4_7h62y")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = -8.0
+offset_right = 232.0
+offset_bottom = 40.0
+song_path = "res://songs/official/0.4/gateway/gateway.msf"
 
 [node name="Custom" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 184.0
+offset_top = 264.0
 offset_right = 236.0
-offset_bottom = 229.0
+offset_bottom = 309.0
 text = "Custom Songs
 "
 
@@ -82,6 +90,7 @@ focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../../Editor/EditorButton")
 focus_neighbor_bottom = NodePath("../../SongInfo/PlaySong")
 text = "Open a File"
+metadata/_edit_lock_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI"]
 layout_mode = 1
@@ -103,7 +112,6 @@ metadata/_edit_group_ = true
 layout_mode = 2
 
 [node name="SongInfo" type="Control" parent="UI"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = -96.0
@@ -113,9 +121,9 @@ offset_bottom = -56.0
 [node name="SongDataLabels" type="VBoxContainer" parent="UI/SongInfo"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 384.0
+offset_top = 480.0
 offset_right = 448.0
-offset_bottom = 625.0
+offset_bottom = 608.0
 metadata/_edit_group_ = true
 
 [node name="Title" type="Label" parent="UI/SongInfo/SongDataLabels"]
@@ -141,9 +149,9 @@ text = "Difficulty: "
 [node name="PlaySong" type="Button" parent="UI/SongInfo"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 512.0
+offset_top = 616.0
 offset_right = 224.0
-offset_bottom = 560.0
+offset_bottom = 664.0
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../Custom/OpenFile")
 focus_neighbor_right = NodePath(".")
@@ -204,6 +212,7 @@ access = 2
 filters = PackedStringArray("*.msf", "*.txt")
 script = ExtResource("1_b3hli")
 
+[connection signal="pressed" from="UI/Official/Label/OfficialSongButton" to="." method="_on_official_song_button_pressed"]
 [connection signal="pressed" from="UI/Custom/OpenFile" to="UI/FileDialog" method="_on_open_file_pressed"]
 [connection signal="pressed" from="UI/SongInfo/PlaySong" to="." method="_on_play_song_pressed"]
 [connection signal="pressed" from="UI/Editor/EditorButton" to="." method="_on_editor_button_pressed"]

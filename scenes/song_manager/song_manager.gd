@@ -36,6 +36,7 @@ func start_song() -> void:
 	conductor.starting_beat_in_measure = GlobalData.song_info["starting_beat_in_measure"]
 	if !disabled && conductor.stream:
 		conductor.play_song()
+		print(conductor.seconds_per_beat)
 		SignalHandler.emit_signal("send_message", "Playing!")
 		
 func setup_file() -> void:
@@ -86,8 +87,11 @@ func process_commands(commands: Array) -> void:
 			#Get command type
 			var type_regex: RegEx = RegEx.new()
 			type_regex.compile(".(?=\\/)")
-			var type_result: String = type_regex.search(x.get_string()).get_string()
-			
+			var type_matches: RegExMatch = type_regex.search(x.get_string())
+			if type_matches == null:
+				SignalHandler.emit_signal("send_error", "Match is null!")
+				return
+			var type_result: String = type_matches.get_string()
 			#Get command parameters
 			var parameter_regex: RegEx = RegEx.new()
 			parameter_regex.compile("(?<=\\/).*?(?=\\+)|(?<=\\+).*?(?=\\+)|(?<=\\+).*?(?=\\,)")

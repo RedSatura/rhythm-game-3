@@ -207,6 +207,10 @@ metadata/_edit_lock_ = true
 position = Vector2(384, 0)
 metadata/_edit_lock_ = true
 
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="timeout" from="UI/NoteFeedbackLabel/VisibilityTimer" to="UI/NoteFeedbackLabel" method="_on_visibility_timer_timeout"]
