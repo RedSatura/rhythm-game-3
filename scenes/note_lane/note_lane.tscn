@@ -1,12 +1,23 @@
 [gd_scene load_steps=8 format=3 uid="uid://cxhghnc6fqebu"]
 
 [ext_resource type="Script" path="res://scenes/note_lane/note_lane.gd" id="1_ipfhx"]
-[ext_resource type="Shader" path="res://scenes/note_lane/hit_feedback_background_shader.gdshader" id="2_ridbf"]
 [ext_resource type="Texture2D" uid="uid://bnj20qqck2yye" path="res://assets/textures/note_detector_bg.png" id="2_t7pny"]
+
+[sub_resource type="Shader" id="Shader_ya8w7"]
+code = "shader_type canvas_item;
+
+uniform vec3 background_color = vec3(1.0, 1.0, 1.0);
+uniform float background_transparency = 0.0;
+
+void fragment() {
+	COLOR = vec4(background_color, UV.y);
+	COLOR.a *= background_transparency;
+}
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_33wlk"]
 resource_local_to_scene = true
-shader = ExtResource("2_ridbf")
+shader = SubResource("Shader_ya8w7")
 shader_parameter/background_color = Vector3(0, 0, 0)
 shader_parameter/background_transparency = 0.0
 
@@ -21,9 +32,6 @@ size = Vector2(128, 16)
 [node name="NoteLane" type="Node2D"]
 position = Vector2(64, 640)
 script = ExtResource("1_ipfhx")
-perfect_color = Color(1, 0.439216, 0.905882, 1)
-good_color = Color(0.8, 1, 0, 1)
-miss_color = Color(1, 0.227451, 0.109804, 1)
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

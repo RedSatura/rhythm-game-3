@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
 [ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="4_57oav"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
-[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
+[ext_resource type="PackedScene" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
 action = &"save"
