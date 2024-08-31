@@ -129,6 +129,7 @@ theme_override_font_sizes/font_size = 14
 text = "Play"
 
 [node name="From Beat" type="Label" parent="UI/Play"]
+visible = false
 layout_mode = 0
 offset_left = 56.0
 offset_right = 96.0
@@ -137,6 +138,7 @@ theme_override_font_sizes/font_size = 16
 text = "Beat"
 
 [node name="SpinBox" type="SpinBox" parent="UI/Play"]
+visible = false
 layout_mode = 0
 offset_left = 56.0
 offset_top = 24.0
