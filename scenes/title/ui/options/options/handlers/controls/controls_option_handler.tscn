@@ -99,3 +99,9 @@ offset_left = 248.0
 offset_right = 360.0
 text = "P"
 input_action_name = "pause"
+
+[connection signal="focus_exited" from="Controls/LeftLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/CenterLeftLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/CenterRightLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/RightLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Pause/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]

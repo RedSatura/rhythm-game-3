@@ -116,7 +116,6 @@ func process_song_validation() -> void:
 	save_button.disabled = true
 	play_button.text = "Stop"
 	play_button_status = PlayButtonStatus.PLAYING
-	SignalHandler.emit_signal("send_message", "Song validated, wait for a moment...")
 	song_manager_viewport.visible = true
 	song_manager_viewport.get_node("SubViewport").set_world_2d(get_world_2d())
 	current_line_in_file = song_validator.get_validator_lines_processed()

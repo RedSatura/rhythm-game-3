@@ -16,26 +16,7 @@ func _ready() -> void:
 	right_lane.toggled.connect(_on_input_button_toggled.bind(right_lane))
 	pause.toggled.connect(_on_input_button_toggled.bind(pause))
 	
-	var key_scancode: InputEventKey = InputEventKey.new()
-	key_scancode.set_keycode(GlobalData.global_settings["key_lane_left"])
-	InputMap.action_erase_events("lane_left")
-	InputMap.action_add_event("lane_left", key_scancode)
-	key_scancode.set_keycode(GlobalData.global_settings["key_lane_center_left"])
-	InputMap.action_erase_events("lane_center_left")
-	InputMap.action_add_event("lane_center_left", key_scancode)
-	key_scancode.set_keycode(GlobalData.global_settings["key_lane_center_right"])
-	InputMap.action_erase_events("lane_center_right")
-	InputMap.action_add_event("lane_center_right", key_scancode)
-	key_scancode.set_keycode(GlobalData.global_settings["key_lane_right"])
-	InputMap.action_erase_events("lane_right")
-	InputMap.action_add_event("lane_right", key_scancode)
-	key_scancode.set_keycode(GlobalData.global_settings["key_pause"])
-	InputMap.action_erase_events("pause")
-	InputMap.action_add_event("pause", key_scancode)
 	update_button_text()
-	
-func _process(_delta: float) -> void:
-	pass
 	
 func _input(event: InputEvent) -> void:
 	if selected_button:
@@ -59,6 +40,7 @@ func change_key(event: InputEventKey) -> void:
 	
 	selected_button.text = OS.get_keycode_string(event.keycode)
 	selected_button.button_pressed = false
+	selected_button.release_focus()
 	selected_button = null
 	
 func update_button_text() -> void:
@@ -67,3 +49,8 @@ func update_button_text() -> void:
 	center_right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_center_right"])
 	right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_right"])
 	pause.text = OS.get_keycode_string(GlobalData.global_settings["key_pause"])
+
+func _on_input_changer_button_focus_exited() -> void:
+	selected_button.button_pressed = false
+	selected_button.release_focus()
+	selected_button = null

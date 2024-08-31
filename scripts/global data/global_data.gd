@@ -17,14 +17,15 @@ var song_info: Dictionary = { #defaults
 	"starting_beat_in_measure": 1,
 }
 
-##TODO implement whtever this is its late
 var global_settings: Dictionary = {
 	"theme": load("res://styles/default_theme.tres"),
 	"theme_name": "light",
-	#KEY BINDS
+	#Key binds
 	"key_lane_left": 68,
 	"key_lane_center_left": 70,
 	"key_lane_center_right": 74,
 	"key_lane_right": 75,
 	"key_pause": 80,
+	#Audio settings
+	"master_volume": 1.0, 
 }

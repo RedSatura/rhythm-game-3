@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjmw7flxngjsm"]
+
+[ext_resource type="Script" path="res://scenes/note_lane/grouped_note_lanes.gd" id="1_vsgem"]
+[ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="2_hciq1"]
+
+[node name="NoteLanes" type="Node2D"]
+process_mode = 1
+script = ExtResource("1_vsgem")
+
+[node name="NoteLane1" parent="." instance=ExtResource("2_hciq1")]
+
+[node name="NoteLane2" parent="." instance=ExtResource("2_hciq1")]
+position = Vector2(192, 640)
+lane_position = "CENTER_LEFT"
+
+[node name="NoteLane3" parent="." instance=ExtResource("2_hciq1")]
+position = Vector2(320, 640)
+lane_position = "CENTER_RIGHT"
+
+[node name="NoteLane4" parent="." instance=ExtResource("2_hciq1")]
+position = Vector2(448, 640)
+lane_position = "RIGHT"

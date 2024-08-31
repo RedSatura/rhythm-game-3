@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://pylb3er1nyx6"]
+
+[ext_resource type="Script" path="res://scenes/title/ui/official_song_button/official_song_button.gd" id="1_ndmmm"]
+
+[node name="OfficialSongButton" type="Button"]
+offset_right = 160.0
+offset_bottom = 48.0
+text = "Gateway"
+script = ExtResource("1_ndmmm")

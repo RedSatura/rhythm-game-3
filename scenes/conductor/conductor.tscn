@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/conductor/conductor.gd" id="1_jv58c"]
 
 [node name="Conductor" type="AudioStreamPlayer"]
+process_mode = 1
 autoplay = true
 bus = &"Delayer"
 script = ExtResource("1_jv58c")
-audio_offset = 1500

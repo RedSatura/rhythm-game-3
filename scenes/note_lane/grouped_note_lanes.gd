@@ -5,6 +5,11 @@ extends Node2D
 @onready var note_lane_3: Node = $NoteLane3
 @onready var note_lane_4: Node = $NoteLane4
 
+func _ready() -> void:
+	SignalHandler.connect("spawn_note", Callable(self, "spawn_note_on_lane"))
+	SignalHandler.connect("disable_lane", Callable(self, "disable_lane"))
+	SignalHandler.connect("set_note_lane_setting_auto_mode", Callable(self, "set_note_lane_auto_mode"))
+
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works
 	match lane_number:
