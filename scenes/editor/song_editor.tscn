@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cy0hcyuyxp8sr"]
+[gd_scene load_steps=13 format=3 uid="uid://cy0hcyuyxp8sr"]
 
 [ext_resource type="Script" path="res://scenes/editor/song_editor.gd" id="1_m8jub"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
-[ext_resource type="Theme" uid="uid://difwrn3vbn48p" path="res://styles/default_theme.tres" id="4_57oav"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
-[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
+[ext_resource type="PackedScene" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
 action = &"save"
@@ -37,7 +36,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("4_57oav")
 
 [node name="Panel" type="Panel" parent="UI"]
 layout_mode = 0
@@ -129,6 +127,7 @@ theme_override_font_sizes/font_size = 14
 text = "Play"
 
 [node name="From Beat" type="Label" parent="UI/Play"]
+visible = false
 layout_mode = 0
 offset_left = 56.0
 offset_right = 96.0
@@ -137,6 +136,7 @@ theme_override_font_sizes/font_size = 16
 text = "Beat"
 
 [node name="SpinBox" type="SpinBox" parent="UI/Play"]
+visible = false
 layout_mode = 0
 offset_left = 56.0
 offset_top = 24.0

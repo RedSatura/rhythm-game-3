@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv228jy5kmeo4"]
+
+[ext_resource type="Script" path="res://test/test_lane.gd" id="1_pv6vk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d4ysl"]
+radius = 104.0
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_pv6vk")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_d4ysl")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
