@@ -4,3 +4,4 @@
 <p>Hello!</p>
 <p>Rhythm Game 3 is a small project by me. It's mostly a hobby project where I put the songs I've composed.</p>
 <p>Downloads can be found on the releases page.</p>
+<p>Available for Linux and Android.</p>
