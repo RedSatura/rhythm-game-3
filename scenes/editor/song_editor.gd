@@ -131,7 +131,8 @@ func process_song_validation() -> void:
 	song_manager.get_node("SongStartTimer").start()
 	
 func process_beat(pos: int) -> void:
-	update_editor_line_color(pos, highlighting_color)
+	print_debug(str(pos) + " " + str(current_line_in_file))
+	update_editor_line_color(current_line_in_file, highlighting_color)
 	current_line_in_file += 1
 
 func _on_new_song_saver_file_selected(path: String) -> void:
@@ -155,3 +156,4 @@ func _on_spin_box_value_changed(value: float) -> void:
 
 func song_started() -> void:
 	clear_highlights()
+	current_line_in_file += spinbox.value
