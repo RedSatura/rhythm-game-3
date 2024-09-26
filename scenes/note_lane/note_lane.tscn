@@ -11,6 +11,7 @@ shader_parameter/background_color = Vector3(0, 0, 0)
 shader_parameter/background_transparency = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qbr3x"]
+radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbutt"]
 radius = 40.0
@@ -58,7 +59,6 @@ texture = ExtResource("2_t7pny")
 expand_mode = 1
 
 [node name="PerfectArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]

@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/Nunito-LightItalic.ttf-71d39b6e555e5248f8bc8e
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
