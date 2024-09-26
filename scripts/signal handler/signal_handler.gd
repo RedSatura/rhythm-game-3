@@ -5,6 +5,7 @@ signal send_song_to_validator(path: String)
 signal song_validated
 
 #song statuses
+signal song_started
 signal song_ended
 
 #file statuses
@@ -41,6 +42,7 @@ signal reset_to_defaults
 
 #song editor
 signal update_editor_line_color(line: int, color: Color)
+signal update_starting_song_beat(beat: int)
 
 #themes
 signal change_theme(theme: Theme)
@@ -54,4 +56,3 @@ signal set_note_lane_setting_auto_mode(status: bool)
 #region title_screen
 signal toggle_show_title_screen_options(status: bool)
 #endregion
-

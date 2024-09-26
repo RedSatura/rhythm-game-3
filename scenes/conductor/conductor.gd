@@ -15,6 +15,8 @@ var song_position_in_beats: int = 0
 var seconds_per_beat: float = 60.0 / bpm
 var last_reported_beat: int = 0
 
+var beat_starting_position: int = 0
+
 @export var song_beat_delay: int = 0
 
 var current_beat_in_measure: int = 1
@@ -32,6 +34,7 @@ var time_off_beat: float = 0.0
 @onready var master_bus: int = AudioServer.get_bus_index("Master")
 
 func _ready() -> void:
+	song_position_in_beats = 0
 	seconds_per_beat = 60.0 / (bpm * beat_mode)
 	current_beat_in_measure = starting_beat_in_measure
 	#kept here for reference purposes
@@ -84,9 +87,12 @@ func play_song() -> void:
 	if stream:
 		#send out relevant song data
 		SignalHandler.emit_signal("get_song_length", stream.get_length())
-		play()
+		play(beat_starting_position * seconds_per_beat)
 	else:
 		SignalHandler.emit_signal("send_error", "No audio stream found!")
 
 func set_volume() -> void:
 	AudioServer.set_bus_volume_db(master_bus, linear_to_db(GlobalData.global_settings["master_volume"]))
+
+func stop_song() -> void:
+	pass

@@ -13,11 +13,15 @@ var song_title: String = ""
 
 @onready var song_start_timer: Node = $SongStartTimer
 
+@export var current_set_beat: int = 0
+
 var disabled: bool = false
 
 var current_line_in_file: int = 0
+var line_read_offset: int = 0
 
 func _ready() -> void:
+	SignalHandler.connect("update_starting_song_beat", Callable(self, "update_starting_song_beat"))
 	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
 	if !in_editor:
 		song_start_timer.start()
@@ -36,8 +40,8 @@ func start_song() -> void:
 	conductor.starting_beat_in_measure = GlobalData.song_info["starting_beat_in_measure"]
 	if !disabled && conductor.stream:
 		conductor.play_song()
-		print(conductor.seconds_per_beat)
 		SignalHandler.emit_signal("send_message", "Playing!")
+		SignalHandler.emit_signal("song_started")
 		
 func setup_file() -> void:
 	if in_editor:
@@ -52,6 +56,10 @@ func setup_file() -> void:
 			current_line_in_file += 1
 			if line_content == "SONG_START":
 				break
+	
+	for x: int in line_read_offset:
+		file.get_line()
+		current_line_in_file += 1
 		
 func end_song() -> void:
 	var tween: Tween = get_tree().create_tween()
@@ -137,3 +145,7 @@ func process_beat(pos: int) -> void:
 
 func _on_song_start_timer_timeout() -> void:
 	start_song()
+
+func update_starting_song_beat(beat: int) -> void:
+	conductor.beat_starting_position = beat
+	line_read_offset = beat

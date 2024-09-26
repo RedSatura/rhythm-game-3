@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
-[ext_resource type="PackedScene" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
+[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
 action = &"save"
@@ -12,15 +12,15 @@ action = &"save"
 [sub_resource type="Shortcut" id="Shortcut_j002f"]
 events = [SubResource("InputEventAction_yfhqm")]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5agte"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jn6ve"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oule7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_meuqb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n18v5"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oule7"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jn6ve"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5agte"]
 
 [node name="SongEditor" type="Node2D"]
 script = ExtResource("1_m8jub")
@@ -127,7 +127,6 @@ theme_override_font_sizes/font_size = 14
 text = "Play"
 
 [node name="From Beat" type="Label" parent="UI/Play"]
-visible = false
 layout_mode = 0
 offset_left = 56.0
 offset_right = 96.0
@@ -136,13 +135,12 @@ theme_override_font_sizes/font_size = 16
 text = "Beat"
 
 [node name="SpinBox" type="SpinBox" parent="UI/Play"]
-visible = false
 layout_mode = 0
 offset_left = 56.0
 offset_top = 24.0
-offset_right = 127.125
-offset_bottom = 52.0
-max_value = 9999.0
+offset_right = 139.062
+offset_bottom = 55.0
+max_value = 10000.0
 rounded = true
 alignment = 2
 
@@ -154,6 +152,7 @@ offset_right = 1264.0
 offset_bottom = 432.0
 focus_neighbor_left = NodePath("../Play")
 focus_neighbor_bottom = NodePath(".")
+current_tab = 0
 
 [node name="Song Editor" type="TabBar" parent="UI/Help"]
 layout_mode = 2
@@ -163,6 +162,7 @@ focus_neighbor_right = NodePath("../Song Format")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath("../Song Format")
 focus_previous = NodePath("../../Play")
+metadata/_tab_index = 0
 
 [node name="Label" type="Label" parent="UI/Help/Song Editor"]
 layout_mode = 0
@@ -186,6 +186,7 @@ focus_neighbor_right = NodePath("../Headers")
 focus_neighbor_bottom = NodePath("ScrollContainer")
 focus_next = NodePath("../Headers")
 focus_previous = NodePath("../Song Editor")
+metadata/_tab_index = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/Help/Song Format"]
 layout_mode = 0
@@ -227,6 +228,7 @@ focus_neighbor_right = NodePath("../Commands")
 focus_neighbor_bottom = NodePath("ScrollContainer")
 focus_next = NodePath("../Commands")
 focus_previous = NodePath("../Song Format")
+metadata/_tab_index = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/Help/Headers"]
 layout_mode = 0
@@ -279,6 +281,7 @@ focus_neighbor_left = NodePath("../Headers")
 focus_neighbor_top = NodePath("../../TitleScreen")
 focus_neighbor_right = NodePath("../../TitleScreen")
 focus_neighbor_bottom = NodePath(".")
+metadata/_tab_index = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/Help/Commands"]
 layout_mode = 0
@@ -317,11 +320,11 @@ layout_mode = 0
 offset_left = 1216.0
 offset_right = 1280.0
 offset_bottom = 64.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_5agte")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jn6ve")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_oule7")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_meuqb")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_n18v5")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_oule7")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_jn6ve")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5agte")
 icon = ExtResource("5_xkohr")
 icon_alignment = 1
 expand_icon = true
@@ -397,6 +400,7 @@ position = Vector2(1920, 0)
 [connection signal="pressed" from="UI/Open" to="." method="_on_open_pressed"]
 [connection signal="pressed" from="UI/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="UI/Play" to="." method="_on_play_pressed"]
+[connection signal="value_changed" from="UI/Play/SpinBox" to="." method="_on_spin_box_value_changed"]
 [connection signal="pressed" from="UI/TitleScreen" to="." method="_on_title_screen_pressed"]
 [connection signal="file_selected" from="SongPicker" to="." method="_on_song_picker_file_selected"]
 [connection signal="file_selected" from="NewSongSaver" to="." method="_on_new_song_saver_file_selected"]

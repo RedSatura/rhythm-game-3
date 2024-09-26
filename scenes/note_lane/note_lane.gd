@@ -2,6 +2,7 @@ extends Node2D
 
 @export var lane_position: String = "LEFT"
 @export var auto_mode: bool = false
+@export var in_editor: bool = false
 
 @export var perfect_color: Color = Color.MAGENTA
 @export var good_color: Color = Color(1.0, 0.549, 0.784)
@@ -68,11 +69,13 @@ func handle_input_on_note() -> void:
 	if current_note != null:
 		if good:
 			SignalHandler.emit_signal("note_hit", "GOOD")
-			hit_feedback_background.material.set_shader_parameter("background_color", good_color)
+			if !in_editor:
+				hit_feedback_background.material.set_shader_parameter("background_color", good_color)
 			fade_feedback_background()
 		elif perfect:
 			SignalHandler.emit_signal("note_hit", "PERFECT")
-			hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+			if !in_editor:
+				hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
 			fade_feedback_background()
 		current_note.queue_free()
 		current_note = null
@@ -130,7 +133,8 @@ func _on_perfect_area_area_exited(_area: Area2D) -> void:
 
 func _on_area_2d_area_entered(_area: Area2D) -> void:
 	SignalHandler.emit_signal("note_hit", "MISS")
-	hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+	if !in_editor:
+		hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
 	fade_feedback_background()
 
 func fade_feedback_background() -> void:

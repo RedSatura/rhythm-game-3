@@ -2,6 +2,8 @@ extends Node2D
 
 @export var highlighting_color: Color = Color.LIGHT_PINK
 
+@export var play_from_beat: int = 0
+
 @onready var code_edit: Node = $UI/CodeEdit
 @onready var song_picker: Node = $SongPicker
 @onready var new_song_saver: Node = $NewSongSaver
@@ -16,6 +18,8 @@ extends Node2D
 
 @onready var messages_container: Node = $UI/ScrollContainer/MessagesContainer
 @onready var song_manager_viewport: Node = $UI/SongManagerViewport
+
+@onready var spinbox: Node = $UI/Play/SpinBox #spinbox for setting current beat in song
 
 var file: FileAccess = null
 var file_path: String = ""
@@ -37,6 +41,7 @@ func _ready() -> void:
 	SignalHandler.connect("update_editor_line_color", Callable(self, "update_editor_line_color"))
 	SignalHandler.connect("song_validated", Callable(self, "process_song_validation"))
 	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
+	SignalHandler.connect("song_started", Callable(self, "song_started"))
 	$UI.theme = GlobalData.global_settings["theme"]
 	song_manager_viewport.visible = false
 	song_validator.highlighting_color = highlighting_color
@@ -69,6 +74,7 @@ func _on_song_picker_file_selected(path: String) -> void:
 			currently_opened.text = "Currently Opened File:\n" + str(path)
 			save_button.text = "Save"
 			code_edit.editable = true
+			spinbox.editable = true
 			play_button.text = "Play"
 			play_button_status = PlayButtonStatus.IDLE
 			SignalHandler.emit_signal("send_message", "Successfully opened file.")
@@ -91,6 +97,7 @@ func _on_play_pressed() -> void: #Validates and plays the file
 			code_edit.editable = true
 			open_button.disabled = false
 			save_button.disabled = false
+			spinbox.editable = true
 			play_button.text = "Play"
 			play_button_status = PlayButtonStatus.IDLE
 			song_manager.stop_song()
@@ -114,6 +121,7 @@ func process_song_validation() -> void:
 	code_edit.editable = false
 	open_button.disabled = true
 	save_button.disabled = true
+	spinbox.editable = false
 	play_button.text = "Stop"
 	play_button_status = PlayButtonStatus.PLAYING
 	song_manager_viewport.visible = true
@@ -122,8 +130,8 @@ func process_song_validation() -> void:
 	song_manager.current_line_in_file = current_line_in_file
 	song_manager.get_node("SongStartTimer").start()
 	
-func process_beat(_pos: int) -> void:
-	update_editor_line_color(current_line_in_file, highlighting_color)
+func process_beat(pos: int) -> void:
+	update_editor_line_color(pos, highlighting_color)
 	current_line_in_file += 1
 
 func _on_new_song_saver_file_selected(path: String) -> void:
@@ -141,3 +149,9 @@ func message_received(message: String) -> void:
 	var message_display: Node = load("res://scenes/ui/message_display/message_display.tscn").instantiate()
 	messages_container.add_child(message_display)
 	message_display.update_message(0, message)
+
+func _on_spin_box_value_changed(value: float) -> void:
+	SignalHandler.emit_signal("update_starting_song_beat", value)
+
+func song_started() -> void:
+	clear_highlights()
