@@ -16,6 +16,8 @@ extends Node2D
 
 @onready var currently_opened: Node = $UI/CurrentlyOpened
 
+@onready var note_lanes: Node = $NoteLanes
+
 @onready var messages_container: Node = $UI/ScrollContainer/MessagesContainer
 @onready var song_manager_viewport: Node = $UI/SongManagerViewport
 
@@ -93,11 +95,13 @@ func _on_play_pressed() -> void: #Validates and plays the file
 		PlayButtonStatus.IDLE:
 			save_song()
 			song_validator.validate_song(file_path)
+			note_lanes.reset_lanes()
 		PlayButtonStatus.PLAYING:
 			code_edit.editable = true
 			open_button.disabled = false
 			save_button.disabled = false
 			spinbox.editable = true
+			note_lanes.reset_lanes()
 			play_button.text = "Play"
 			play_button_status = PlayButtonStatus.IDLE
 			song_manager.stop_song()
@@ -131,7 +135,6 @@ func process_song_validation() -> void:
 	song_manager.get_node("SongStartTimer").start()
 	
 func process_beat(pos: int) -> void:
-	print_debug(str(pos) + " " + str(current_line_in_file))
 	update_editor_line_color(current_line_in_file, highlighting_color)
 	current_line_in_file += 1
 

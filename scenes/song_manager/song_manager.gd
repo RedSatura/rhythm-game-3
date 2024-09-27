@@ -17,6 +17,8 @@ var song_title: String = ""
 
 var disabled: bool = false
 
+var command_processing_enabled: bool = false
+
 var current_line_in_file: int = 0
 var line_read_offset: int = 0
 
@@ -73,6 +75,7 @@ func stop_song() -> void:
 	if !in_editor:
 		SignalHandler.emit_signal("song_ended")
 	current_line_in_file = 0
+	command_processing_enabled = false
 	
 func get_next_commands(_beat_pos: int) -> void:
 	line_content = file.get_line().strip_edges()
@@ -87,7 +90,8 @@ func get_commands() -> void:
 	var regex: RegEx = RegEx.new()
 	regex.compile("[^,]+?(?=\\,)")
 	var result: Array = regex.search_all(line_content)
-	process_commands(result)
+	if command_processing_enabled:
+		process_commands(result)
 	
 func process_commands(commands: Array) -> void:
 	if commands != [] && commands != null:
@@ -118,6 +122,19 @@ func process_commands(commands: Array) -> void:
 							SignalHandler.emit_signal("disable_lane", cached_params[0], cached_params[1])
 						else:
 							SignalHandler.emit_signal("send_error", "Too few or too many parameters!")
+				"m": #Move a note lane.
+					#Parameters:
+					#Note lane number (int) - 1 for left, 2 for center left, 3 for center right, 4 for right.
+					#Movement (int) - How much to move the lane. Positive values move the lane right and negative values do the opposite.
+					#Duration (int) - Number of beats to disable.
+					if parameter_result != [] && parameter_result != null:
+						if parameter_result.size() == 3:
+							var cached_params: Array = [] #stores parameters
+							for value: RegExMatch in parameter_result: #get and convert parameters
+								cached_params.push_back(int(value.get_string()))
+							SignalHandler.emit_signal("move_lane", cached_params[0], cached_params[1], cached_params[2])
+						else:
+							SignalHandler.emit_signal("send_error", "Too few or too many parameters!")
 				"s":	#Spawn note.
 					#Parameters:
 					#Note lane number (int) - 1 for left, 2 for center left, 3 for center right, 4 for right.
@@ -142,6 +159,7 @@ func process_commands(commands: Array) -> void:
 		
 func process_beat(pos: int) -> void:
 	get_next_commands(pos)
+	command_processing_enabled = true
 
 func _on_song_start_timer_timeout() -> void:
 	start_song()

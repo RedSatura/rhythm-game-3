@@ -17,6 +17,8 @@ extends Node2D
 @onready var note_detector_background: Node = $UI/NoteDetectorBackground
 @onready var hit_feedback_background: Node = $UI/HitFeedbackBackground
 
+@onready var movement_tween: Tween = get_tree().create_tween()
+
 var current_note: Area2D = null
 
 var disabled_beats_left: int = 0
@@ -40,11 +42,13 @@ func _ready() -> void:
 	$UI.theme = GlobalData.global_settings["theme"]
 
 func spawn_note() -> void:
-	var new_note: Node = load("res://scenes/note_lane/note/note.tscn").instantiate()
-	new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
-	add_child(new_note)
-	new_note.global_position = note_spawn_position.global_position
-	
+	if lane_state == LaneState.ACTIVE:
+		var new_note: Node = load("res://scenes/note_lane/note/note.tscn").instantiate()
+		new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
+		add_child(new_note)
+		new_note.global_position = note_spawn_position.global_position
+	else:
+		SignalHandler.emit_signal("send_error", "Cannot spawn note when lane is disabled.")
 	
 func _on_note_cooldown_timer_timeout() -> void:
 	spawn_note()
@@ -99,12 +103,12 @@ func beat_occured(_pos: int) -> void:
 	
 func disable_lane(duration: int = 0) -> void:
 	lane_state = LaneState.DISABLED
-	lane_background.color = Color(0, 0)
+	lane_background.modulate = Color(0, 0)
 	disabled_beats_left = duration
 	
 func enable_lane() -> void:
 	lane_state = LaneState.ACTIVE
-	lane_background.color = Color(0.6, 0.357, 0.224, 0.502)
+	lane_background.modulate = Color(0.7, 0.7, 0.7, 1.0)
 
 func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
@@ -143,3 +147,9 @@ func fade_feedback_background() -> void:
 	
 func set_fade_value(value: float) -> void:
 	hit_feedback_background.material.set_shader_parameter("background_transparency", value)
+
+func move_lane(movement_value: int = 0, duration: float = 0) -> void:
+	movement_tween.tween_property(self, "position", Vector2(self.position.x + movement_value, self.position.y), duration)
+
+func stop_tweens() -> void:
+	pass

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
-[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
+[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/grouped_note_lanes.tscn" id="6_esn1d"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
 action = &"save"

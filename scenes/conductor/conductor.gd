@@ -87,6 +87,7 @@ func play_song() -> void:
 	if stream:
 		#send out relevant song data
 		SignalHandler.emit_signal("get_song_length", stream.get_length())
+		SignalHandler.emit_signal("get_song_seconds_per_beat", seconds_per_beat)
 		play(beat_starting_position * seconds_per_beat)
 	else:
 		SignalHandler.emit_signal("send_error", "No audio stream found!")

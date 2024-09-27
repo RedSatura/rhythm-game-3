@@ -5,7 +5,7 @@ extends Node2D
 @onready var messages_container: Node = $UI/ScrollContainer/MessagesContainer
 
 func _ready() -> void:
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	randomize()
 	SignalHandler.connect("send_error", Callable(self, "error_received"))
 	SignalHandler.connect("send_message", Callable(self, "message_received"))
