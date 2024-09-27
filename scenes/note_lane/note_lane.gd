@@ -17,8 +17,6 @@ extends Node2D
 @onready var note_detector_background: Node = $UI/NoteDetectorBackground
 @onready var hit_feedback_background: Node = $UI/HitFeedbackBackground
 
-@onready var movement_tween: Tween = get_tree().create_tween()
-
 var current_note: Area2D = null
 
 var disabled_beats_left: int = 0
@@ -149,7 +147,8 @@ func set_fade_value(value: float) -> void:
 	hit_feedback_background.material.set_shader_parameter("background_transparency", value)
 
 func move_lane(movement_value: int = 0, duration: float = 0) -> void:
-	movement_tween.tween_property(self, "position", Vector2(self.position.x + movement_value, self.position.y), duration)
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(self, "position", Vector2(self.position.x + movement_value, self.position.y), duration)
 
 func stop_tweens() -> void:
 	pass
