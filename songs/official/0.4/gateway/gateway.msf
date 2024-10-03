@@ -7,7 +7,7 @@ AUDIO_SRC: gateway.ogg
 IMAGE_SRC: gateway.jpg
 
 BPM: 140
-BEAT_MODE: 2
+BEAT_MODE: 1
 BEATS_IN_MEASURE: 4
 
 SONG_START

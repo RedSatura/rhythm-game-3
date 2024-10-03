@@ -15,4 +15,5 @@ song_beat_delay = 1
 [node name="SongStartTimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="finished" from="Conductor" to="." method="_on_conductor_finished"]
 [connection signal="timeout" from="SongStartTimer" to="." method="_on_song_start_timer_timeout"]

@@ -97,3 +97,6 @@ func set_volume() -> void:
 
 func stop_song() -> void:
 	pass
+
+func _on_finished() -> void:
+	pass # Replace with function body.

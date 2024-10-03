@@ -178,3 +178,6 @@ func _on_song_start_timer_timeout() -> void:
 func update_starting_song_beat(beat: int) -> void:
 	conductor.beat_starting_position = beat
 	line_read_offset = beat
+
+func _on_conductor_finished() -> void:
+	end_song()
