@@ -75,7 +75,7 @@ func stop_song() -> void:
 	if !in_editor:
 		SignalHandler.emit_signal("song_ended")
 	current_line_in_file = 0
-	command_processing_enabled = false
+	#command_processing_enabled = false
 	
 func get_next_commands(_beat_pos: int) -> void:
 	line_content = file.get_line().strip_edges()
@@ -90,8 +90,8 @@ func get_commands() -> void:
 	var regex: RegEx = RegEx.new()
 	regex.compile("[^,]+?(?=\\,)")
 	var result: Array = regex.search_all(line_content)
-	if command_processing_enabled:
-		process_commands(result)
+	#if command_processing_enabled:
+	process_commands(result)
 	
 func process_commands(commands: Array) -> void:
 	if commands != [] && commands != null:
@@ -170,7 +170,7 @@ func process_commands(commands: Array) -> void:
 		
 func process_beat(pos: int) -> void:
 	get_next_commands(pos)
-	command_processing_enabled = true
+	#command_processing_enabled = true
 
 func _on_song_start_timer_timeout() -> void:
 	start_song()

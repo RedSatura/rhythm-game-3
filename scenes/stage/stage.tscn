@@ -24,6 +24,7 @@ offset_bottom = 40.0
 theme = ExtResource("2_ge13s")
 
 [node name="Background" type="Panel" parent="UI"]
+modulate = Color(1, 1, 1, 0.0627451)
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
@@ -31,6 +32,8 @@ theme_type_variation = &"StageBackground"
 
 [node name="Button" type="Button" parent="UI"]
 process_mode = 3
+z_index = 1
+z_as_relative = false
 layout_mode = 0
 offset_left = 1216.0
 offset_right = 1280.0
@@ -42,6 +45,8 @@ expand_icon = true
 
 [node name="PauseButton" type="Button" parent="UI"]
 process_mode = 3
+z_index = 1
+z_as_relative = false
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
@@ -207,10 +212,6 @@ metadata/_edit_lock_ = true
 [node name="NoteLanes" parent="." instance=ExtResource("10_6mjfg")]
 position = Vector2(384, 0)
 metadata/_edit_lock_ = true
-
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
 
 [connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]

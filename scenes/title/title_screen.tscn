@@ -69,6 +69,7 @@ offset_left = 56.0
 offset_top = -8.0
 offset_right = 232.0
 offset_bottom = 40.0
+focus_mode = 1
 song_path = "res://songs/official/0.4/gateway/gateway.msf"
 
 [node name="Custom" type="Label" parent="UI"]
@@ -182,6 +183,7 @@ focus_neighbor_left = NodePath("../../Custom/OpenFile")
 focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../../Settings/OptionsButton")
 focus_neighbor_bottom = NodePath(".")
+focus_mode = 1
 text = "Edit a Song"
 
 [node name="Settings" type="Control" parent="UI"]

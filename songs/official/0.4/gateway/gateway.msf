@@ -3,7 +3,8 @@ ARTIST: RedSatura
 MAPCREATOR: RedSatura
 DIFFICULTY: 5
 
-AUDIO_SRC: Gateway.ogg
+AUDIO_SRC: gateway.ogg
+IMAGE_SRC: gateway.jpg
 
 BPM: 140
 BEAT_MODE: 2
@@ -15,14 +16,15 @@ s/2+,
 s/3+,
 s/4+,
 s/1+,
-s/2+,m/1+128+2+,m/4+-128+2+,
-m/2+-128+2+,m/3+128+2+,
+s/2+,
+
+
 s/2+,s/4+,
 s/3+,
 s/4+,
 s/1+,
 s/2+,
-s/3+,l/Hello World!+,
+s/3+,
 
 
 s/3+,s/1+,

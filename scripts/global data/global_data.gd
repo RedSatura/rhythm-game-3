@@ -10,6 +10,8 @@ var song_info: Dictionary = { #defaults
 	"difficulty": 0,
 	#paths for files
 	"audio_src": "",
+	"image_src": "",
+	"video_src": "",
 	#song-related information
 	"bpm": 100,
 	"beat_mode": 1,

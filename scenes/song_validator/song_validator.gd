@@ -14,6 +14,8 @@ var default_song_info: Dictionary = { #defaults
 	"difficulty": 0,
 	#paths for files
 	"audio_src": "",
+	"image_src": "",
+	"video_src": "",
 	#song-related information
 	"bpm": 100,
 	"beat_mode": 1,
@@ -82,52 +84,64 @@ func process_song_metadata_type(type: String) -> void: #Step 3: Getting data fro
 	var result: RegExMatch = metadata_data_regex.search(line_content)
 	
 	if result != null:
-		var meatdata_content: String = result.get_string().strip_edges()
+		var metadata_content: String = result.get_string().strip_edges()
 		
 		match type:
 			#Chart metadata:
 			"TITLE":
-				song_info["title"] = str(meatdata_content)
+				song_info["title"] = str(metadata_content)
 			"ARTIST":
-				song_info["artist"] = str(meatdata_content)
+				song_info["artist"] = str(metadata_content)
 			"MAPCREATOR":
-				song_info["mapcreator"] = str(meatdata_content)
+				song_info["mapcreator"] = str(metadata_content)
 			"DIFFICULTY":
-				song_info["difficulty"] = int(meatdata_content)
+				song_info["difficulty"] = int(metadata_content)
 			#Paths for files:
 			"AUDIO_SRC":
-				var audio_path: String = file_path.get_base_dir() + "/" + meatdata_content
+				var audio_path: String = file_path.get_base_dir() + "/" + metadata_content
 				if FileAccess.file_exists(audio_path):
 					song_info["audio_src"] = audio_path
 					audio_src_valid = true
 				else: #why does this not work for some reason (EDIT: prob works now)
 					audio_src_valid = false
 					return
+			"IMAGE_SRC":
+				var image_path: String = file_path.get_base_dir() + "/" + metadata_content
+				if FileAccess.file_exists(image_path):
+					song_info["image_src"] = image_path
+				else:
+					return
+			"VIDEO_SRC":
+				var video_path: String = file_path.get_base_dir() + "/" + metadata_content
+				if FileAccess.file_exists(video_path):
+					song_info["video_src"] = video_path
+				else:
+					return
 			#Song-related types:
 			"BPM":
-				if int(meatdata_content) <= 0:
+				if int(metadata_content) <= 0:
 					SignalHandler.emit_signal("send_error", "BPM was invalid, so it will be set to 100 when played.")
 					song_info["bpm"] = 100
 				else:
-					song_info["bpm"] = int(meatdata_content)
+					song_info["bpm"] = int(metadata_content)
 			"BEAT_MODE":
-				if int(meatdata_content) <= 0:
+				if int(metadata_content) <= 0:
 					SignalHandler.emit_signal("send_error", "Beat mode was invalid, so it will be set to 1 when played.")
 					song_info["beat_mode"] = 1
 				else:
-					song_info["beat_mode"] = int(meatdata_content)
+					song_info["beat_mode"] = int(metadata_content)
 			"BEATS_IN_MEASURE":
-				if int(meatdata_content) <= 0:
+				if int(metadata_content) <= 0:
 					SignalHandler.emit_signal("send_error", "Beats in measure was invalid, so it will be set to 4 when played.")
 					song_info["beats_in_measure"] = 4
 				else:
-					song_info["beats_in_measure"] = int(meatdata_content)
+					song_info["beats_in_measure"] = int(metadata_content)
 			"STARTING_BEAT_IN_MEASURE":
-				if int(meatdata_content) <= 0:
+				if int(metadata_content) <= 0:
 					SignalHandler.emit_signal("send_error", "Starting beat in measure was invalid, so it will be set to 1 when played.")
 					song_info["starting_beat_in_measure"] = 1
 				else:
-					song_info["starting_beat_in_measure"] = int(meatdata_content)
+					song_info["starting_beat_in_measure"] = int(metadata_content)
 			_:
 				pass
 				

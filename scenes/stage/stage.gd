@@ -2,7 +2,6 @@ extends Node2D
 
 @onready var song_manager: Node = $UI/SongManager
 @onready var note_feedback_label: Node = $UI/NoteFeedbackLabel
-@onready var label: Label = $Label
 
 @export var in_editor: bool = false
 
@@ -14,7 +13,7 @@ func _ready() -> void:
 	$UI.theme = GlobalData.global_settings["theme"]
 	
 func error_received(error: String) -> void:
-	label.text = error
+	print_debug(error)
 
 func _on_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")

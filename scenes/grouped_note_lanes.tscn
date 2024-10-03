@@ -9,18 +9,26 @@ process_mode = 1
 script = ExtResource("1_vsgem")
 
 [node name="NoteLane1" parent="." instance=ExtResource("2_hciq1")]
+identifier_color = Color(1, 0, 0, 1)
+initial_position = 64
 
 [node name="NoteLane2" parent="." instance=ExtResource("2_hciq1")]
 position = Vector2(192, 640)
 lane_position = "CENTER_LEFT"
+identifier_color = Color(1, 1, 0, 1)
+initial_position = 192
 
 [node name="NoteLane3" parent="." instance=ExtResource("2_hciq1")]
 position = Vector2(320, 640)
 lane_position = "CENTER_RIGHT"
+identifier_color = Color(0, 1, 0, 1)
+initial_position = 320
 
 [node name="NoteLane4" parent="." instance=ExtResource("2_hciq1")]
 position = Vector2(448, 640)
 lane_position = "RIGHT"
+identifier_color = Color(0, 0, 1, 1)
+initial_position = 448
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -40,6 +48,25 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_constants/shadow_outline_size = 24
 theme_override_font_sizes/font_size = 48
-text = "Test Lyrics!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="UI"]
+z_index = -1
+layout_mode = 0
+offset_left = -384.0
+offset_right = 896.0
+offset_bottom = 720.0
+mouse_filter = 2
+
+[node name="ImageDisplayer" type="TextureRect" parent="UI"]
+modulate = Color(1, 1, 1, 0.25098)
+z_index = -1
+z_as_relative = false
+layout_mode = 0
+offset_left = -384.0
+offset_right = 896.0
+offset_bottom = 720.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5

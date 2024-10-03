@@ -84,6 +84,9 @@ collision_layer = 0
 position = Vector2(0, 120)
 shape = SubResource("RectangleShape2D_pm3ef")
 
+[node name="LaneIdentifier" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-64, 64, 64, 64, 64, 80, -64, 80)
+
 [connection signal="area_entered" from="PerfectArea" to="." method="_on_perfect_area_area_entered"]
 [connection signal="area_exited" from="PerfectArea" to="." method="_on_perfect_area_area_exited"]
 [connection signal="area_entered" from="NoteDetector" to="." method="_on_note_detector_area_entered"]

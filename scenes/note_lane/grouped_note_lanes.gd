@@ -8,6 +8,9 @@ extends Node2D
 @onready var ui: Node = $UI
 @onready var lyric_label: Node = $UI/LyricLabel
 
+@onready var image_displayer: Node = $UI/ImageDisplayer
+@onready var video_player: Node = $UI/VideoPlayer
+
 var seconds_per_beat: float = 0 #Important for syncing tweens to the beat!
 
 func _ready() -> void:
@@ -17,6 +20,8 @@ func _ready() -> void:
 	SignalHandler.connect("set_note_lane_setting_auto_mode", Callable(self, "set_note_lane_auto_mode"))
 	SignalHandler.connect("get_song_seconds_per_beat", Callable(self, "set_seconds_per_beat"))
 	SignalHandler.connect("update_lyric", Callable(self, "update_lyric"))
+	SignalHandler.connect("song_started", Callable(self, "song_started"))
+	$UI.theme = GlobalData.global_settings["theme"]
 
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works
@@ -79,3 +84,28 @@ func reset_lanes() -> void:
 
 func update_lyric(text: String) -> void:
 	lyric_label.text = text
+	
+func load_image() -> void:
+	var image_path: String = GlobalData.song_info["image_src"]
+	if FileAccess.file_exists(image_path):
+		image_displayer.texture = load(image_path)
+	else:
+		return
+	
+func load_video() -> void:
+	var video_path: String = GlobalData.song_info["video_src"]
+	if FileAccess.file_exists(video_path):
+		if video_path.get_extension() == "ogv":
+			var ogv: VideoStreamTheora = VideoStreamTheora.new()
+			ogv.set_file(video_path)
+			video_player.stream = ogv
+			image_displayer.visible = false
+		else:
+			SignalHandler.emit_signal("send_error", "Video format not supported, unable to play video!")
+			return
+	else:
+		return
+
+func song_started() -> void:
+	load_image()
+	load_video()

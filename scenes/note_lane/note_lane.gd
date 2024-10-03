@@ -8,6 +8,10 @@ extends Node2D
 @export var good_color: Color = Color(1.0, 0.549, 0.784)
 @export var miss_color: Color = Color.RED
 
+@export var identifier_color: Color = Color.WHITE
+
+@export var initial_position: int = 0
+
 @onready var note_spawn_position: Node = $NoteSpawnPosition
 @onready var note_cooldown_timer: Node = $NoteCooldownTimer
 
@@ -16,6 +20,8 @@ extends Node2D
 @onready var lane_background: Node = $UI/LaneBackground
 @onready var note_detector_background: Node = $UI/NoteDetectorBackground
 @onready var hit_feedback_background: Node = $UI/HitFeedbackBackground
+
+@onready var lane_identifier: Node = $LaneIdentifier
 
 var current_note: Area2D = null
 
@@ -37,6 +43,7 @@ func _ready() -> void:
 	perfect = false
 	good = false
 	current_note = null
+	lane_identifier.color = Color(identifier_color.r, identifier_color.g, identifier_color.b, 0.5)
 	$UI.theme = GlobalData.global_settings["theme"]
 
 func spawn_note() -> void:
@@ -148,7 +155,7 @@ func set_fade_value(value: float) -> void:
 
 func move_lane(movement_value: int = 0, duration: float = 0) -> void:
 	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(self, "position", Vector2(self.position.x + movement_value, self.position.y), duration)
+	tween.tween_property(self, "position", Vector2(initial_position + movement_value, self.position.y), duration)
 
 func stop_tweens() -> void:
 	pass
