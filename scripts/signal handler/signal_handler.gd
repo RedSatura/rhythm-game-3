@@ -11,6 +11,8 @@ signal song_ended
 #file statuses
 signal song_saved
 
+signal send_user_song_file_paths(paths: Array)
+
 #send initial song data
 signal get_song_length(length: int)
 signal get_song_offset(offset: float)

@@ -34,6 +34,6 @@ func pause_song() -> void:
 	else:
 		get_tree().paused = true
 		
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()

@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://d4glp02ecl6x5"]
+[gd_scene load_steps=10 format=3 uid="uid://d4glp02ecl6x5"]
 
 [ext_resource type="Script" path="res://scenes/title/song_file_picker.gd" id="1_b3hli"]
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_283yi"]
 [ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="3_qigky"]
-[ext_resource type="PackedScene" uid="uid://pylb3er1nyx6" path="res://scenes/title/ui/official_song_button/official_song_button.tscn" id="4_7h62y"]
 [ext_resource type="PackedScene" uid="uid://cin78nuhqwsys" path="res://scenes/title/ui/options/options_button/options_button.tscn" id="5_g1xjh"]
 [ext_resource type="PackedScene" uid="uid://c126fvxjjjxl7" path="res://scenes/title/ui/options/options/options.tscn" id="6_tu506"]
 [ext_resource type="Script" path="res://scenes/title/song_selection/song_selection.gd" id="8_td63i"]
@@ -47,32 +46,6 @@ offset_right = 272.0
 offset_bottom = 90.0
 theme_override_font_sizes/font_size = 24
 text = "v0.4.0"
-
-[node name="Official" type="Label" parent="UI"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 144.0
-offset_right = 216.0
-offset_bottom = 189.0
-text = "Official Songs
-"
-
-[node name="Label" type="Label" parent="UI/Official"]
-layout_mode = 0
-offset_top = 64.0
-offset_right = 34.0
-offset_bottom = 98.0
-theme_override_font_sizes/font_size = 24
-text = "0.4"
-
-[node name="OfficialSongButton" parent="UI/Official/Label" instance=ExtResource("4_7h62y")]
-layout_mode = 0
-offset_left = 56.0
-offset_top = -8.0
-offset_right = 232.0
-offset_bottom = 40.0
-focus_mode = 0
-song_path = "res://songs/official/0.4/gateway/gateway.msf"
 
 [node name="Custom" type="Label" parent="UI"]
 layout_mode = 0
@@ -215,53 +188,58 @@ access = 2
 filters = PackedStringArray("*.msf", "*.txt")
 script = ExtResource("1_b3hli")
 
-[node name="SongSelection2" type="Label" parent="UI"]
-custom_minimum_size = Vector2(640, 64)
-layout_mode = 2
+[node name="SongSelection" type="Control" parent="UI"]
+anchors_preset = 0
 offset_left = 320.0
 offset_top = 64.0
 offset_right = 960.0
-offset_bottom = 128.0
+offset_bottom = 656.0
+script = ExtResource("8_td63i")
+metadata/_edit_group_ = true
+
+[node name="SongSelection2" type="Label" parent="UI/SongSelection"]
+custom_minimum_size = Vector2(640, 64)
+layout_mode = 2
+offset_right = 640.0
+offset_bottom = 64.0
 text = "Song Selection"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SongSelection" type="ScrollContainer" parent="UI"]
+[node name="SongSelection" type="ScrollContainer" parent="UI/SongSelection"]
 layout_mode = 0
-offset_left = 320.0
-offset_top = 128.0
-offset_right = 960.0
-offset_bottom = 656.0
-script = ExtResource("8_td63i")
+offset_top = 64.0
+offset_right = 640.0
+offset_bottom = 592.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/SongSelection"]
+[node name="SongItemContainer" type="VBoxContainer" parent="UI/SongSelection/SongSelection"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="OfficialSongs" type="Label" parent="UI/SongSelection/VBoxContainer"]
+[node name="OfficialSongs" type="Label" parent="UI/SongSelection/SongSelection/SongItemContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 text = "Official Songs"
 vertical_alignment = 1
 
-[node name="SongItem" parent="UI/SongSelection/VBoxContainer" instance=ExtResource("9_1h54w")]
+[node name="SongItem" parent="UI/SongSelection/SongSelection/SongItemContainer" instance=ExtResource("9_1h54w")]
 layout_mode = 2
 song_path = "res://songs/official/0.4/gateway/gateway.msf"
-song_name = "Gateway"
+song_title = "Gateway"
 song_artist = "RedSatura"
 
-[node name="CustomSongs" type="Label" parent="UI/SongSelection/VBoxContainer"]
+[node name="CustomSongs" type="Label" parent="UI/SongSelection/SongSelection/SongItemContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 text = "Custom Songs"
 vertical_alignment = 1
 justification_flags = 162
 
-[node name="OpenCustomSong" type="Control" parent="UI/SongSelection/VBoxContainer"]
+[node name="OpenCustomSong" type="Control" parent="UI/SongSelection/SongSelection/SongItemContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
-[node name="OpenCustom" type="Label" parent="UI/SongSelection/VBoxContainer/OpenCustomSong"]
+[node name="OpenCustom" type="Label" parent="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
@@ -271,9 +249,9 @@ text = "Open a Custom Song"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="UI/Official/Label/OfficialSongButton" to="." method="_on_official_song_button_pressed"]
 [connection signal="pressed" from="UI/Custom/OpenFile" to="UI/FileDialog" method="_on_open_file_pressed"]
 [connection signal="pressed" from="UI/SongInfo/PlaySong" to="." method="_on_play_song_pressed"]
 [connection signal="pressed" from="UI/Editor/EditorButton" to="." method="_on_editor_button_pressed"]
 [connection signal="canceled" from="UI/FileDialog" to="." method="_on_file_dialog_canceled"]
 [connection signal="file_selected" from="UI/FileDialog" to="UI/FileDialog" method="_on_file_selected"]
+[connection signal="gui_input" from="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong" to="UI/SongSelection" method="_on_open_custom_song_gui_input"]

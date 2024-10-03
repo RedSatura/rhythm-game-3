@@ -134,7 +134,7 @@ func process_song_validation() -> void:
 	song_manager.current_line_in_file = current_line_in_file
 	song_manager.get_node("SongStartTimer").start()
 	
-func process_beat(pos: int) -> void:
+func process_beat(_pos: int) -> void:
 	update_editor_line_color(current_line_in_file, highlighting_color)
 	current_line_in_file += 1
 

@@ -25,6 +25,7 @@ InputListener="*res://scripts/input_listener.gd"
 
 [debug]
 
+gdscript/warnings/unused_signal=0
 gdscript/warnings/untyped_declaration=2
 gdscript/warnings/inferred_declaration=2
 

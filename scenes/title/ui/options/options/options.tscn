@@ -84,7 +84,7 @@ offset_top = 688.0
 offset_right = 435.327
 offset_bottom = 712.0
 theme_override_font_sizes/font_size = 16
-text = "Made with Godot Engine 4.2"
+text = "Made with Godot Engine 4.3"
 
 [connection signal="toggled" from="Display/DarkMode" to="." method="_on_dark_mode_toggled"]
 [connection signal="value_changed" from="Sound/Volume/MasterVolumeSlider" to="." method="_on_global_volume_slider_value_changed"]
