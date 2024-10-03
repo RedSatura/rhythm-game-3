@@ -5,6 +5,9 @@ extends Node2D
 @onready var note_lane_3: Node = $NoteLane3
 @onready var note_lane_4: Node = $NoteLane4
 
+@onready var ui: Node = $UI
+@onready var lyric_label: Node = $UI/LyricLabel
+
 var seconds_per_beat: float = 0 #Important for syncing tweens to the beat!
 
 func _ready() -> void:
@@ -13,6 +16,7 @@ func _ready() -> void:
 	SignalHandler.connect("move_lane", Callable(self, "move_lane"))
 	SignalHandler.connect("set_note_lane_setting_auto_mode", Callable(self, "set_note_lane_auto_mode"))
 	SignalHandler.connect("get_song_seconds_per_beat", Callable(self, "set_seconds_per_beat"))
+	SignalHandler.connect("update_lyric", Callable(self, "update_lyric"))
 
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works
@@ -72,3 +76,6 @@ func reset_lanes() -> void:
 	note_lane_2.position.x = 192
 	note_lane_3.position.x = 320
 	note_lane_4.position.x = 448
+
+func update_lyric(text: String) -> void:
+	lyric_label.text = text

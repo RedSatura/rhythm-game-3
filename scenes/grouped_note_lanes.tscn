@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjmw7flxngjsm"]
+[gd_scene load_steps=4 format=3 uid="uid://cjmw7flxngjsm"]
 
 [ext_resource type="Script" path="res://scenes/note_lane/grouped_note_lanes.gd" id="1_vsgem"]
 [ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="2_hciq1"]
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="3_bqjyj"]
 
 [node name="NoteLanes" type="Node2D"]
 process_mode = 1
@@ -20,3 +21,25 @@ lane_position = "CENTER_RIGHT"
 [node name="NoteLane4" parent="." instance=ExtResource("2_hciq1")]
 position = Vector2(448, 640)
 lane_position = "RIGHT"
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("3_bqjyj")
+
+[node name="LyricLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = -256.0
+offset_top = 64.0
+offset_right = 768.0
+offset_bottom = 128.0
+theme_override_colors/font_shadow_color = Color(0.329, 0.329, 0.329, 0.719)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 24
+theme_override_font_sizes/font_size = 48
+text = "Test Lyrics!"
+horizontal_alignment = 1
+vertical_alignment = 1

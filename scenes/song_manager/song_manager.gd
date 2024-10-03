@@ -122,6 +122,17 @@ func process_commands(commands: Array) -> void:
 							SignalHandler.emit_signal("disable_lane", cached_params[0], cached_params[1])
 						else:
 							SignalHandler.emit_signal("send_error", "Too few or too many parameters!")
+				"l": #Update the lyics
+					#Parameters:
+					#Text (String) - the text inside will be used to update the lyric label.
+					if parameter_result != [] && parameter_result != null:
+						if parameter_result.size() == 1:
+							var cached_params: Array = [] #stores parameters
+							for value: RegExMatch in parameter_result: #get and convert parameters
+								cached_params.push_back(value.get_string())
+							SignalHandler.emit_signal("update_lyric", cached_params[0])
+						else:
+							SignalHandler.emit_signal("send_error", "Too few or too many parameters!")
 				"m": #Move a note lane.
 					#Parameters:
 					#Note lane number (int) - 1 for left, 2 for center left, 3 for center right, 4 for right.
