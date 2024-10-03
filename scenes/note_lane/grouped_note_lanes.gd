@@ -11,6 +11,8 @@ extends Node2D
 @onready var image_displayer: Node = $UI/ImageDisplayer
 @onready var video_player: Node = $UI/VideoPlayer
 
+@onready var video_player_offset: Node = $UI/VideoPlayer/VideoPlayerOffset
+
 var seconds_per_beat: float = 0 #Important for syncing tweens to the beat!
 
 func _ready() -> void:
@@ -100,6 +102,7 @@ func load_video() -> void:
 			ogv.set_file(video_path)
 			video_player.stream = ogv
 			image_displayer.visible = false
+			video_player_offset.start()
 		else:
 			SignalHandler.emit_signal("send_error", "Video format not supported, unable to play video!")
 			return
@@ -107,5 +110,9 @@ func load_video() -> void:
 		return
 
 func song_started() -> void:
+	lyric_label.text = ""
 	load_image()
 	load_video()
+
+func _on_video_player_offset_timeout() -> void:
+	video_player.play()

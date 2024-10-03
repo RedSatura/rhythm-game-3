@@ -59,8 +59,11 @@ offset_right = 896.0
 offset_bottom = 720.0
 mouse_filter = 2
 
+[node name="VideoPlayerOffset" type="Timer" parent="UI/VideoPlayer"]
+one_shot = true
+
 [node name="ImageDisplayer" type="TextureRect" parent="UI"]
-modulate = Color(1, 1, 1, 0.25098)
+modulate = Color(1, 1, 1, 0.501961)
 z_index = -1
 z_as_relative = false
 layout_mode = 0
@@ -70,3 +73,5 @@ offset_bottom = 720.0
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
+
+[connection signal="timeout" from="UI/VideoPlayer/VideoPlayerOffset" to="." method="_on_video_player_offset_timeout"]

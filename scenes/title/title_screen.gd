@@ -4,6 +4,8 @@ extends Node2D
 
 @onready var messages_container: Node = $UI/ScrollContainer/MessagesContainer
 
+@onready var song_selection: Node = $UI/SongSelection
+
 func _ready() -> void:
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	randomize()
