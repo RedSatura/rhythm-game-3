@@ -18,6 +18,5 @@ func _ready() -> void:
 func _on_pressed() -> void:
 	SignalHandler.emit_signal("send_song_to_validator", song_path)
 	
-
 func song_validated() -> void:
 	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/stage/stage.tscn")

@@ -70,6 +70,14 @@ offset_right = 1016.0
 offset_bottom = 376.0
 text = "Song Editor"
 
+[node name="Quit" type="Button" parent="UI/TitleObjects"]
+layout_mode = 0
+offset_left = 712.0
+offset_top = 392.0
+offset_right = 1016.0
+offset_bottom = 440.0
+text = "Quit"
+
 [node name="ScrollContainer" type="ScrollContainer" parent="UI"]
 layout_mode = 1
 anchors_preset = 12
@@ -124,6 +132,8 @@ vertical_alignment = 1
 
 [node name="Gateway" parent="UI/SongSelection/SongSelection/SongItemContainer" instance=ExtResource("9_1h54w")]
 layout_mode = 2
+focus_neighbor_top = NodePath("../../../Minimize")
+focus_neighbor_bottom = NodePath("../OpenCustomSong")
 song_path = "res://songs/official/0.4/gateway/gateway.msf"
 song_title = "Gateway"
 song_artist = "RedSatura"
@@ -138,6 +148,7 @@ justification_flags = 162
 [node name="OpenCustomSong" type="Button" parent="UI/SongSelection/SongSelection/SongItemContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+focus_neighbor_top = NodePath("../Gateway")
 flat = true
 
 [node name="OpenCustom" type="Label" parent="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong"]
@@ -156,16 +167,18 @@ title = "Open a File"
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+show_hidden_files = true
 use_native_dialog = true
 
 [node name="Minimize" type="Button" parent="UI/SongSelection"]
 layout_mode = 0
-offset_left = 576.0
-offset_right = 640.0
-offset_bottom = 64.0
-focus_mode = 0
+offset_left = 584.0
+offset_top = 8.0
+offset_right = 632.0
+offset_bottom = 56.0
+focus_neighbor_top = NodePath(".")
+focus_neighbor_bottom = NodePath("../SongSelection/SongItemContainer/Gateway")
 text = "X"
-flat = true
 
 [node name="Settings" type="Control" parent="UI"]
 layout_mode = 3
@@ -185,10 +198,12 @@ offset_right = 1280.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_rx4e8")
 
 [node name="Transition" parent="UI" instance=ExtResource("8_1j1aq")]
+visible = false
 layout_mode = 0
 
 [connection signal="pressed" from="UI/TitleObjects/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="UI/TitleObjects/SongEditor" to="." method="_on_song_editor_pressed"]
+[connection signal="pressed" from="UI/TitleObjects/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong" to="UI/SongSelection" method="_on_open_custom_song_pressed"]
 [connection signal="file_selected" from="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong/FileDialog" to="UI/SongSelection" method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="UI/SongSelection/Minimize" to="UI/SongSelection" method="_on_minimize_pressed"]

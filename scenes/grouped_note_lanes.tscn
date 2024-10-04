@@ -58,6 +58,7 @@ offset_left = -384.0
 offset_right = 896.0
 offset_bottom = 720.0
 mouse_filter = 2
+expand = true
 
 [node name="VideoPlayerOffset" type="Timer" parent="UI/VideoPlayer"]
 one_shot = true

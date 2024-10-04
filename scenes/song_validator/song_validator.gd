@@ -16,6 +16,8 @@ var default_song_info: Dictionary = { #defaults
 	"audio_src": "",
 	"image_src": "",
 	"video_src": "",
+	#file-related properties
+	"video_offset": 0,
 	#song-related information
 	"bpm": 100,
 	"beat_mode": 1,
@@ -117,6 +119,9 @@ func process_song_metadata_type(type: String) -> void: #Step 3: Getting data fro
 					song_info["video_src"] = video_path
 				else:
 					return
+			#File-related properties:
+			"VIDEO_OFFSET":
+				song_info["video_offset"] = int(metadata_content)
 			#Song-related types:
 			"BPM":
 				if int(metadata_content) <= 0:

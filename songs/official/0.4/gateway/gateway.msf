@@ -4,7 +4,6 @@ MAPCREATOR: RedSatura
 DIFFICULTY: 5
 
 AUDIO_SRC: gateway.ogg
-IMAGE_SRC: gateway.jpg
 
 BPM: 140
 BEAT_MODE: 2

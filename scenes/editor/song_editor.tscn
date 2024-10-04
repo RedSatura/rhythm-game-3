@@ -386,6 +386,7 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.msf", "*.txt")
 show_hidden_files = true
+use_native_dialog = true
 
 [node name="NewSongSaver" type="FileDialog" parent="."]
 initial_position = 1
@@ -393,6 +394,7 @@ size = Vector2i(800, 400)
 access = 2
 filters = PackedStringArray(".msf")
 show_hidden_files = true
+use_native_dialog = true
 
 [node name="NoteLanes" parent="." instance=ExtResource("6_esn1d")]
 position = Vector2(1920, 0)

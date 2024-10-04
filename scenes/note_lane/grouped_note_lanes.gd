@@ -24,6 +24,7 @@ func _ready() -> void:
 	SignalHandler.connect("update_lyric", Callable(self, "update_lyric"))
 	SignalHandler.connect("song_started", Callable(self, "song_started"))
 	$UI.theme = GlobalData.global_settings["theme"]
+	video_player_offset.start(GlobalData.song_info["video_offset"])
 
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works

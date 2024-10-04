@@ -12,6 +12,8 @@ var song_info: Dictionary = { #defaults
 	"audio_src": "",
 	"image_src": "",
 	"video_src": "",
+	#file-specific properties
+	"video_offset": 0,
 	#song-related information
 	"bpm": 100,
 	"beat_mode": 1,

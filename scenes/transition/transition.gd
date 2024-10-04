@@ -19,4 +19,5 @@ func set_transition_status(status: bool, path: String = "") -> void:
 			tween.connect("finished", change_scene)
 
 func change_scene() -> void:
-	get_tree().change_scene_to_file(scene_path)
+	if get_tree():
+		get_tree().change_scene_to_file(scene_path)
