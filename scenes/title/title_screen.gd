@@ -7,7 +7,7 @@ extends Node2D
 @onready var title_objects: Node = $UI/TitleObjects
 
 func _ready() -> void:
-	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	randomize()
 	SignalHandler.connect("send_error", Callable(self, "error_received"))
 	SignalHandler.connect("send_message", Callable(self, "message_received"))

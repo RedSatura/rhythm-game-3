@@ -134,7 +134,7 @@ vertical_alignment = 1
 layout_mode = 2
 focus_neighbor_top = NodePath("../../../Minimize")
 focus_neighbor_bottom = NodePath("../OpenCustomSong")
-song_path = "res://songs/official/0.4/gateway/gateway.msf"
+song_path = "res://songs/gateway/gateway.msf"
 song_title = "Gateway"
 song_artist = "RedSatura"
 

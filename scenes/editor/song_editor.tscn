@@ -392,6 +392,7 @@ use_native_dialog = true
 position = Vector2(1920, 0)
 
 [node name="Transition" parent="." instance=ExtResource("6_gcys7")]
+visible = false
 
 [connection signal="text_changed" from="UI/CodeEdit" to="." method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="UI/Open" to="." method="_on_open_pressed"]

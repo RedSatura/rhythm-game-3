@@ -36,6 +36,8 @@ func start_song() -> void:
 	
 	if FileAccess.file_exists(GlobalData.song_info["audio_src"]):
 		conductor.stream = AudioStreamOggVorbis.load_from_file(GlobalData.song_info["audio_src"])
+	elif ResourceLoader.exists(GlobalData.song_info["audio_src"]):
+		conductor.stream = ResourceLoader.load(GlobalData.song_info["audio_src"])
 	conductor.bpm = GlobalData.song_info["bpm"]
 	conductor.beat_mode = GlobalData.song_info["beat_mode"]
 	conductor.beats_in_measure = GlobalData.song_info["beats_in_measure"]

@@ -73,7 +73,6 @@ func open_file(path: String) -> void: #Step 2: Opening file
 				if result != null:
 					process_song_metadata_type(result.get_string().strip_edges())
 		if !audio_src_valid:
-			SignalHandler.emit_signal("send_error", "Invalid audio path!")
 			return
 		validate_song_body(file)
 	else:
@@ -104,21 +103,29 @@ func process_song_metadata_type(type: String) -> void: #Step 3: Getting data fro
 				if FileAccess.file_exists(audio_path):
 					song_info["audio_src"] = audio_path
 					audio_src_valid = true
+				elif ResourceLoader.exists(audio_path):
+					song_info["audio_src"] = audio_path
+					audio_src_valid = true
 				else: #why does this not work for some reason (EDIT: prob works now)
 					audio_src_valid = false
+					SignalHandler.emit_signal("send_error", "Invalid audio path! " + audio_path + " does not exist!")
 					return
 			"IMAGE_SRC":
 				var image_path: String = file_path.get_base_dir() + "/" + metadata_content
 				if FileAccess.file_exists(image_path):
 					song_info["image_src"] = image_path
+				elif ResourceLoader.exists(image_path):
+					song_info["image_src"] = image_path
 				else:
-					return
+					pass
 			"VIDEO_SRC":
 				var video_path: String = file_path.get_base_dir() + "/" + metadata_content
 				if FileAccess.file_exists(video_path):
 					song_info["video_src"] = video_path
+				elif ResourceLoader.exists(video_path):
+					song_info["video_src"] = video_path
 				else:
-					return
+					pass
 			#File-related properties:
 			"VIDEO_OFFSET":
 				song_info["video_offset"] = int(metadata_content)

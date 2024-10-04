@@ -17,14 +17,14 @@ func _on_close_pressed() -> void:
 func update_message(type: int = 0, message: String = "") -> void:
 	match type:
 		0: #messages
-			$Message.text = message
+			$ScrollContainer/Message.text = message
 			get_theme_stylebox("panel", "MessageDisplay").border_width_right = 0
 			if fade_timer:
 				fade_timer.start(3)
 			if fade_bar:
 				fade_bar.visible = true
 		1: #errors
-			$Message.text = message
+			$ScrollContainer/Message.text = message
 			get_theme_stylebox("panel", "MessageDisplay").border_width_right = 4
 		_:
 			pass
