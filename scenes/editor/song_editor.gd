@@ -82,7 +82,7 @@ func _on_song_picker_file_selected(path: String) -> void:
 			SignalHandler.emit_signal("send_message", "Successfully opened file.")
 
 func _on_title_screen_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")
+	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/title/title_screen.tscn")
 
 func _on_code_edit_text_changed() -> void:
 	clear_highlights() #pls fix, this is terrible (clears every single line of highlighting every time text changes)

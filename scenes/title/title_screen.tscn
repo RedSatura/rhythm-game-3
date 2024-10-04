@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://d4glp02ecl6x5"]
+[gd_scene load_steps=10 format=3 uid="uid://d4glp02ecl6x5"]
 
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_283yi"]
 [ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="3_qigky"]
 [ext_resource type="PackedScene" uid="uid://cin78nuhqwsys" path="res://scenes/title/ui/options/options_button/options_button.tscn" id="5_g1xjh"]
 [ext_resource type="PackedScene" uid="uid://c126fvxjjjxl7" path="res://scenes/title/ui/options/options/options.tscn" id="6_tu506"]
+[ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="8_1j1aq"]
 [ext_resource type="Script" path="res://scenes/title/song_selection/song_selection.gd" id="8_td63i"]
 [ext_resource type="PackedScene" uid="uid://bf5cho0i8da4p" path="res://scenes/title/song_selection/song_item/song_item.tscn" id="9_1h54w"]
 
@@ -13,6 +14,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_kubb5")
+metadata/_edit_vertical_guides_ = [-424.0]
 
 [node name="SongValidator" parent="." instance=ExtResource("3_283yi")]
 
@@ -147,6 +149,7 @@ offset_left = 8.0
 offset_top = 8.0
 offset_right = 632.0
 offset_bottom = 56.0
+focus_mode = 2
 text = "Open a Custom Song"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -184,8 +187,11 @@ offset_left = 1216.0
 offset_right = 1280.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_rx4e8")
 
+[node name="Transition" parent="UI" instance=ExtResource("8_1j1aq")]
+layout_mode = 0
+
 [connection signal="pressed" from="UI/TitleObjects/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="UI/TitleObjects/SongEditor" to="." method="_on_song_editor_pressed"]
-[connection signal="gui_input" from="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong" to="UI/SongSelection" method="_on_open_custom_song_gui_input"]
+[connection signal="pressed" from="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong" to="UI/SongSelection" method="_on_open_custom_song_pressed"]
 [connection signal="file_selected" from="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong/FileDialog" to="UI/SongSelection" method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="UI/SongSelection/Minimize" to="UI/SongSelection" method="_on_minimize_pressed"]

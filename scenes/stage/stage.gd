@@ -16,7 +16,7 @@ func error_received(error: String) -> void:
 	print_debug(error)
 
 func _on_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/title/title_screen.tscn")
+	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/title/title_screen.tscn")
 
 func _on_pause_button_pressed() -> void:
 	pause_song()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=13 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
 [ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="6_26smg"]
 [ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
 [ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/grouped_note_lanes.tscn" id="10_6mjfg"]
+[ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="12_0l0mw"]
 
 [node name="Stage" type="Node2D"]
 process_mode = 3
@@ -212,6 +213,8 @@ metadata/_edit_lock_ = true
 [node name="NoteLanes" parent="." instance=ExtResource("10_6mjfg")]
 position = Vector2(384, 0)
 metadata/_edit_lock_ = true
+
+[node name="Transition" parent="." instance=ExtResource("12_0l0mw")]
 
 [connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]

@@ -15,4 +15,4 @@ func _ready() -> void:
 	difficulty_label.text = "Difficulty: " + str(song_difficulty)
 
 func _on_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
+	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/stage/stage.tscn")

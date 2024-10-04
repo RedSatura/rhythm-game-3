@@ -56,12 +56,8 @@ func change_theme(theme: Theme) -> void:
 	$UI.theme = theme
 	GlobalData.global_settings["theme"] = theme
 
-func _on_official_song_button_pressed() -> void:
-	SignalHandler.emit_signal("send_song_to_validator", "res://songs/official/0.4/gateway/gateway.msf")
-	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
-
 func _on_song_editor_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/editor/song_editor.tscn")
+	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/editor/song_editor.tscn")
 
 func _on_play_pressed() -> void:
 	SignalHandler.emit_signal("set_song_selection_visibility", true)

@@ -80,9 +80,6 @@ func song_validated() -> void:
 	elif custom_processing:
 		get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
 
-func _on_open_custom_song_gui_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("click"):
-		file_dialog.popup()
 
 func _on_file_dialog_file_selected(path: String) -> void:
 	custom_processing = true
@@ -99,3 +96,7 @@ func set_visibility(status: bool) -> void:
 
 func _on_minimize_pressed() -> void:
 	SignalHandler.emit_signal("set_song_selection_visibility", false)
+
+
+func _on_open_custom_song_pressed() -> void:
+	file_dialog.popup()
