@@ -19,8 +19,10 @@ func update_message(type: int = 0, message: String = "") -> void:
 		0: #messages
 			$Message.text = message
 			get_theme_stylebox("panel", "MessageDisplay").border_width_right = 0
-			fade_timer.start(3)
-			fade_bar.visible = true
+			if fade_timer:
+				fade_timer.start(3)
+			if fade_bar:
+				fade_bar.visible = true
 		1: #errors
 			$Message.text = message
 			get_theme_stylebox("panel", "MessageDisplay").border_width_right = 4

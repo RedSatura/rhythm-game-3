@@ -1,4 +1,4 @@
-extends Control
+extends Button
 
 @export_file var song_path: String = ""
 @export var song_title: String = ""
@@ -14,6 +14,5 @@ func _ready() -> void:
 	artist_label.text = song_artist
 	difficulty_label.text = "Difficulty: " + str(song_difficulty)
 
-func _on_panel_gui_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("click"):
-		get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")

@@ -1,14 +1,22 @@
 extends Control
 
 @onready var song_item_container: Node = $SongSelection/SongItemContainer
+@onready var file_dialog: Node = $SongSelection/SongItemContainer/OpenCustomSong/FileDialog
 
 var files: Array = []
 
 var file_processing: bool = false
+var custom_processing: bool = false
+
+enum VisibilityState {
+	VISIBLE,
+	HIDDEN,
+}
 
 func _ready() -> void:
 	SignalHandler.connect("song_validated", Callable(self, "song_validated"))
 	SignalHandler.connect("send_user_song_file_paths", Callable(self, "process_file_paths"))
+	SignalHandler.connect("set_song_selection_visibility", Callable(self, "set_visibility"))
 	check_songs()
 	
 func check_songs() -> void:
@@ -69,7 +77,25 @@ func song_validated() -> void:
 		new_song_item.song_difficulty = GlobalData.song_info["difficulty"]
 		song_item_container.add_child(new_song_item)
 		file_processing = false
+	elif custom_processing:
+		get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
 
 func _on_open_custom_song_gui_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("click"):
-		pass
+		file_dialog.popup()
+
+func _on_file_dialog_file_selected(path: String) -> void:
+	custom_processing = true
+	SignalHandler.emit_signal("send_song_to_validator", path)
+
+func set_visibility(status: bool) -> void:
+	if status:
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(self, "position", Vector2(320, 64), 0.3).set_trans(Tween.TRANS_SINE)
+		$SongSelection/SongItemContainer/Gateway.grab_focus()
+	else:
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(self, "position", Vector2(320, 720), 0.3).set_trans(Tween.TRANS_SINE)
+
+func _on_minimize_pressed() -> void:
+	SignalHandler.emit_signal("set_song_selection_visibility", false)

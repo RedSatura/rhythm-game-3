@@ -1,10 +1,10 @@
 extends Node2D
 
-@onready var song_info: Node = $UI/SongInfo
-
 @onready var messages_container: Node = $UI/ScrollContainer/MessagesContainer
 
 @onready var song_selection: Node = $UI/SongSelection
+
+@onready var title_objects: Node = $UI/TitleObjects
 
 func _ready() -> void:
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -15,10 +15,11 @@ func _ready() -> void:
 	SignalHandler.connect("song_validated", Callable(self, "song_validated"))
 	SignalHandler.connect("reset_to_defaults", Callable(self, "reset_to_defaults"))
 	SignalHandler.connect("change_theme", Callable(self, "change_theme"))
+	SignalHandler.connect("set_song_selection_visibility", Callable(self, "song_selection_visibility_status"))
+	
+	$UI/TitleObjects/Play.grab_focus()
 	
 	OS.request_permissions()
-	
-	song_info.visible = false
 	
 	if GlobalData.global_settings["theme"] == null:
 		GlobalData.global_settings["theme"] = load("res://styles/default_theme.tres")
@@ -40,14 +41,10 @@ func message_received(message: String) -> void:
 	message_display.update_message(0, message)
 	
 func song_validated() -> void:
-	song_info.visible = true
-	$UI/SongInfo/SongDataLabels/Title.text = str(GlobalData.song_info["title"])
-	$UI/SongInfo/SongDataLabels/Artist.text = "Artist: " + str(GlobalData.song_info["artist"])
-	$UI/SongInfo/SongDataLabels/MapCreator.text = "Map Creator: " + str(GlobalData.song_info["mapcreator"])
-	$UI/SongInfo/SongDataLabels/Difficulty.text = "Difficulty: " + str(GlobalData.song_info["difficulty"])
+	pass
 	
 func reset_to_defaults() -> void:
-	song_info.visible = false
+	pass
 
 func _on_play_song_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
@@ -62,3 +59,17 @@ func change_theme(theme: Theme) -> void:
 func _on_official_song_button_pressed() -> void:
 	SignalHandler.emit_signal("send_song_to_validator", "res://songs/official/0.4/gateway/gateway.msf")
 	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
+
+func _on_song_editor_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/editor/song_editor.tscn")
+
+func _on_play_pressed() -> void:
+	SignalHandler.emit_signal("set_song_selection_visibility", true)
+
+func song_selection_visibility_status(status: bool) -> void:
+	if status:
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(title_objects, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.3)
+	else:
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(title_objects, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.3)

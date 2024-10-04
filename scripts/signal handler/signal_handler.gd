@@ -60,4 +60,5 @@ signal set_note_lane_setting_auto_mode(status: bool)
 
 #region title_screen
 signal toggle_show_title_screen_options(status: bool)
+signal set_song_selection_visibility(status: bool)
 #endregion
