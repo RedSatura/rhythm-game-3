@@ -75,8 +75,7 @@ func end_song() -> void:
 func stop_song() -> void:
 	conductor.stop()
 	conductor.stream = null
-	if !in_editor:
-		SignalHandler.emit_signal("song_ended")
+	SignalHandler.emit_signal("song_ended")
 	current_line_in_file = 0
 	#command_processing_enabled = false
 	

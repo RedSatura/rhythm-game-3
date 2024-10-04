@@ -113,7 +113,7 @@ func disable_lane(duration: int = 0) -> void:
 	
 func enable_lane() -> void:
 	lane_state = LaneState.ACTIVE
-	lane_background.modulate = Color(0.7, 0.7, 0.7, 1.0)
+	lane_background.modulate = Color(0.25, 0.25, 0.25, 1.0)
 
 func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch:

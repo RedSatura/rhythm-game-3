@@ -23,8 +23,9 @@ func _ready() -> void:
 	SignalHandler.connect("get_song_seconds_per_beat", Callable(self, "set_seconds_per_beat"))
 	SignalHandler.connect("update_lyric", Callable(self, "update_lyric"))
 	SignalHandler.connect("song_started", Callable(self, "song_started"))
+	SignalHandler.connect("song_ended", Callable(self, "song_ended"))
 	$UI.theme = GlobalData.global_settings["theme"]
-	video_player_offset.start(GlobalData.song_info["video_offset"])
+	video_player.stream = null
 
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works
@@ -84,6 +85,7 @@ func reset_lanes() -> void:
 	note_lane_2.position.x = 192
 	note_lane_3.position.x = 320
 	note_lane_4.position.x = 448
+	video_player.stream = null
 
 func update_lyric(text: String) -> void:
 	lyric_label.text = text
@@ -111,9 +113,14 @@ func load_video() -> void:
 		return
 
 func song_started() -> void:
+	load_video()
+	if video_player.stream:
+		video_player_offset.start(GlobalData.song_info["video_offset"])
 	lyric_label.text = ""
 	load_image()
-	load_video()
 
 func _on_video_player_offset_timeout() -> void:
 	video_player.play()
+
+func song_ended() -> void:
+	video_player.stop()

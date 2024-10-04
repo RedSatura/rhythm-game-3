@@ -35,7 +35,7 @@ offset_right = -64.0
 offset_bottom = -640.0
 
 [node name="LaneBackground" type="ColorRect" parent="UI"]
-modulate = Color(0.7, 0.7, 0.7, 1)
+modulate = Color(0.25, 0.25, 0.25, 1)
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 720.0

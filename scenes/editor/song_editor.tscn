@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
-[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/grouped_note_lanes.tscn" id="6_esn1d"]
+[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="6_gcys7"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
@@ -368,14 +368,6 @@ horizontal_scroll_mode = 0
 
 [node name="MessagesContainer" type="VBoxContainer" parent="UI/ScrollContainer"]
 layout_mode = 2
-
-[node name="NoteLaneBackground" type="Panel" parent="UI"]
-layout_mode = 0
-offset_left = 1536.0
-offset_right = 2816.0
-offset_bottom = 720.0
-theme_type_variation = &"StageBackground"
-metadata/_edit_lock_ = true
 
 [node name="SongPicker" type="FileDialog" parent="."]
 title = "Open a File"

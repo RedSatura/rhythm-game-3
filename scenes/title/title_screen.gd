@@ -7,7 +7,7 @@ extends Node2D
 @onready var title_objects: Node = $UI/TitleObjects
 
 func _ready() -> void:
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	randomize()
 	SignalHandler.connect("send_error", Callable(self, "error_received"))
 	SignalHandler.connect("send_message", Callable(self, "message_received"))
@@ -16,7 +16,8 @@ func _ready() -> void:
 	SignalHandler.connect("reset_to_defaults", Callable(self, "reset_to_defaults"))
 	SignalHandler.connect("change_theme", Callable(self, "change_theme"))
 	SignalHandler.connect("set_song_selection_visibility", Callable(self, "song_selection_visibility_status"))
-	
+	GlobalData.song_info["video_src"] = ""
+	GlobalData.song_info["image_src"] = ""
 	$UI/TitleObjects/Play.grab_focus()
 	
 	OS.request_permissions()

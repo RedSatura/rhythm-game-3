@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="6_0b2l7"]
 [ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="6_26smg"]
 [ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
-[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/grouped_note_lanes.tscn" id="10_6mjfg"]
+[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="10_6mjfg"]
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="12_0l0mw"]
 
 [node name="Stage" type="Node2D"]
