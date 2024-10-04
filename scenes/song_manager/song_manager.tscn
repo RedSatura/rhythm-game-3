@@ -13,6 +13,7 @@ autoplay = false
 song_beat_delay = 1
 
 [node name="SongStartTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [connection signal="finished" from="Conductor" to="." method="_on_conductor_finished"]

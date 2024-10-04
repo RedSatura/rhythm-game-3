@@ -206,15 +206,17 @@ vertical_alignment = 1
 wait_time = 3.0
 one_shot = true
 
-[node name="SongManager" parent="UI" instance=ExtResource("6_0b2l7")]
-in_editor = false
-metadata/_edit_lock_ = true
+[node name="Transition" parent="UI" instance=ExtResource("12_0l0mw")]
+layout_mode = 0
 
 [node name="NoteLanes" parent="." instance=ExtResource("10_6mjfg")]
 position = Vector2(384, 0)
 metadata/_edit_lock_ = true
 
-[node name="Transition" parent="." instance=ExtResource("12_0l0mw")]
+[node name="SongManager" parent="." instance=ExtResource("6_0b2l7")]
+file_path = "res://songs/official/0.4/gateway/gateway.msf"
+in_editor = false
+metadata/_edit_lock_ = true
 
 [connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]

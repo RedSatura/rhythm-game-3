@@ -53,11 +53,14 @@ func setup_file() -> void:
 			file.get_line() #no need to use strip_edges since it isn't used anyway
 	else:
 		file = FileAccess.open(GlobalData.song_path, FileAccess.READ)
-		for x: int in 20:
-			line_content = file.get_line()
-			current_line_in_file += 1
-			if line_content == "SONG_START":
-				break
+		if file != null:
+			for x: int in 20:
+				line_content = file.get_line()
+				current_line_in_file += 1
+				if line_content == "SONG_START":
+					break
+		else:
+			return
 	
 	for x: int in line_read_offset:
 		file.get_line()

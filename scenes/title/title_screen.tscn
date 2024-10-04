@@ -124,8 +124,6 @@ vertical_alignment = 1
 
 [node name="Gateway" parent="UI/SongSelection/SongSelection/SongItemContainer" instance=ExtResource("9_1h54w")]
 layout_mode = 2
-focus_neighbor_top = NodePath(".")
-focus_neighbor_bottom = NodePath("../OpenCustomSong")
 song_path = "res://songs/official/0.4/gateway/gateway.msf"
 song_title = "Gateway"
 song_artist = "RedSatura"
@@ -140,7 +138,6 @@ justification_flags = 162
 [node name="OpenCustomSong" type="Button" parent="UI/SongSelection/SongSelection/SongItemContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
-focus_neighbor_top = NodePath("../Gateway")
 flat = true
 
 [node name="OpenCustom" type="Label" parent="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong"]

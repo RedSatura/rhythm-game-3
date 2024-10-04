@@ -10,9 +10,14 @@ extends Button
 @onready var difficulty_label: Node = $Difficulty
 
 func _ready() -> void:
+	SignalHandler.connect("song_validated", Callable(self, "song_validated"))
 	title_label.text = song_title
 	artist_label.text = song_artist
 	difficulty_label.text = "Difficulty: " + str(song_difficulty)
 
 func _on_pressed() -> void:
+	SignalHandler.emit_signal("send_song_to_validator", song_path)
+	
+
+func song_validated() -> void:
 	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/stage/stage.tscn")

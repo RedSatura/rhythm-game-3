@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var song_manager: Node = $UI/SongManager
+@onready var song_manager: Node = $SongManager
 @onready var note_feedback_label: Node = $UI/NoteFeedbackLabel
 
 @export var in_editor: bool = false
