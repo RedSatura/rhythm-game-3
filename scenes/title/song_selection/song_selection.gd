@@ -37,25 +37,25 @@ func check_songs() -> void:
 			song_dir.list_dir_begin()
 			
 			var song_file_name: String = song_dir.get_next()
-			
 			while song_file_name != "":
 				if song_dir.current_is_dir():
 					pass
 				else:
 					if song_file_name.get_extension() != "msf":
-						song_file_name = song_dir.get_next()
+						pass
 					else:
 						files.append(song_dir.get_current_dir() + "/" + song_file_name)
-						song_file_name = song_dir.get_next()
 					
 				song_file_name = song_dir.get_next()
 		else:
 			SignalHandler.emit_signal("send_error", "File accessing error.")
+			break
 		file_name = dir.get_next()
 		
 	SignalHandler.emit_signal("send_user_song_file_paths", files)
 
 func process_file_paths(paths: Array) -> void:
+	print(paths)
 	for path: String in paths:
 		if FileAccess.file_exists(path):
 			read_file(path)
