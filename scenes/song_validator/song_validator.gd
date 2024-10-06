@@ -128,7 +128,7 @@ func process_song_metadata_type(type: String) -> void: #Step 3: Getting data fro
 					pass
 			#File-related properties:
 			"VIDEO_OFFSET":
-				song_info["video_offset"] = int(metadata_content)
+				song_info["video_offset"] = float(metadata_content)
 			#Song-related types:
 			"BPM":
 				if int(metadata_content) <= 0:
