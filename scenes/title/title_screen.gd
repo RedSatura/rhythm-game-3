@@ -6,6 +6,8 @@ extends Node2D
 
 @onready var title_objects: Node = $UI/TitleObjects
 
+@onready var song_previewer: Node = $SongPreviewer
+
 func _ready() -> void:
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	randomize()

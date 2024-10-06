@@ -202,6 +202,8 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_rx4e8")
 visible = false
 layout_mode = 0
 
+[node name="SongPreviewer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="pressed" from="UI/TitleObjects/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="UI/TitleObjects/SongEditor" to="." method="_on_song_editor_pressed"]
 [connection signal="pressed" from="UI/TitleObjects/Quit" to="." method="_on_quit_pressed"]

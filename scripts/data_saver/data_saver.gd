@@ -24,6 +24,7 @@ func save_data() -> void:
 	config.set_value("Keybinds", "lane_center_right", GlobalData.global_settings["key_lane_center_right"])
 	config.set_value("Keybinds", "lane_right", GlobalData.global_settings["key_lane_right"])
 	config.set_value("Keybinds", "pause", GlobalData.global_settings["key_pause"])
+	config.set_value("Keybinds", "restart", GlobalData.global_settings["key_restart"])
 	
 	config.set_value("Audio", "master_volume", GlobalData.global_settings["master_volume"])
 	
@@ -53,6 +54,7 @@ func load_data() -> void:
 			GlobalData.global_settings["key_lane_center_right"] = config.get_value("Keybinds", "lane_center_right")
 			GlobalData.global_settings["key_lane_right"] = config.get_value("Keybinds", "lane_right")
 			GlobalData.global_settings["key_pause"] = config.get_value("Keybinds", "pause")
+			GlobalData.global_settings["key_restart"] = config.get_value("Keybinds", "restart")
 			
 			GlobalData.global_settings["master_volume"] = config.get_value("Audio", "master_volume", 1.0)
 			
@@ -77,3 +79,7 @@ func load_data() -> void:
 			key_scancode_5.set_keycode(GlobalData.global_settings["key_pause"])
 			InputMap.action_erase_events("pause")
 			InputMap.action_add_event("pause", key_scancode_5)
+			var key_scancode_6: InputEventKey = InputEventKey.new()
+			key_scancode_6.set_keycode(GlobalData.global_settings["key_restart"])
+			InputMap.action_erase_events("restart")
+			InputMap.action_add_event("restart", key_scancode_5)

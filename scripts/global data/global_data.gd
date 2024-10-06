@@ -32,6 +32,7 @@ var global_settings: Dictionary = {
 	"key_lane_center_right": 74,
 	"key_lane_right": 75,
 	"key_pause": 80,
+	"key_restart": 82,
 	#Audio settings
 	"master_volume": 1.0, 
 }

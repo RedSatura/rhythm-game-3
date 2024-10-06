@@ -5,6 +5,7 @@ extends Control
 @onready var center_right_lane: Node = $Controls/CenterRightLane/InputChangerButton
 @onready var right_lane: Node = $Controls/RightLane/InputChangerButton
 @onready var pause: Node = $Controls/Pause/InputChangerButton
+@onready var restart: Node = $Controls/Restart/InputChangerButton
 
 var selected_button: Button = null
 
@@ -15,6 +16,7 @@ func _ready() -> void:
 	center_right_lane.toggled.connect(_on_input_button_toggled.bind(center_right_lane))
 	right_lane.toggled.connect(_on_input_button_toggled.bind(right_lane))
 	pause.toggled.connect(_on_input_button_toggled.bind(pause))
+	restart.toggled.connect(_on_input_button_toggled.bind(restart))
 	
 	update_button_text()
 	
@@ -49,6 +51,7 @@ func update_button_text() -> void:
 	center_right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_center_right"])
 	right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_right"])
 	pause.text = OS.get_keycode_string(GlobalData.global_settings["key_pause"])
+	restart.text = OS.get_keycode_string(GlobalData.global_settings["key_restart"])
 
 func _on_input_changer_button_focus_exited() -> void:
 	selected_button.button_pressed = false

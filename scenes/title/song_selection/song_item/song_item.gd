@@ -13,6 +13,7 @@ extends Button
 @onready var difficulty_label: Node = $Difficulty
 
 var scrolling_enabled: bool = false
+var on_focus: bool = false
 
 enum ScrollState {
 	BEGIN,
@@ -33,7 +34,8 @@ func _on_pressed() -> void:
 	SignalHandler.emit_signal("send_song_to_validator", song_path)
 	
 func song_validated() -> void:
-	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/stage/stage.tscn")
+	if !on_focus:
+		SignalHandler.emit_signal("set_transition_status", false, "res://scenes/stage/stage.tscn")
 
 func _process(_delta: float) -> void:
 	match scroll_state:
@@ -58,3 +60,6 @@ func _on_timer_timeout() -> void:
 			title_scroll_timer.start()
 			title_scroll.scroll_horizontal = 0
 			scroll_state = ScrollState.BEGIN
+
+func _on_focus_entered() -> void:
+	pass
