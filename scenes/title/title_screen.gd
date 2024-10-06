@@ -28,6 +28,11 @@ func _ready() -> void:
 	else:
 		$UI.theme = GlobalData.global_settings["theme"]
 		
+	if GlobalData.global_settings["fullscreen"]:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		
 func _on_song_file_picker_file_selected(path: String) -> void:
 	SignalHandler.emit_signal("send_message", "Loading %s" % path)
 

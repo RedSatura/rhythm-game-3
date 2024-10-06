@@ -29,26 +29,38 @@ text = "Display"
 
 [node name="DarkMode" type="CheckButton" parent="Display"]
 layout_mode = 0
+offset_left = 8.0
 offset_top = 32.0
 offset_right = 352.0
 offset_bottom = 63.0
 theme_override_font_sizes/font_size = 16
 text = "Dark Mode"
 
+[node name="Fullscreen" type="CheckButton" parent="Display"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 351.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 16
+text = "Fullscreen"
+
 [node name="Sound" type="Label" parent="."]
 layout_mode = 0
 offset_left = 15.9536
-offset_top = 335.0
+offset_top = 368.0
 offset_right = 82.9536
-offset_bottom = 366.0
+offset_bottom = 399.0
 theme_override_font_sizes/font_size = 22
 text = "Sound"
+metadata/_edit_group_ = true
 
 [node name="Volume" type="Label" parent="Sound"]
 layout_mode = 0
-offset_top = 33.0
-offset_right = 59.0
-offset_bottom = 65.0
+offset_left = 7.97679
+offset_top = 32.0
+offset_right = 125.977
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 16
 text = "Master Volume"
 vertical_alignment = 1
@@ -56,7 +68,7 @@ vertical_alignment = 1
 [node name="MasterVolumeSlider" type="HSlider" parent="Sound/Volume"]
 layout_mode = 0
 offset_left = 154.0
-offset_right = 367.0
+offset_right = 359.0
 offset_bottom = 32.0
 max_value = 1.0
 step = 0.05
@@ -64,9 +76,9 @@ value = 0.5
 ticks_on_borders = true
 
 [node name="ControlsOptionHandler" parent="." instance=ExtResource("3_0bww4")]
-offset_top = 136.0
+offset_top = 168.0
 offset_right = 439.0
-offset_bottom = 328.0
+offset_bottom = 360.0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -87,4 +99,5 @@ theme_override_font_sizes/font_size = 16
 text = "Made with Godot Engine 4.3"
 
 [connection signal="toggled" from="Display/DarkMode" to="." method="_on_dark_mode_toggled"]
+[connection signal="toggled" from="Display/Fullscreen" to="." method="_on_fullscreen_toggled"]
 [connection signal="value_changed" from="Sound/Volume/MasterVolumeSlider" to="." method="_on_global_volume_slider_value_changed"]

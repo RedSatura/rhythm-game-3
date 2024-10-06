@@ -17,6 +17,7 @@ func save_data() -> void:
 	
 	config.set_value("GlobalSettings", "theme", GlobalData.global_settings["theme"])
 	config.set_value("GlobalSettings", "theme_name", GlobalData.global_settings["theme_name"])
+	config.set_value("GlobalSettings", "fullscreen", GlobalData.global_settings["fullscreen"])
 	
 	config.set_value("Keybinds", "lane_left", GlobalData.global_settings["key_lane_left"])
 	config.set_value("Keybinds", "lane_center_left", GlobalData.global_settings["key_lane_center_left"])
@@ -45,6 +46,7 @@ func load_data() -> void:
 		else:
 			GlobalData.global_settings["theme"] = config.get_value("GlobalSettings", "theme")
 			GlobalData.global_settings["theme_name"] = config.get_value("GlobalSettings", "theme_name")
+			GlobalData.global_settings["fullscreen"] = config.get_value("GlobalSettings", "fullscreen")
 			
 			GlobalData.global_settings["key_lane_left"] = config.get_value("Keybinds", "lane_left")
 			GlobalData.global_settings["key_lane_center_left"] = config.get_value("Keybinds", "lane_center_left")

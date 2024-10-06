@@ -22,8 +22,10 @@ var song_info: Dictionary = { #defaults
 }
 
 var global_settings: Dictionary = {
+	#Display
 	"theme": load("res://styles/default_theme.tres"),
 	"theme_name": "light",
+	"fullscreen": true,
 	#Key binds
 	"key_lane_left": 68,
 	"key_lane_center_left": 70,

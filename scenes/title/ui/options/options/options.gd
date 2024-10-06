@@ -2,6 +2,8 @@ extends Panel
 
 @export var slide_value: int = 448
 
+@onready var fullscreen_option: Node = $Display/Fullscreen
+
 var current_theme_path: String = ""
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -9,6 +11,7 @@ func _ready() -> void:
 	if GlobalData.global_settings["theme_name"] == "dark":
 		$Display/DarkMode.button_pressed = true
 	$Sound/Volume/MasterVolumeSlider.value = GlobalData.global_settings["master_volume"]
+	fullscreen_option.button_pressed = GlobalData.global_settings["fullscreen"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -27,15 +30,23 @@ func _on_dark_mode_toggled(toggled_on: bool) -> void:
 		var new_theme: Theme = load("res://styles/dark_theme.tres")
 		GlobalData.global_settings["theme_name"] = "dark"
 		SignalHandler.emit_signal("change_theme", new_theme)
-		DataSaver.save_data()
 	else:
 		var new_theme: Theme = load("res://styles/default_theme.tres")
 		GlobalData.global_settings["theme_name"] = "light"
 		SignalHandler.emit_signal("change_theme", new_theme)
-		DataSaver.save_data()
+	DataSaver.save_data()
 
 func _on_global_volume_slider_value_changed(value: float) -> void:
 	#change master volume
 	#audio related stuff should be handled by the conductor or similar nodes
 	GlobalData.global_settings["master_volume"] = value
+	DataSaver.save_data()
+
+func _on_fullscreen_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		GlobalData.global_settings["fullscreen"] = true
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		GlobalData.global_settings["fullscreen"] = false
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	DataSaver.save_data()
