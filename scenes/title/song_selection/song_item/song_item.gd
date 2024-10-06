@@ -34,7 +34,7 @@ func _on_pressed() -> void:
 	SignalHandler.emit_signal("send_song_to_validator", song_path)
 	
 func song_validated() -> void:
-	if !on_focus:
+	if on_focus:
 		SignalHandler.emit_signal("set_transition_status", false, "res://scenes/stage/stage.tscn")
 
 func _process(_delta: float) -> void:
@@ -61,5 +61,9 @@ func _on_timer_timeout() -> void:
 			title_scroll.scroll_horizontal = 0
 			scroll_state = ScrollState.BEGIN
 
-func _on_focus_entered() -> void:
-	pass
+func _on_focus_entered() -> void:	
+	SignalHandler.emit_signal("send_song_to_validator", song_path)
+	on_focus = true
+
+func _on_focus_exited() -> void:
+	on_focus = false

@@ -49,7 +49,8 @@ func message_received(message: String) -> void:
 	message_display.update_message(0, message)
 	
 func song_validated() -> void:
-	pass
+	song_previewer.stream = AudioStreamOggVorbis.load_from_file(GlobalData.song_info["audio_src"])
+	song_previewer.play()
 	
 func reset_to_defaults() -> void:
 	pass

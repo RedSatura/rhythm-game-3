@@ -50,5 +50,6 @@ wait_time = 2.0
 one_shot = true
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
 [connection signal="timeout" from="TitleScroll/Timer" to="." method="_on_timer_timeout"]
