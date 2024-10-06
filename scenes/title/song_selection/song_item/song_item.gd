@@ -61,7 +61,8 @@ func _on_timer_timeout() -> void:
 			title_scroll.scroll_horizontal = 0
 			scroll_state = ScrollState.BEGIN
 
-func _on_focus_entered() -> void:	
+func _on_focus_entered() -> void:
+	GlobalData.song_info["video_src"] = ""
 	SignalHandler.emit_signal("send_song_to_validator", song_path)
 	on_focus = true
 

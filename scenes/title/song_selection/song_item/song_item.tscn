@@ -7,6 +7,8 @@
 custom_minimum_size = Vector2(640, 64)
 offset_right = 640.0
 offset_bottom = 64.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath(".")
 theme = ExtResource("1_tq7xw")
 script = ExtResource("2_7f65r")
 

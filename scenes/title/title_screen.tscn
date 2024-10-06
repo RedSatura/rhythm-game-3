@@ -60,6 +60,10 @@ offset_left = 712.0
 offset_top = 264.0
 offset_right = 1016.0
 offset_bottom = 312.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../SongEditor")
 text = "Play"
 
 [node name="SongEditor" type="Button" parent="UI/TitleObjects"]
@@ -68,6 +72,10 @@ offset_left = 712.0
 offset_top = 328.0
 offset_right = 1016.0
 offset_bottom = 376.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Play")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Quit")
 text = "Song Editor"
 
 [node name="Quit" type="Button" parent="UI/TitleObjects"]
@@ -76,6 +84,10 @@ offset_left = 712.0
 offset_top = 392.0
 offset_right = 1016.0
 offset_bottom = 440.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../SongEditor")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
 text = "Quit"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI"]
@@ -149,7 +161,9 @@ justification_flags = 162
 [node name="OpenCustomSong" type="Button" parent="UI/SongSelection/SongSelection/SongItemContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Gateway")
+focus_neighbor_right = NodePath(".")
 flat = true
 
 [node name="OpenCustom" type="Label" parent="UI/SongSelection/SongSelection/SongItemContainer/OpenCustomSong"]
@@ -177,9 +191,24 @@ offset_left = 584.0
 offset_top = 8.0
 offset_right = 632.0
 offset_bottom = 56.0
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../SongSelection/SongItemContainer/Gateway")
 text = "X"
+
+[node name="SelectionGuide" type="Label" parent="UI/SongSelection"]
+layout_mode = 0
+offset_top = 592.0
+offset_right = 640.0
+offset_bottom = 624.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+theme_override_font_sizes/font_size = 22
+text = "Use [L Lane] & [R Lane] to Select Between Songs"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Settings" type="Control" parent="UI"]
 layout_mode = 3

@@ -82,4 +82,4 @@ func load_data() -> void:
 			var key_scancode_6: InputEventKey = InputEventKey.new()
 			key_scancode_6.set_keycode(GlobalData.global_settings["key_restart"])
 			InputMap.action_erase_events("restart")
-			InputMap.action_add_event("restart", key_scancode_5)
+			InputMap.action_add_event("restart", key_scancode_6)

@@ -5,6 +5,7 @@
 [node name="InputChangerButton" type="Button"]
 offset_right = 112.0
 offset_bottom = 31.0
+focus_mode = 0
 theme_override_font_sizes/font_size = 16
 toggle_mode = true
 text = "D"
