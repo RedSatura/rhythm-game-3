@@ -38,6 +38,7 @@ offset_bottom = 40.0
 theme = ExtResource("3_bqjyj")
 
 [node name="LyricLabel" type="Label" parent="UI"]
+z_index = 100
 layout_mode = 0
 offset_left = -256.0
 offset_top = 64.0

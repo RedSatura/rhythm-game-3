@@ -55,7 +55,6 @@ func check_songs() -> void:
 	SignalHandler.emit_signal("send_user_song_file_paths", files)
 
 func process_file_paths(paths: Array) -> void:
-	print(paths)
 	for path: String in paths:
 		if FileAccess.file_exists(path):
 			read_file(path)

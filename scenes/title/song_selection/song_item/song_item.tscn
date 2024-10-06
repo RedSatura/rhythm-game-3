@@ -10,18 +10,9 @@ offset_bottom = 64.0
 theme = ExtResource("1_tq7xw")
 script = ExtResource("2_7f65r")
 
-[node name="SongTitle" type="Label" parent="."]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 384.0
-offset_bottom = 56.0
-vertical_alignment = 1
-justification_flags = 162
-
 [node name="ArtistName" type="Label" parent="."]
 layout_mode = 0
-offset_left = 392.0
+offset_left = 456.0
 offset_top = 8.0
 offset_right = 629.0
 offset_bottom = 31.0
@@ -31,7 +22,7 @@ vertical_alignment = 1
 
 [node name="Difficulty" type="Label" parent="."]
 layout_mode = 0
-offset_left = 392.0
+offset_left = 456.0
 offset_top = 32.0
 offset_right = 632.0
 offset_bottom = 56.0
@@ -39,4 +30,24 @@ theme_override_font_sizes/font_size = 16
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="TitleScroll" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 440.0
+offset_bottom = 56.0
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+
+[node name="SongTitle" type="Label" parent="TitleScroll"]
+custom_minimum_size = Vector2(368, 48)
+layout_mode = 2
+vertical_alignment = 1
+justification_flags = 162
+
+[node name="Timer" type="Timer" parent="TitleScroll"]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="timeout" from="TitleScroll/Timer" to="." method="_on_timer_timeout"]

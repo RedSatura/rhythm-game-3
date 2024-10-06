@@ -137,6 +137,7 @@ focus_neighbor_bottom = NodePath("../OpenCustomSong")
 song_path = "res://songs/gateway/gateway.msf"
 song_title = "Gateway"
 song_artist = "RedSatura"
+song_difficulty = 3
 
 [node name="CustomSongs" type="Label" parent="UI/SongSelection/SongSelection/SongItemContainer"]
 custom_minimum_size = Vector2(0, 64)
