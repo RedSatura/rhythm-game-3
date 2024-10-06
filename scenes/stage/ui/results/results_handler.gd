@@ -2,6 +2,8 @@ extends Control
 
 @onready var visibility_timer: Node = $VisibilityTimer
 
+@onready var rating_result_label: Node = $Rating/RatingPercentResult
+
 var total_notes: int = 0
 var perfect: int = 0
 var good: int = 0
@@ -23,9 +25,11 @@ func show_results() -> void:
 	$Perfect/PerfectResult.text = str(perfect)
 	$Good/GoodResult.text = str(good)
 	$Miss/MissResult.text = str(miss)
-	var hit_rate: float = (float(perfect + good) / total_notes) * 100
+	var hit_rate: float = (float(perfect + good) / total_notes) * 100 if total_notes != 0 else 0.0
 	$HitRate/HitRatePercentResult.text = "%3.2f" % hit_rate + '%' 
 	$HitRate/HitRateIntegerResult.text = str(perfect + good) + ' / ' + str(total_notes)
+	var grade: float = set_grade()
+	rating_result_label.text = "%3.2f" % grade + '%' 
 	
 func process_note_hit(grade: String) -> void:
 	total_notes += 1
@@ -36,3 +40,8 @@ func process_note_hit(grade: String) -> void:
 			good += 1
 		"MISS":
 			miss += 1
+
+func set_grade() -> float:
+	var grade: float = (((float(perfect) * 1.5) + good) / (total_notes * 1.5)) * 100 if total_notes != 0 else 0.0
+	print(grade)
+	return grade

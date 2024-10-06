@@ -1,28 +1,28 @@
 [gd_scene load_steps=13 format=3 uid="uid://brjf80vt8yjyu"]
 
-[ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
-[ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
-[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="2_ge13s"]
-[ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="3_fb8qo"]
-[ext_resource type="Texture2D" uid="uid://cr543j8pmsdcb" path="res://assets/icons/pause-svgrepo-com.svg" id="4_hqsi5"]
-[ext_resource type="Script" path="res://scenes/stage/ui/song_duration_bar.gd" id="4_w0wif"]
-[ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="5_blj8g"]
-[ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="6_0b2l7"]
-[ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="6_26smg"]
-[ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
-[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="10_6mjfg"]
-[ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="12_0l0mw"]
+[ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_gekk2"]
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="2_hsi7u"]
+[ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="3_3eevu"]
+[ext_resource type="Texture2D" uid="uid://cr543j8pmsdcb" path="res://assets/icons/pause-svgrepo-com.svg" id="4_jn85g"]
+[ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="5_d55w2"]
+[ext_resource type="Script" path="res://test/beat_measure_label.gd" id="6_hh5kk"]
+[ext_resource type="Script" path="res://scenes/stage/ui/song_duration_bar.gd" id="7_0p0tw"]
+[ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="8_yqo5f"]
+[ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="9_atlba"]
+[ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="10_tbjj8"]
+[ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="11_juws2"]
+[ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="12_ixr3u"]
 
 [node name="Stage" type="Node2D"]
 process_mode = 3
-script = ExtResource("1_je8j5")
+script = ExtResource("1_gekk2")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("2_ge13s")
+theme = ExtResource("2_hsi7u")
 
 [node name="Background" type="Panel" parent="UI"]
 modulate = Color(1, 1, 1, 0.376471)
@@ -40,7 +40,7 @@ offset_left = 1216.0
 offset_right = 1280.0
 offset_bottom = 64.0
 focus_mode = 0
-icon = ExtResource("3_fb8qo")
+icon = ExtResource("3_3eevu")
 flat = true
 expand_icon = true
 
@@ -52,7 +52,7 @@ layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
 focus_mode = 0
-icon = ExtResource("4_hqsi5")
+icon = ExtResource("4_jn85g")
 flat = true
 expand_icon = true
 
@@ -65,7 +65,7 @@ offset_right = 856.0
 offset_bottom = 384.0
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("6_26smg")
+script = ExtResource("5_d55w2")
 
 [node name="VisibilityTimer" type="Timer" parent="UI/NoteFeedbackLabel"]
 wait_time = 1.5
@@ -80,7 +80,7 @@ offset_right = 464.0
 offset_bottom = 689.0
 text = "Current Beat: 0
 Measures Occured: 0"
-script = ExtResource("2_3ujy6")
+script = ExtResource("6_hh5kk")
 
 [node name="SongDurationBar" type="ProgressBar" parent="UI"]
 visible = false
@@ -88,7 +88,7 @@ layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 16.0
 show_percentage = false
-script = ExtResource("4_w0wif")
+script = ExtResource("7_0p0tw")
 
 [node name="TimeElapsedLabel" type="Label" parent="UI"]
 visible = false
@@ -98,7 +98,7 @@ offset_top = 640.0
 offset_right = 632.0
 offset_bottom = 696.0
 text = "TIme Elapsed: 0"
-script = ExtResource("6_ik5x7")
+script = ExtResource("8_yqo5f")
 
 [node name="Results" type="Control" parent="UI"]
 layout_mode = 3
@@ -107,7 +107,7 @@ offset_left = 384.0
 offset_top = 64.0
 offset_right = 896.0
 offset_bottom = 640.0
-script = ExtResource("5_blj8g")
+script = ExtResource("9_atlba")
 
 [node name="Results" type="Label" parent="UI/Results"]
 layout_mode = 0
@@ -186,7 +186,7 @@ layout_mode = 0
 offset_left = 192.0
 offset_right = 384.0
 offset_bottom = 64.0
-text = "0.00%"
+text = "12.00%"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -197,25 +197,7 @@ offset_top = 48.0
 offset_right = 384.0
 offset_bottom = 71.0
 theme_override_font_sizes/font_size = 16
-text = "0 / 0"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Rating" type="Label" parent="UI/Results"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 384.0
-offset_right = 288.0
-offset_bottom = 448.0
-text = "Rating:"
-vertical_alignment = 1
-
-[node name="RatingPercentResult" type="Label" parent="UI/Results/Rating"]
-layout_mode = 0
-offset_left = 192.0
-offset_right = 384.0
-offset_bottom = 64.0
-text = "0.00%"
+text = "4 / 4"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -223,15 +205,23 @@ vertical_alignment = 1
 wait_time = 3.0
 one_shot = true
 
-[node name="Transition" parent="UI" instance=ExtResource("12_0l0mw")]
+[node name="Transition" parent="UI" instance=ExtResource("10_tbjj8")]
 visible = false
 layout_mode = 0
 
-[node name="NoteLanes" parent="." instance=ExtResource("10_6mjfg")]
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 416.0
+offset_right = 738.0
+offset_bottom = 461.0
+text = "Pkpsc;asdsd"
+
+[node name="NoteLanes" parent="." instance=ExtResource("11_juws2")]
 position = Vector2(384, 0)
 metadata/_edit_lock_ = true
 
-[node name="SongManager" parent="." instance=ExtResource("6_0b2l7")]
+[node name="SongManager" parent="." instance=ExtResource("12_ixr3u")]
 file_path = "res://songs/official/0.4/gateway/gateway.msf"
 in_editor = false
 metadata/_edit_lock_ = true
