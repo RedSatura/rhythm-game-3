@@ -27,6 +27,10 @@ func _ready() -> void:
 	$UI.theme = GlobalData.global_settings["theme"]
 	video_player.stream = null
 	load_video()
+	if GlobalData.song_info["video_offset"] <= 0.05:
+		video_player.play()
+	else:
+		video_player_offset.start(GlobalData.song_info["video_offset"])
 
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works
@@ -113,6 +117,7 @@ func load_video() -> void:
 		return
 
 func song_started() -> void:
+	load_video()
 	if video_player.stream:
 		if GlobalData.song_info["video_offset"] <= 0.05:
 			video_player.play()
