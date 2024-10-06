@@ -52,7 +52,7 @@ offset_top = 328.0
 offset_right = 640.0
 offset_bottom = 373.0
 theme_override_font_sizes/font_size = 32
-text = "v0.5.0"
+text = "v0.5.1"
 
 [node name="Play" type="Button" parent="UI/TitleObjects"]
 layout_mode = 0
@@ -130,7 +130,7 @@ vertical_alignment = 1
 layout_mode = 0
 offset_top = 64.0
 offset_right = 640.0
-offset_bottom = 592.0
+offset_bottom = 560.0
 
 [node name="SongItemContainer" type="VBoxContainer" parent="UI/SongSelection/SongSelection"]
 layout_mode = 2
@@ -199,14 +199,24 @@ text = "X"
 
 [node name="SelectionGuide" type="Label" parent="UI/SongSelection"]
 layout_mode = 0
-offset_top = 592.0
+offset_top = 560.0
 offset_right = 640.0
-offset_bottom = 624.0
+offset_bottom = 592.0
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 22
-text = "Use [L Lane] & [R Lane] to Select Between Songs"
+text = "Use [L Lane] & [R Lane] to Browse Songs"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SelectionGuide2" type="Label" parent="UI/SongSelection"]
+layout_mode = 0
+offset_top = 592.0
+offset_right = 640.0
+offset_bottom = 623.0
+theme_override_font_sizes/font_size = 22
+text = "Use [CL Lane] & [CR Lane] to Select a Song"
 horizontal_alignment = 1
 vertical_alignment = 1
 
