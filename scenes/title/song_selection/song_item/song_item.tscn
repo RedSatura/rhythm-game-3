@@ -12,16 +12,6 @@ focus_neighbor_right = NodePath(".")
 theme = ExtResource("1_tq7xw")
 script = ExtResource("2_7f65r")
 
-[node name="ArtistName" type="Label" parent="."]
-layout_mode = 0
-offset_left = 456.0
-offset_top = 8.0
-offset_right = 629.0
-offset_bottom = 31.0
-theme_override_font_sizes/font_size = 16
-horizontal_alignment = 2
-vertical_alignment = 1
-
 [node name="Difficulty" type="Label" parent="."]
 layout_mode = 0
 offset_left = 456.0
@@ -51,7 +41,28 @@ justification_flags = 162
 wait_time = 2.0
 one_shot = true
 
+[node name="ArtistScroll" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 456.0
+offset_top = 8.0
+offset_right = 632.0
+offset_bottom = 32.0
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+
+[node name="ArtistName" type="Label" parent="ArtistScroll"]
+custom_minimum_size = Vector2(176, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "AasasasaSDASDASDASDASD"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ArtistScrollTimer" type="Timer" parent="ArtistScroll"]
+wait_time = 2.0
+
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
 [connection signal="timeout" from="TitleScroll/Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="ArtistScroll/ArtistScrollTimer" to="." method="_on_artist_scroll_timer_timeout"]

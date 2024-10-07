@@ -128,9 +128,12 @@ vertical_alignment = 1
 
 [node name="SongSelection" type="ScrollContainer" parent="UI/SongSelection"]
 layout_mode = 0
+offset_left = -8.0
 offset_top = 64.0
-offset_right = 640.0
-offset_bottom = 560.0
+offset_right = 648.0
+offset_bottom = 544.0
+follow_focus = true
+horizontal_scroll_mode = 0
 
 [node name="SongItemContainer" type="VBoxContainer" parent="UI/SongSelection/SongSelection"]
 layout_mode = 2
