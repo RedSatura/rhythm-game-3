@@ -130,11 +130,6 @@ func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_id
 func _on_perfect_area_area_entered(_area: Area2D) -> void:
 	good = false
 	perfect = true
-	if auto_mode:
-		if current_note != null:
-			SignalHandler.emit_signal("note_hit", "PERFECT")
-			current_note.queue_free()
-			current_note = null
 
 func _on_perfect_area_area_exited(_area: Area2D) -> void:
 	good = true
@@ -159,3 +154,9 @@ func move_lane(movement_value: int = 0, duration: float = 0) -> void:
 
 func stop_tweens() -> void:
 	pass
+
+func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
+	if auto_mode:
+		if current_note != null:
+			current_note.queue_free()
+			current_note = null

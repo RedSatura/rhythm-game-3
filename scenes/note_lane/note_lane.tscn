@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cxhghnc6fqebu"]
+[gd_scene load_steps=9 format=3 uid="uid://cxhghnc6fqebu"]
 
 [ext_resource type="Script" path="res://scenes/note_lane/note_lane.gd" id="1_ipfhx"]
 [ext_resource type="Shader" path="res://scenes/note_lane/hit_feedback_background_shader.gdshader" id="2_ridbf"]
@@ -18,6 +18,8 @@ radius = 40.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm3ef"]
 size = Vector2(128, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3418p"]
 
 [node name="NoteLane" type="Node2D"]
 position = Vector2(64, 640)
@@ -59,12 +61,14 @@ texture = ExtResource("2_t7pny")
 expand_mode = 1
 
 [node name="PerfectArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]
 shape = SubResource("CircleShape2D_qbr3x")
 
 [node name="NoteDetector" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoteDetector"]
@@ -76,15 +80,23 @@ position = Vector2(0, -704)
 [node name="NoteCooldownTimer" type="Timer" parent="."]
 wait_time = 2.0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="MissDetector" type="Area2D" parent="."]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MissDetector"]
 position = Vector2(0, 120)
 shape = SubResource("RectangleShape2D_pm3ef")
 
 [node name="LaneIdentifier" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-64, 64, 64, 64, 64, 80, -64, 80)
+
+[node name="AutoHitArea" type="Area2D" parent="."]
+position = Vector2(0, 12)
+collision_layer = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AutoHitArea"]
+shape = SubResource("CircleShape2D_3418p")
 
 [connection signal="area_entered" from="PerfectArea" to="." method="_on_perfect_area_area_entered"]
 [connection signal="area_exited" from="PerfectArea" to="." method="_on_perfect_area_area_exited"]
@@ -92,4 +104,5 @@ polygon = PackedVector2Array(-64, 64, 64, 64, 64, 80, -64, 80)
 [connection signal="area_exited" from="NoteDetector" to="." method="_on_note_detector_area_exited"]
 [connection signal="input_event" from="NoteDetector" to="." method="_on_note_detector_input_event"]
 [connection signal="timeout" from="NoteCooldownTimer" to="." method="_on_note_cooldown_timer_timeout"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="MissDetector" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="AutoHitArea" to="." method="_on_auto_hit_area_area_entered"]

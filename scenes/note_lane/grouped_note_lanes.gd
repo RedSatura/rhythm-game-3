@@ -26,7 +26,6 @@ func _ready() -> void:
 	SignalHandler.connect("song_ended", Callable(self, "song_ended"))
 	$UI.theme = GlobalData.global_settings["theme"]
 	video_player.stream = null
-	load_video()
 	if GlobalData.song_info["video_offset"] <= 0.05:
 		video_player.play()
 	else:
@@ -117,6 +116,7 @@ func load_video() -> void:
 		return
 
 func song_started() -> void:
+	load_image()
 	load_video()
 	if video_player.stream:
 		if GlobalData.song_info["video_offset"] <= 0.05:
