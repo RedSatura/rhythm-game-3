@@ -54,7 +54,6 @@ vertical_scroll_mode = 0
 custom_minimum_size = Vector2(176, 24)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "AasasasaSDASDASDASDASD"
 horizontal_alignment = 2
 vertical_alignment = 1
 

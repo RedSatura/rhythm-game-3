@@ -97,8 +97,13 @@ func update_lyric(text: String) -> void:
 func load_image() -> void:
 	var image_path: String = GlobalData.song_info["image_src"]
 	if FileAccess.file_exists(image_path):
-		image_displayer.texture = load(image_path)
+		var image: Image = Image.load_from_file(GlobalData.song_info["image_src"])
+		var texture: Texture = ImageTexture.create_from_image(image)
+		image_displayer.texture = texture
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(image_displayer, "modulate", Color(1.0, 1.0, 1.0, 0.5), 2)
 	else:
+		SignalHandler.emit_signal("send_error", "Image does not exist.")
 		return
 	
 func load_video() -> void:
@@ -124,10 +129,10 @@ func song_started() -> void:
 		else:
 			video_player_offset.start(GlobalData.song_info["video_offset"])
 	lyric_label.text = ""
-	load_image()
 
 func _on_video_player_offset_timeout() -> void:
 	video_player.play()
 
 func song_ended() -> void:
 	video_player.stop()
+	image_displayer.modulate = Color(1.0, 1.0, 1.0, 0.0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=15 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
 [ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
@@ -12,6 +12,13 @@
 [ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
 [ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="10_6mjfg"]
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="12_0l0mw"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_gbc25"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_l1bdf"]
+events = [SubResource("InputEventKey_gbc25")]
 
 [node name="Stage" type="Node2D"]
 process_mode = 3
@@ -40,6 +47,7 @@ offset_left = 1216.0
 offset_right = 1280.0
 offset_bottom = 64.0
 focus_mode = 0
+shortcut = SubResource("Shortcut_l1bdf")
 icon = ExtResource("3_fb8qo")
 flat = true
 expand_icon = true
@@ -224,6 +232,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Transition" parent="UI" instance=ExtResource("12_0l0mw")]
+process_mode = 3
 visible = false
 layout_mode = 0
 

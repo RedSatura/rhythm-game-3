@@ -66,7 +66,7 @@ expand = true
 one_shot = true
 
 [node name="ImageDisplayer" type="TextureRect" parent="UI"]
-modulate = Color(1, 1, 1, 0.501961)
+modulate = Color(1, 1, 1, 0)
 z_index = -1
 z_as_relative = false
 layout_mode = 0

@@ -91,6 +91,7 @@ shape = SubResource("RectangleShape2D_pm3ef")
 polygon = PackedVector2Array(-64, 64, 64, 64, 64, 80, -64, 80)
 
 [node name="AutoHitArea" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, 12)
 collision_layer = 0
 metadata/_edit_group_ = true
