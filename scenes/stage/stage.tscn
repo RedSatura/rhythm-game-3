@@ -228,7 +228,6 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="VisibilityTimer" type="Timer" parent="UI/Results"]
-wait_time = 3.0
 one_shot = true
 
 [node name="Transition" parent="UI" instance=ExtResource("12_0l0mw")]

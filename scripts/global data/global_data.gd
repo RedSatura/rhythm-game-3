@@ -35,4 +35,6 @@ var global_settings: Dictionary = {
 	"key_restart": 82,
 	#Audio settings
 	"master_volume": 1.0, 
+	#Gameplay settings
+	"scroll_speed": 1.0,
 }

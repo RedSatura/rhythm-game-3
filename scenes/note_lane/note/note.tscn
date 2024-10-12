@@ -4,14 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://c2f4gd58q2jxy" path="res://assets/textures/note_bg.png" id="2_4ub0x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mxjhr"]
-radius = 4.0
+radius = 1.0
 
 [node name="Note" type="Area2D"]
 process_mode = 1
 z_index = 1
 monitoring = false
 script = ExtResource("1_7d4lo")
-note_speed = 1.25
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -32.0

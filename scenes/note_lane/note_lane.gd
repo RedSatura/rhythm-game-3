@@ -45,6 +45,7 @@ func _ready() -> void:
 	current_note = null
 	lane_identifier.color = Color(identifier_color.r, identifier_color.g, identifier_color.b, 0.5)
 	$UI.theme = GlobalData.global_settings["theme"]
+	note_spawn_position.position.y = GlobalData.global_settings["scroll_speed"] * -1024
 
 func spawn_note() -> void:
 	if lane_state == LaneState.ACTIVE:

@@ -103,7 +103,6 @@ func load_image() -> void:
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(image_displayer, "modulate", Color(1.0, 1.0, 1.0, 0.5), 2)
 	else:
-		SignalHandler.emit_signal("send_error", "Image does not exist.")
 		return
 	
 func load_video() -> void:

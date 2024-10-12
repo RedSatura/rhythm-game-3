@@ -15,6 +15,7 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 128.0
 offset_bottom = 61.0
+theme_override_font_sizes/font_size = 32
 text = "Options
 "
 
@@ -73,14 +74,54 @@ offset_bottom = 32.0
 max_value = 1.0
 step = 0.05
 value = 0.5
-ticks_on_borders = true
 
 [node name="ControlsOptionHandler" parent="." instance=ExtResource("3_0bww4")]
 offset_top = 168.0
 offset_right = 439.0
-offset_bottom = 360.0
+offset_bottom = 400.0
 
-[node name="Label" type="Label" parent="."]
+[node name="Gameplay" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 464.0
+offset_right = 128.0
+offset_bottom = 496.0
+theme_override_font_sizes/font_size = 22
+text = "Gameplay"
+vertical_alignment = 1
+
+[node name="ScrollSpeed" type="Label" parent="Gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 102.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 16
+text = "Scroll Speed"
+vertical_alignment = 1
+
+[node name="ScrollSpeedSlider" type="HSlider" parent="Gameplay/ScrollSpeed"]
+layout_mode = 0
+offset_left = 159.0
+offset_right = 359.0
+offset_bottom = 32.0
+min_value = 0.75
+max_value = 2.0
+step = 0.25
+value = 1.0
+tick_count = 6
+
+[node name="ScrollSpeedValueLabel" type="Label" parent="Gameplay/ScrollSpeed"]
+layout_mode = 0
+offset_left = 367.0
+offset_right = 399.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 14
+text = "1.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreatedBy" type="Label" parent="."]
 layout_mode = 0
 offset_left = 239.304
 offset_top = 664.0
@@ -89,7 +130,7 @@ offset_bottom = 693.0
 theme_override_font_sizes/font_size = 20
 text = "Created by RedSatura"
 
-[node name="Label2" type="Label" parent="."]
+[node name="MadeWith" type="Label" parent="."]
 layout_mode = 0
 offset_left = 231.327
 offset_top = 688.0
@@ -101,3 +142,4 @@ text = "Made with Godot Engine 4.3"
 [connection signal="toggled" from="Display/DarkMode" to="." method="_on_dark_mode_toggled"]
 [connection signal="toggled" from="Display/Fullscreen" to="." method="_on_fullscreen_toggled"]
 [connection signal="value_changed" from="Sound/Volume/MasterVolumeSlider" to="." method="_on_global_volume_slider_value_changed"]
+[connection signal="value_changed" from="Gameplay/ScrollSpeed/ScrollSpeedSlider" to="." method="_on_scroll_speed_slider_value_changed"]
