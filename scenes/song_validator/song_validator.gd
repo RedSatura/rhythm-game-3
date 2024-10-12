@@ -50,6 +50,7 @@ func check_file_existence(path: String) -> void: #Step 1: Checking file existenc
 		return
 		
 func open_file(path: String) -> void: #Step 2: Opening file
+	reset_global_data_song_info()
 	var file: FileAccess = null
 	file = FileAccess.open(path, FileAccess.READ)
 	if file != null:
@@ -178,3 +179,7 @@ func validate_song_body(file: FileAccess) -> void: #Step 4: Validating song body
 		
 func get_validator_lines_processed() -> int:
 	return current_line_in_file
+
+func reset_global_data_song_info() -> void:
+	GlobalData.song_info["video_src"] = ""
+	GlobalData.song_info["image_src"] = ""

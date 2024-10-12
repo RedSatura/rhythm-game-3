@@ -11,10 +11,10 @@ shader_parameter/background_color = Vector3(0, 0, 0)
 shader_parameter/background_transparency = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qbr3x"]
-radius = 16.0
+radius = 24.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbutt"]
-radius = 40.0
+radius = 52.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm3ef"]
 size = Vector2(128, 16)
@@ -61,21 +61,19 @@ texture = ExtResource("2_t7pny")
 expand_mode = 1
 
 [node name="PerfectArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]
 shape = SubResource("CircleShape2D_qbr3x")
 
 [node name="NoteDetector" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoteDetector"]
 shape = SubResource("CircleShape2D_tbutt")
 
 [node name="NoteSpawnPosition" type="Marker2D" parent="."]
-position = Vector2(0, -704)
+position = Vector2(0, -1024)
 
 [node name="NoteCooldownTimer" type="Timer" parent="."]
 wait_time = 2.0
