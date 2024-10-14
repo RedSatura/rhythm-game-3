@@ -8,7 +8,6 @@ extends Node2D
 @onready var note_lane_4: Node = $NoteLanes/NoteLane4
 
 @onready var ui: Node = $UI
-@onready var lyric_label: Node = $UI/LyricLabel
 
 @onready var image_displayer: Node = $UI/ImageDisplayer
 @onready var video_player: Node = $UI/VideoPlayer
@@ -23,7 +22,6 @@ func _ready() -> void:
 	SignalHandler.connect("move_lane", Callable(self, "move_lane"))
 	SignalHandler.connect("set_note_lane_setting_auto_mode", Callable(self, "set_note_lane_auto_mode"))
 	SignalHandler.connect("get_song_seconds_per_beat", Callable(self, "set_seconds_per_beat"))
-	SignalHandler.connect("update_lyric", Callable(self, "update_lyric"))
 	SignalHandler.connect("song_started", Callable(self, "song_started"))
 	SignalHandler.connect("song_ended", Callable(self, "song_ended"))
 	$UI.theme = GlobalData.global_settings["theme"]
@@ -98,9 +96,6 @@ func reset_lanes() -> void:
 	note_lane_3.position.x = 320
 	note_lane_4.position.x = 448
 	video_player.stream = null
-
-func update_lyric(text: String) -> void:
-	lyric_label.text = text
 	
 func load_image() -> void:
 	var image_path: String = GlobalData.song_info["image_src"]
@@ -135,7 +130,6 @@ func song_started() -> void:
 			video_player.play()
 		else:
 			video_player_offset.start(GlobalData.song_info["video_offset"])
-	lyric_label.text = ""
 
 func _on_video_player_offset_timeout() -> void:
 	video_player.play()

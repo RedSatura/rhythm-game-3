@@ -389,7 +389,7 @@ show_hidden_files = true
 use_native_dialog = true
 
 [node name="NoteLanes" parent="." instance=ExtResource("6_esn1d")]
-position = Vector2(1920, 0)
+position = Vector2(1664, 0)
 
 [node name="Transition" parent="." instance=ExtResource("6_gcys7")]
 visible = false

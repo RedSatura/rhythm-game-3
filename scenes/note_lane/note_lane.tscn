@@ -11,7 +11,7 @@ shader_parameter/background_color = Vector3(0, 0, 0)
 shader_parameter/background_transparency = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qbr3x"]
-radius = 24.0
+radius = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tbutt"]
 radius = 56.0
@@ -61,6 +61,7 @@ texture = ExtResource("2_t7pny")
 expand_mode = 1
 
 [node name="PerfectArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 monitorable = false
 
@@ -68,6 +69,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_qbr3x")
 
 [node name="NoteDetector" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 monitorable = false
 
@@ -81,6 +83,7 @@ position = Vector2(0, -1024)
 wait_time = 2.0
 
 [node name="MissDetector" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MissDetector"]
@@ -91,8 +94,7 @@ shape = SubResource("RectangleShape2D_pm3ef")
 polygon = PackedVector2Array(-64, 64, 64, 64, 64, 80, -64, 80)
 
 [node name="AutoHitArea" type="Area2D" parent="."]
-visible = false
-position = Vector2(0, 12)
+position = Vector2(0, 11)
 collision_layer = 0
 metadata/_edit_group_ = true
 

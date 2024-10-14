@@ -80,8 +80,13 @@ func _unhandled_input(_event: InputEvent) -> void:
 				
 func handle_input_on_note() -> void:
 	if current_note != null:
-		if good:
-			SignalHandler.emit_signal("note_hit", "GOOD")
+		if early:
+			SignalHandler.emit_signal("note_hit", "EARLY")
+			if !in_editor:
+				hit_feedback_background.material.set_shader_parameter("background_color", good_color)
+			fade_feedback_background()
+		elif late:
+			SignalHandler.emit_signal("note_hit", "LATE")
 			if !in_editor:
 				hit_feedback_background.material.set_shader_parameter("background_color", good_color)
 			fade_feedback_background()
@@ -137,6 +142,7 @@ func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_id
 func _on_perfect_area_area_entered(_area: Area2D) -> void:
 	good = false
 	early = false
+	late = false
 	perfect = true
 
 func _on_perfect_area_area_exited(_area: Area2D) -> void:

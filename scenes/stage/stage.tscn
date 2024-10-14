@@ -1,15 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=10 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
-[ext_resource type="Script" path="res://test/beat_measure_label.gd" id="2_3ujy6"]
 [ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="2_ge13s"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="3_fb8qo"]
 [ext_resource type="Texture2D" uid="uid://cr543j8pmsdcb" path="res://assets/icons/pause-svgrepo-com.svg" id="4_hqsi5"]
-[ext_resource type="Script" path="res://scenes/stage/ui/song_duration_bar.gd" id="4_w0wif"]
-[ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="5_blj8g"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="6_0b2l7"]
-[ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="6_26smg"]
-[ext_resource type="Script" path="res://test/time_elapsed_label.gd" id="6_ik5x7"]
 [ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="10_6mjfg"]
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="12_0l0mw"]
 
@@ -64,177 +59,25 @@ icon = ExtResource("4_hqsi5")
 flat = true
 expand_icon = true
 
-[node name="NoteFeedbackLabel" type="Label" parent="UI"]
-visible = false
-layout_mode = 0
-offset_left = 448.0
-offset_top = 256.0
-offset_right = 856.0
-offset_bottom = 384.0
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("6_26smg")
-
-[node name="VisibilityTimer" type="Timer" parent="UI/NoteFeedbackLabel"]
-wait_time = 1.5
-one_shot = true
-
-[node name="BeatMeasureLabel" type="Label" parent="UI"]
-visible = false
-layout_mode = 0
-offset_left = 272.0
-offset_top = 640.0
-offset_right = 464.0
-offset_bottom = 689.0
-text = "Current Beat: 0
-Measures Occured: 0"
-script = ExtResource("2_3ujy6")
-
-[node name="SongDurationBar" type="ProgressBar" parent="UI"]
-visible = false
-layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 16.0
-show_percentage = false
-script = ExtResource("4_w0wif")
-
-[node name="TimeElapsedLabel" type="Label" parent="UI"]
-visible = false
-layout_mode = 0
-offset_left = 464.0
-offset_top = 640.0
-offset_right = 632.0
-offset_bottom = 696.0
-text = "TIme Elapsed: 0"
-script = ExtResource("6_ik5x7")
-
-[node name="Results" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 384.0
-offset_top = 64.0
-offset_right = 896.0
-offset_bottom = 640.0
-script = ExtResource("5_blj8g")
-metadata/_edit_group_ = true
-
-[node name="Results" type="Label" parent="UI/Results"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 64.0
-offset_right = 512.0
-offset_bottom = 128.0
-theme_override_font_sizes/font_size = 40
-text = "Results"
-
-[node name="Perfect" type="Label" parent="UI/Results"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 128.0
-offset_right = 320.0
-offset_bottom = 192.0
-text = "Perfect: "
-vertical_alignment = 1
-
-[node name="PerfectResult" type="Label" parent="UI/Results/Perfect"]
-layout_mode = 0
-offset_left = 256.0
-offset_right = 384.0
-offset_bottom = 64.0
-text = "0"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Good" type="Label" parent="UI/Results"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 192.0
-offset_right = 320.0
-offset_bottom = 256.0
-text = "Good: "
-vertical_alignment = 1
-
-[node name="GoodResult" type="Label" parent="UI/Results/Good"]
-layout_mode = 0
-offset_left = 256.0
-offset_right = 384.0
-offset_bottom = 64.0
-text = "0"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Miss" type="Label" parent="UI/Results"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 256.0
-offset_right = 320.0
-offset_bottom = 320.0
-text = "Miss: "
-vertical_alignment = 1
-
-[node name="MissResult" type="Label" parent="UI/Results/Miss"]
-layout_mode = 0
-offset_left = 256.0
-offset_right = 384.0
-offset_bottom = 64.0
-text = "0"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="HitRate" type="Label" parent="UI/Results"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 448.0
-offset_right = 288.0
-offset_bottom = 512.0
-text = "Hit Rate: "
-vertical_alignment = 1
-
-[node name="HitRatePercentResult" type="Label" parent="UI/Results/HitRate"]
-layout_mode = 0
-offset_left = 192.0
-offset_right = 384.0
-offset_bottom = 64.0
-text = "0.00%"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="HitRateIntegerResult" type="Label" parent="UI/Results/HitRate"]
-layout_mode = 0
-offset_left = 224.0
-offset_top = 48.0
-offset_right = 384.0
-offset_bottom = 71.0
-theme_override_font_sizes/font_size = 16
-text = "0 / 0"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Rating" type="Label" parent="UI/Results"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 384.0
-offset_right = 288.0
-offset_bottom = 448.0
-text = "Rating:"
-vertical_alignment = 1
-
-[node name="RatingPercentResult" type="Label" parent="UI/Results/Rating"]
-layout_mode = 0
-offset_left = 192.0
-offset_right = 384.0
-offset_bottom = 64.0
-text = "0.00%"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="VisibilityTimer" type="Timer" parent="UI/Results"]
-one_shot = true
-
 [node name="Transition" parent="UI" instance=ExtResource("12_0l0mw")]
 process_mode = 3
 visible = false
 layout_mode = 0
+
+[node name="LyricLabel" type="Label" parent="UI"]
+z_index = 100
+layout_mode = 0
+offset_left = 128.0
+offset_top = 64.0
+offset_right = 1152.0
+offset_bottom = 130.0
+theme_override_colors/font_shadow_color = Color(0.329, 0.329, 0.329, 0.719)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 24
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NoteLanes" parent="." instance=ExtResource("10_6mjfg")]
 position = Vector2(384, 0)
@@ -247,5 +90,3 @@ metadata/_edit_lock_ = true
 
 [connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]
-[connection signal="timeout" from="UI/NoteFeedbackLabel/VisibilityTimer" to="UI/NoteFeedbackLabel" method="_on_visibility_timer_timeout"]
-[connection signal="timeout" from="UI/Results/VisibilityTimer" to="UI/Results" method="_on_visiblity_timer_timeout"]

@@ -1,7 +1,8 @@
 extends Node2D
 
 @onready var song_manager: Node = $SongManager
-@onready var note_feedback_label: Node = $UI/NoteFeedbackLabel
+
+@onready var lyric_label: Node = $UI/LyricLabel
 
 @export var in_editor: bool = false
 
@@ -10,7 +11,11 @@ var song_path: String = ""
 func _ready() -> void:
 	SignalHandler.connect("song_ended", Callable(self, "process_song_end"))
 	SignalHandler.connect("send_error", Callable(self, "error_received"))
+	SignalHandler.connect("update_lyric", Callable(self, "update_lyric"))
 	$UI.theme = GlobalData.global_settings["theme"]
+	
+	if GlobalData.global_settings["upscroll"]:
+		lyric_label.position.y = 596
 	
 func error_received(error: String) -> void:
 	print_debug(error)
@@ -37,3 +42,6 @@ func pause_song() -> void:
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
+
+func update_lyric(lyric: String) -> void:
+	lyric_label.text = lyric

@@ -1,5 +1,7 @@
 extends Label
 
+@export var in_editor: bool = false
+
 var combo: int = 0
 
 func _ready() -> void:
@@ -21,11 +23,18 @@ func process_note_hit(grade: String) -> void:
 		"MISS":
 			combo = 0
 			update_label("Miss")
+		"EARLY":
+			combo += 1
+			update_label("Good (Early)")
+		"LATE":
+			combo += 1
+			update_label("Good (Late)")
 
 func update_label(message: String) -> void:
-	self.text = str(message) + "\nCombo x%d" % [combo]
-	self.visible = true
-	$VisibilityTimer.start()
+	if !in_editor:
+		self.text = str(message) + "\nCombo x%d" % [combo]
+		self.visible = true
+		$VisibilityTimer.start()
 
 func _on_visibility_timer_timeout() -> void:
 	self.visible = false

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjmw7flxngjsm"]
+[gd_scene load_steps=6 format=3 uid="uid://cjmw7flxngjsm"]
 
 [ext_resource type="Script" path="res://scenes/note_lane/grouped_note_lanes.gd" id="1_vsgem"]
 [ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="2_hciq1"]
 [ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="3_bqjyj"]
+[ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="4_3f8kl"]
+[ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="5_q6eou"]
 
 [node name="NoteLanes" type="Node2D"]
 process_mode = 1
@@ -41,21 +43,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("3_bqjyj")
 
-[node name="LyricLabel" type="Label" parent="UI"]
-z_index = 100
-layout_mode = 0
-offset_left = -256.0
-offset_top = 64.0
-offset_right = 768.0
-offset_bottom = 128.0
-theme_override_colors/font_shadow_color = Color(0.329, 0.329, 0.329, 0.719)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_constants/shadow_outline_size = 24
-theme_override_font_sizes/font_size = 48
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="VideoPlayer" type="VideoStreamPlayer" parent="UI"]
 modulate = Color(1, 1, 1, 0.501961)
 z_index = -1
@@ -74,11 +61,153 @@ modulate = Color(1, 1, 1, 0)
 z_index = -1
 z_as_relative = false
 layout_mode = 0
-offset_left = -384.0
-offset_right = 896.0
+offset_left = -376.0
+offset_right = 904.0
 offset_bottom = 720.0
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Results" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_top = 64.0
+offset_right = 512.0
+offset_bottom = 640.0
+script = ExtResource("4_3f8kl")
+metadata/_edit_group_ = true
+
+[node name="Results" type="Label" parent="UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 512.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 40
+text = "Results"
+
+[node name="Perfect" type="Label" parent="UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 320.0
+offset_bottom = 192.0
+text = "Perfect: "
+vertical_alignment = 1
+
+[node name="PerfectResult" type="Label" parent="UI/Results/Perfect"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Good" type="Label" parent="UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 256.0
+text = "Good: "
+vertical_alignment = 1
+
+[node name="GoodResult" type="Label" parent="UI/Results/Good"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Miss" type="Label" parent="UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 256.0
+offset_right = 320.0
+offset_bottom = 320.0
+text = "Miss: "
+vertical_alignment = 1
+
+[node name="MissResult" type="Label" parent="UI/Results/Miss"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRate" type="Label" parent="UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 448.0
+offset_right = 288.0
+offset_bottom = 512.0
+text = "Hit Rate: "
+vertical_alignment = 1
+
+[node name="HitRatePercentResult" type="Label" parent="UI/Results/HitRate"]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0.00%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRateIntegerResult" type="Label" parent="UI/Results/HitRate"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 48.0
+offset_right = 384.0
+offset_bottom = 71.0
+theme_override_font_sizes/font_size = 16
+text = "0 / 0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Rating" type="Label" parent="UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 384.0
+offset_right = 288.0
+offset_bottom = 448.0
+text = "Rating:"
+vertical_alignment = 1
+
+[node name="RatingPercentResult" type="Label" parent="UI/Results/Rating"]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0.00%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VisibilityTimer" type="Timer" parent="UI/Results"]
+one_shot = true
+
+[node name="NoteFeedbackLabel" type="Label" parent="UI"]
+z_index = 1000
+layout_mode = 0
+offset_left = 52.0
+offset_top = 288.0
+offset_right = 460.0
+offset_bottom = 416.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_q6eou")
+
+[node name="VisibilityTimer" type="Timer" parent="UI/NoteFeedbackLabel"]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="timeout" from="UI/VideoPlayer/VideoPlayerOffset" to="." method="_on_video_player_offset_timeout"]
+[connection signal="timeout" from="UI/Results/VisibilityTimer" to="UI/Results" method="_on_visiblity_timer_timeout"]
+[connection signal="timeout" from="UI/NoteFeedbackLabel/VisibilityTimer" to="UI/NoteFeedbackLabel" method="_on_visibility_timer_timeout"]
