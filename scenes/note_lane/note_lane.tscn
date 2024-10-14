@@ -62,12 +62,14 @@ expand_mode = 1
 
 [node name="PerfectArea" type="Area2D" parent="."]
 collision_layer = 0
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]
 shape = SubResource("CircleShape2D_qbr3x")
 
 [node name="NoteDetector" type="Area2D" parent="."]
 collision_layer = 0
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoteDetector"]
 shape = SubResource("CircleShape2D_tbutt")

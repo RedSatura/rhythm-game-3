@@ -2,6 +2,9 @@ extends Panel
 
 @export var slide_value: int = 448
 
+#audio
+@onready var master_bus: int = AudioServer.get_bus_index("Master")
+
 @onready var dark_mode_option: Node = $ScrollContainer/Control/Display/DarkMode
 
 @onready var fullscreen_option: Node = $ScrollContainer/Control/Display/Fullscreen
@@ -51,6 +54,7 @@ func _on_global_volume_slider_value_changed(value: float) -> void:
 	#audio related stuff should be handled by the conductor or similar nodes
 	GlobalData.global_settings["master_volume"] = value
 	master_volume_value_label.text = "%3.2f" % value
+	AudioServer.set_bus_volume_db(master_bus, linear_to_db(value))
 	DataSaver.save_data()
 
 func _on_fullscreen_toggled(toggled_on: bool) -> void:
@@ -66,7 +70,6 @@ func _on_scroll_speed_slider_value_changed(value: float) -> void:
 	GlobalData.global_settings["scroll_speed"] = value
 	DataSaver.save_data()
 	scroll_speed_value_label.text = "%3.2f" % value
-
 
 func _on_upscroll_toggled(toggled_on: bool) -> void:
 	if toggled_on:
