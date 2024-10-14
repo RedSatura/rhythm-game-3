@@ -27,10 +27,14 @@ var global_settings: Dictionary = {
 	"theme_name": "light",
 	"fullscreen": true,
 	#Key binds
-	"key_lane_left": 68,
-	"key_lane_center_left": 70,
-	"key_lane_center_right": 74,
-	"key_lane_right": 75,
+	"key_lane_left_1": 68,
+	"key_lane_center_left_1": 70,
+	"key_lane_center_right_1": 74,
+	"key_lane_right_1": 75,
+	"key_lane_left_2": 68,
+	"key_lane_center_left_2": 70,
+	"key_lane_center_right_2": 74,
+	"key_lane_right_2": 75,
 	"key_pause": 80,
 	"key_restart": 82,
 	#Audio settings

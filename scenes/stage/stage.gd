@@ -20,9 +20,6 @@ func _ready() -> void:
 func error_received(error: String) -> void:
 	print_debug(error)
 
-func _on_button_pressed() -> void:
-	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/title/title_screen.tscn")
-
 func _on_pause_button_pressed() -> void:
 	pause_song()
 		
@@ -45,3 +42,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 func update_lyric(lyric: String) -> void:
 	lyric_label.text = lyric
+
+func _on_home_button_pressed() -> void:
+	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/title/title_screen.tscn")

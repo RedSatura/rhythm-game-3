@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://xamq4vqi72yj"]
+
+[ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="1_uj8xt"]
+
+[node name="NoteFeedbackLabel" type="Label"]
+z_index = 1000
+offset_right = 408.0
+offset_bottom = 128.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_uj8xt")
+
+[node name="VisibilityTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="VisibilityTimer" to="." method="_on_visibility_timer_timeout"]

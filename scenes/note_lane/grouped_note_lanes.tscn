@@ -1,14 +1,105 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjmw7flxngjsm"]
+[gd_scene load_steps=5 format=3 uid="uid://cjmw7flxngjsm"]
 
-[ext_resource type="Script" path="res://scenes/note_lane/grouped_note_lanes.gd" id="1_vsgem"]
 [ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="2_hciq1"]
-[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="3_bqjyj"]
 [ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="4_3f8kl"]
-[ext_resource type="Script" path="res://scenes/stage/ui/note_feedback_label.gd" id="5_q6eou"]
+[ext_resource type="PackedScene" uid="uid://xamq4vqi72yj" path="res://scenes/ui/note_feedback_label/note_feedback_label.tscn" id="4_skl7c"]
+
+[sub_resource type="GDScript" id="GDScript_4bw30"]
+resource_local_to_scene = true
+script/source = "extends Node2D
+
+#what 'player' these grouped lanes belong to
+#1 means player 1 and 2 means player 2
+@export var lane_identifier: int = 1
+
+@onready var note_lanes: Node = $NoteLanes
+
+@onready var note_lane_1: Node = $NoteLanes/NoteLane1
+@onready var note_lane_2: Node = $NoteLanes/NoteLane2
+@onready var note_lane_3: Node = $NoteLanes/NoteLane3
+@onready var note_lane_4: Node = $NoteLanes/NoteLane4
+
+@onready var ui: Node = $UI
+
+var seconds_per_beat: float = 0 #Important for syncing tweens to the beat!
+
+func _ready() -> void:
+	SignalHandler.connect(\"spawn_note\", Callable(self, \"spawn_note_on_lane\"))
+	SignalHandler.connect(\"disable_lane\", Callable(self, \"disable_lane\"))
+	SignalHandler.connect(\"move_lane\", Callable(self, \"move_lane\"))
+	SignalHandler.connect(\"set_note_lane_setting_auto_mode\", Callable(self, \"set_note_lane_auto_mode\"))
+	SignalHandler.connect(\"get_song_seconds_per_beat\", Callable(self, \"set_seconds_per_beat\"))
+	
+	ui.theme = GlobalData.global_settings[\"theme\"]
+		
+	if GlobalData.global_settings[\"upscroll\"]:
+		note_lanes.rotation_degrees = -180
+		note_lanes.scale.x = -1
+		note_lanes.position.y = 368
+
+func spawn_note_on_lane(lane_number: int) -> void:
+	#man this solution is terrible but it works
+	match lane_number:
+		0:
+			var random_number: int = RandomNumberGenerator.new().randi_range(1, 4)
+			spawn_note_on_lane(random_number)
+		1:
+			note_lane_1.spawn_note()
+		2:
+			note_lane_2.spawn_note()
+		3:
+			note_lane_3.spawn_note()
+		4:
+			note_lane_4.spawn_note()
+		_:
+			pass
+
+func disable_lane(lane_number: int, duration: int) -> void:
+	#this is also terrible but i'll improve it eventually
+	match lane_number:
+		1:
+			note_lane_1.disable_lane(duration)
+		2:
+			note_lane_2.disable_lane(duration)
+		3:
+			note_lane_3.disable_lane(duration)
+		4:
+			note_lane_4.disable_lane(duration)
+		_:
+			pass
+			
+func set_note_lane_auto_mode(status: bool = false) -> void:
+	note_lane_1.auto_mode = status
+	note_lane_2.auto_mode = status
+	note_lane_3.auto_mode = status
+	note_lane_4.auto_mode = status
+
+func move_lane(lane_number: int, movement_value: int = 0, duration: int = 1) -> void:
+	match lane_number:
+		1:
+			note_lane_1.move_lane(movement_value, duration * seconds_per_beat)
+		2:
+			note_lane_2.move_lane(movement_value, duration * seconds_per_beat)
+		3:
+			note_lane_3.move_lane(movement_value, duration * seconds_per_beat)
+		4:
+			note_lane_4.move_lane(movement_value, duration * seconds_per_beat)
+		_:
+			pass
+
+func set_seconds_per_beat(seconds: float) -> void:
+	seconds_per_beat = seconds
+
+func reset_lanes() -> void:
+	note_lane_1.position.x = 64
+	note_lane_2.position.x = 192
+	note_lane_3.position.x = 320
+	note_lane_4.position.x = 448
+"
 
 [node name="NoteLanes" type="Node2D"]
 process_mode = 1
-script = ExtResource("1_vsgem")
+script = SubResource("GDScript_4bw30")
 
 [node name="NoteLanes" type="Node2D" parent="."]
 position = Vector2(256, 352)
@@ -41,32 +132,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("3_bqjyj")
-
-[node name="VideoPlayer" type="VideoStreamPlayer" parent="UI"]
-modulate = Color(1, 1, 1, 0.501961)
-z_index = -1
-layout_mode = 0
-offset_left = -384.0
-offset_right = 896.0
-offset_bottom = 720.0
-mouse_filter = 2
-expand = true
-
-[node name="VideoPlayerOffset" type="Timer" parent="UI/VideoPlayer"]
-one_shot = true
-
-[node name="ImageDisplayer" type="TextureRect" parent="UI"]
-modulate = Color(1, 1, 1, 0)
-z_index = -1
-z_as_relative = false
-layout_mode = 0
-offset_left = -376.0
-offset_right = 904.0
-offset_bottom = 720.0
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Results" type="Control" parent="UI"]
 visible = false
@@ -191,23 +256,11 @@ vertical_alignment = 1
 [node name="VisibilityTimer" type="Timer" parent="UI/Results"]
 one_shot = true
 
-[node name="NoteFeedbackLabel" type="Label" parent="UI"]
-z_index = 1000
+[node name="NoteFeedbackLabel" parent="UI" instance=ExtResource("4_skl7c")]
 layout_mode = 0
-offset_left = 52.0
+offset_left = 48.0
 offset_top = 288.0
-offset_right = 460.0
+offset_right = 464.0
 offset_bottom = 416.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("5_q6eou")
 
-[node name="VisibilityTimer" type="Timer" parent="UI/NoteFeedbackLabel"]
-wait_time = 1.5
-one_shot = true
-
-[connection signal="timeout" from="UI/VideoPlayer/VideoPlayerOffset" to="." method="_on_video_player_offset_timeout"]
 [connection signal="timeout" from="UI/Results/VisibilityTimer" to="UI/Results" method="_on_visiblity_timer_timeout"]
-[connection signal="timeout" from="UI/NoteFeedbackLabel/VisibilityTimer" to="UI/NoteFeedbackLabel" method="_on_visibility_timer_timeout"]

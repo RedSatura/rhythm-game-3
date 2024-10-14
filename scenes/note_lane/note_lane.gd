@@ -12,6 +12,12 @@ extends Node2D
 
 @export var initial_position: int = 0
 
+#basically where the note comes from when playing two-player
+#so player 1 gets notes from 1 and player 2 gets notes from 2
+#if you get confused note_source is basically equivalent to lane_identifier from its parents
+#im stupid, sorry
+@export var note_source: int = 1
+
 @onready var note_spawn_position: Node = $NoteSpawnPosition
 @onready var note_cooldown_timer: Node = $NoteCooldownTimer
 
@@ -64,34 +70,49 @@ func _on_note_cooldown_timer_timeout() -> void:
 	
 func _unhandled_input(_event: InputEvent) -> void:
 	if lane_state == LaneState.ACTIVE && !auto_mode:
-		match lane_position:
-			"LEFT":
-				if Input.is_action_just_pressed("lane_left"):
-					handle_input_on_note()
-			"CENTER_LEFT":
-				if Input.is_action_just_pressed("lane_center_left"):
-					handle_input_on_note()
-			"CENTER_RIGHT":
-				if Input.is_action_just_pressed("lane_center_right"):
-					handle_input_on_note()
-			"RIGHT":
-				if Input.is_action_just_pressed("lane_right"):
-					handle_input_on_note()
+		if note_source == 1:
+			match lane_position:
+				"LEFT":
+					if Input.is_action_just_pressed("lane_left_1"):
+						handle_input_on_note()
+				"CENTER_LEFT":
+					if Input.is_action_just_pressed("lane_center_left_1"):
+						handle_input_on_note()
+				"CENTER_RIGHT":
+					if Input.is_action_just_pressed("lane_center_right_1"):
+						handle_input_on_note()
+				"RIGHT":
+					if Input.is_action_just_pressed("lane_right_1"):
+						handle_input_on_note()
+		if note_source == 2:
+			match lane_position:
+				"LEFT":
+					if Input.is_action_just_pressed("lane_left_2"):
+						handle_input_on_note()
+				"CENTER_LEFT":
+					if Input.is_action_just_pressed("lane_center_left_2"):
+						handle_input_on_note()
+				"CENTER_RIGHT":
+					if Input.is_action_just_pressed("lane_center_right_2"):
+						handle_input_on_note()
+				"RIGHT":
+					if Input.is_action_just_pressed("lane_right_2"):
+						handle_input_on_note()
 				
 func handle_input_on_note() -> void:
 	if current_note != null:
 		if early:
-			SignalHandler.emit_signal("note_hit", "EARLY")
+			SignalHandler.emit_signal("note_hit", "EARLY", note_source)
 			if !in_editor:
 				hit_feedback_background.material.set_shader_parameter("background_color", good_color)
 			fade_feedback_background()
 		elif late:
-			SignalHandler.emit_signal("note_hit", "LATE")
+			SignalHandler.emit_signal("note_hit", "LATE", note_source)
 			if !in_editor:
 				hit_feedback_background.material.set_shader_parameter("background_color", good_color)
 			fade_feedback_background()
 		elif perfect:
-			SignalHandler.emit_signal("note_hit", "PERFECT")
+			SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
 			if !in_editor:
 				hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
 			fade_feedback_background()
@@ -151,7 +172,7 @@ func _on_perfect_area_area_exited(_area: Area2D) -> void:
 	perfect = false
 
 func _on_area_2d_area_entered(_area: Area2D) -> void:
-	SignalHandler.emit_signal("note_hit", "MISS")
+	SignalHandler.emit_signal("note_hit", "MISS", note_source)
 	if !in_editor:
 		hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
 	fade_feedback_background()

@@ -391,6 +391,16 @@ use_native_dialog = true
 [node name="NoteLanes" parent="." instance=ExtResource("6_esn1d")]
 position = Vector2(1664, 0)
 
+[node name="Results" parent="NoteLanes/UI" index="0"]
+in_editor = true
+
+[node name="NoteFeedbackLabel" parent="NoteLanes/UI" index="1"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 408.0
+offset_bottom = 128.0
+in_editor = true
+
 [node name="Transition" parent="." instance=ExtResource("6_gcys7")]
 visible = false
 
@@ -402,3 +412,5 @@ visible = false
 [connection signal="pressed" from="UI/TitleScreen" to="." method="_on_title_screen_pressed"]
 [connection signal="file_selected" from="SongPicker" to="." method="_on_song_picker_file_selected"]
 [connection signal="file_selected" from="NewSongSaver" to="." method="_on_new_song_saver_file_selected"]
+
+[editable path="NoteLanes"]

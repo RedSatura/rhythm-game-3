@@ -46,10 +46,10 @@ func change_key(event: InputEventKey) -> void:
 	selected_button = null
 	
 func update_button_text() -> void:
-	left_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_left"])
-	center_left_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_center_left"])
-	center_right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_center_right"])
-	right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_right"])
+	left_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_left_1"])
+	center_left_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_center_left_1"])
+	center_right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_center_right_1"])
+	right_lane.text = OS.get_keycode_string(GlobalData.global_settings["key_lane_right_1"])
 	pause.text = OS.get_keycode_string(GlobalData.global_settings["key_pause"])
 	restart.text = OS.get_keycode_string(GlobalData.global_settings["key_restart"])
 

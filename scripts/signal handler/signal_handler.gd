@@ -27,7 +27,7 @@ signal get_hitspot_position(position: Vector2)
 signal beat_occured(current_beat: int)
 signal measure_occured
 
-signal note_hit(grade: String)
+signal note_hit(grade: String, source: int)
 
 signal note_missed
 

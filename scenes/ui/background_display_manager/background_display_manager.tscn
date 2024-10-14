@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://iqnrykqog0g0"]
+
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="1_eahrf"]
+[ext_resource type="Script" path="res://scenes/note_lane/background_display_manager.gd" id="2_darwe"]
+
+[node name="BackgroundDisplayManager" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme = ExtResource("1_eahrf")
+script = ExtResource("2_darwe")
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="."]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -1
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+expand = true
+
+[node name="VideoPlayerOffset" type="Timer" parent="VideoPlayer"]
+one_shot = true
+
+[node name="ImageDisplayer" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = -1
+z_as_relative = false
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="timeout" from="VideoPlayer/VideoPlayerOffset" to="." method="_on_video_player_offset_timeout"]

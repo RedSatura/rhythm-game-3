@@ -35,7 +35,7 @@ vertical_alignment = 1
 layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
-input_action_name = "lane_left"
+input_action_name = "lane_left_1"
 
 [node name="CenterLeftLane" type="Label" parent="Controls"]
 layout_mode = 0
@@ -52,7 +52,7 @@ layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 text = "F"
-input_action_name = "lane_center_left"
+input_action_name = "lane_center_left_1"
 
 [node name="CenterRightLane" type="Label" parent="Controls"]
 layout_mode = 0
@@ -70,7 +70,7 @@ layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 text = "J"
-input_action_name = "lane_center_right"
+input_action_name = "lane_center_right_1"
 
 [node name="RightLane" type="Label" parent="Controls"]
 layout_mode = 0
@@ -87,7 +87,7 @@ layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 text = "K"
-input_action_name = "lane_right"
+input_action_name = "lane_right_1"
 
 [node name="Pause" type="Label" parent="Controls"]
 layout_mode = 0

@@ -134,14 +134,13 @@ offset_bottom = 424.0
 theme_override_font_sizes/font_size = 22
 text = "Gameplay"
 vertical_alignment = 1
-metadata/_edit_group_ = true
 
 [node name="ScrollSpeed" type="Label" parent="ScrollContainer/Control/Gameplay"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 32.0
-offset_right = 104.0
-offset_bottom = 64.0
+offset_left = 7.97679
+offset_top = 64.0
+offset_right = 103.977
+offset_bottom = 96.0
 theme_override_font_sizes/font_size = 16
 text = "Note Speed"
 vertical_alignment = 1
@@ -169,10 +168,10 @@ vertical_alignment = 1
 
 [node name="Upscroll" type="CheckButton" parent="ScrollContainer/Control/Gameplay"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 64.0
-offset_right = 367.0
-offset_bottom = 96.0
+offset_left = 7.97679
+offset_top = 32.0
+offset_right = 366.977
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 16
 text = "Upscroll"
 

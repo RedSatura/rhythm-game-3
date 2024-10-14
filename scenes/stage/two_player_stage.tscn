@@ -1,0 +1,526 @@
+[gd_scene load_steps=14 format=3 uid="uid://c6tqws6dplutf"]
+
+[ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_7b66k"]
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="1_seetj"]
+[ext_resource type="PackedScene" uid="uid://iqnrykqog0g0" path="res://scenes/ui/background_display_manager/background_display_manager.tscn" id="2_tjps6"]
+[ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="3_nfncc"]
+[ext_resource type="Texture2D" uid="uid://cr543j8pmsdcb" path="res://assets/icons/pause-svgrepo-com.svg" id="4_1qdi0"]
+[ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="5_7vj72"]
+[ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="7_jp11s"]
+[ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="8_jgrw4"]
+[ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="9_qai40"]
+[ext_resource type="PackedScene" uid="uid://xamq4vqi72yj" path="res://scenes/ui/note_feedback_label/note_feedback_label.tscn" id="10_aw6xi"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_gbc25"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_wwhg7"]
+events = [SubResource("InputEventKey_gbc25")]
+
+[sub_resource type="GDScript" id="GDScript_4bw30"]
+resource_local_to_scene = true
+script/source = "extends Node2D
+
+#what 'player' these grouped lanes belong to
+#1 means player 1 and 2 means player 2
+@export var lane_identifier: int = 1
+
+@onready var note_lanes: Node = $NoteLanes
+
+@onready var note_lane_1: Node = $NoteLanes/NoteLane1
+@onready var note_lane_2: Node = $NoteLanes/NoteLane2
+@onready var note_lane_3: Node = $NoteLanes/NoteLane3
+@onready var note_lane_4: Node = $NoteLanes/NoteLane4
+
+@onready var ui: Node = $UI
+
+var seconds_per_beat: float = 0 #Important for syncing tweens to the beat!
+
+func _ready() -> void:
+	SignalHandler.connect(\"spawn_note\", Callable(self, \"spawn_note_on_lane\"))
+	SignalHandler.connect(\"disable_lane\", Callable(self, \"disable_lane\"))
+	SignalHandler.connect(\"move_lane\", Callable(self, \"move_lane\"))
+	SignalHandler.connect(\"set_note_lane_setting_auto_mode\", Callable(self, \"set_note_lane_auto_mode\"))
+	SignalHandler.connect(\"get_song_seconds_per_beat\", Callable(self, \"set_seconds_per_beat\"))
+	
+	ui.theme = GlobalData.global_settings[\"theme\"]
+		
+	if GlobalData.global_settings[\"upscroll\"]:
+		note_lanes.rotation_degrees = -180
+		note_lanes.scale.x = -1
+		note_lanes.position.y = 368
+
+func spawn_note_on_lane(lane_number: int) -> void:
+	#man this solution is terrible but it works
+	match lane_number:
+		0:
+			var random_number: int = RandomNumberGenerator.new().randi_range(1, 4)
+			spawn_note_on_lane(random_number)
+		1:
+			note_lane_1.spawn_note()
+		2:
+			note_lane_2.spawn_note()
+		3:
+			note_lane_3.spawn_note()
+		4:
+			note_lane_4.spawn_note()
+		_:
+			pass
+
+func disable_lane(lane_number: int, duration: int) -> void:
+	#this is also terrible but i'll improve it eventually
+	match lane_number:
+		1:
+			note_lane_1.disable_lane(duration)
+		2:
+			note_lane_2.disable_lane(duration)
+		3:
+			note_lane_3.disable_lane(duration)
+		4:
+			note_lane_4.disable_lane(duration)
+		_:
+			pass
+			
+func set_note_lane_auto_mode(status: bool = false) -> void:
+	note_lane_1.auto_mode = status
+	note_lane_2.auto_mode = status
+	note_lane_3.auto_mode = status
+	note_lane_4.auto_mode = status
+
+func move_lane(lane_number: int, movement_value: int = 0, duration: int = 1) -> void:
+	match lane_number:
+		1:
+			note_lane_1.move_lane(movement_value, duration * seconds_per_beat)
+		2:
+			note_lane_2.move_lane(movement_value, duration * seconds_per_beat)
+		3:
+			note_lane_3.move_lane(movement_value, duration * seconds_per_beat)
+		4:
+			note_lane_4.move_lane(movement_value, duration * seconds_per_beat)
+		_:
+			pass
+
+func set_seconds_per_beat(seconds: float) -> void:
+	seconds_per_beat = seconds
+
+func reset_lanes() -> void:
+	note_lane_1.position.x = 64
+	note_lane_2.position.x = 192
+	note_lane_3.position.x = 320
+	note_lane_4.position.x = 448
+"
+
+[node name="TwoPlayerStage" type="Node2D"]
+script = ExtResource("1_7b66k")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_seetj")
+
+[node name="BackgroundDisplayManager" parent="UI" instance=ExtResource("2_tjps6")]
+
+[node name="Background" type="Panel" parent="UI"]
+modulate = Color(1, 1, 1, 0.376471)
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_type_variation = &"StageBackground"
+
+[node name="HomeButton" type="Button" parent="UI"]
+process_mode = 3
+z_index = 1
+z_as_relative = false
+layout_mode = 0
+offset_left = 1216.0
+offset_right = 1280.0
+offset_bottom = 64.0
+focus_mode = 0
+shortcut = SubResource("Shortcut_wwhg7")
+icon = ExtResource("3_nfncc")
+flat = true
+expand_icon = true
+
+[node name="PauseButton" type="Button" parent="UI"]
+process_mode = 3
+z_index = 1
+z_as_relative = false
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+focus_mode = 0
+icon = ExtResource("4_1qdi0")
+flat = true
+expand_icon = true
+
+[node name="Transition" parent="UI" instance=ExtResource("5_7vj72")]
+process_mode = 3
+visible = false
+layout_mode = 0
+
+[node name="LyricLabel" type="Label" parent="UI"]
+z_index = 100
+layout_mode = 0
+offset_left = 128.0
+offset_top = 64.0
+offset_right = 1152.0
+offset_bottom = 130.0
+theme_override_colors/font_shadow_color = Color(0.329, 0.329, 0.329, 0.719)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 24
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SongManager" parent="." instance=ExtResource("7_jp11s")]
+in_editor = false
+
+[node name="NoteLanes" type="Node2D" parent="."]
+process_mode = 1
+position = Vector2(64, 0)
+script = SubResource("GDScript_4bw30")
+
+[node name="NoteLanes" type="Node2D" parent="NoteLanes"]
+position = Vector2(256, 352)
+
+[node name="NoteLane1" parent="NoteLanes/NoteLanes" instance=ExtResource("8_jgrw4")]
+position = Vector2(-192, 288)
+identifier_color = Color(1, 0, 0, 1)
+initial_position = -192
+
+[node name="NoteLane2" parent="NoteLanes/NoteLanes" instance=ExtResource("8_jgrw4")]
+position = Vector2(-64, 288)
+lane_position = "CENTER_LEFT"
+identifier_color = Color(1, 1, 0, 1)
+initial_position = -64
+
+[node name="NoteLane3" parent="NoteLanes/NoteLanes" instance=ExtResource("8_jgrw4")]
+position = Vector2(64, 288)
+lane_position = "CENTER_RIGHT"
+identifier_color = Color(0, 1, 0, 1)
+initial_position = 64
+
+[node name="NoteLane4" parent="NoteLanes/NoteLanes" instance=ExtResource("8_jgrw4")]
+position = Vector2(192, 288)
+lane_position = "RIGHT"
+identifier_color = Color(0, 0, 1, 1)
+initial_position = 192
+
+[node name="UI" type="Control" parent="NoteLanes"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Results" type="Control" parent="NoteLanes/UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_top = 64.0
+offset_right = 512.0
+offset_bottom = 640.0
+script = ExtResource("9_qai40")
+metadata/_edit_group_ = true
+
+[node name="Results" type="Label" parent="NoteLanes/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 512.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 40
+text = "Results"
+
+[node name="Perfect" type="Label" parent="NoteLanes/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 320.0
+offset_bottom = 192.0
+text = "Perfect: "
+vertical_alignment = 1
+
+[node name="PerfectResult" type="Label" parent="NoteLanes/UI/Results/Perfect"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Good" type="Label" parent="NoteLanes/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 256.0
+text = "Good: "
+vertical_alignment = 1
+
+[node name="GoodResult" type="Label" parent="NoteLanes/UI/Results/Good"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Miss" type="Label" parent="NoteLanes/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 256.0
+offset_right = 320.0
+offset_bottom = 320.0
+text = "Miss: "
+vertical_alignment = 1
+
+[node name="MissResult" type="Label" parent="NoteLanes/UI/Results/Miss"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRate" type="Label" parent="NoteLanes/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 448.0
+offset_right = 288.0
+offset_bottom = 512.0
+text = "Hit Rate: "
+vertical_alignment = 1
+
+[node name="HitRatePercentResult" type="Label" parent="NoteLanes/UI/Results/HitRate"]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0.00%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRateIntegerResult" type="Label" parent="NoteLanes/UI/Results/HitRate"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 48.0
+offset_right = 384.0
+offset_bottom = 71.0
+theme_override_font_sizes/font_size = 16
+text = "0 / 0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Rating" type="Label" parent="NoteLanes/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 384.0
+offset_right = 288.0
+offset_bottom = 448.0
+text = "Rating:"
+vertical_alignment = 1
+
+[node name="RatingPercentResult" type="Label" parent="NoteLanes/UI/Results/Rating"]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0.00%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VisibilityTimer" type="Timer" parent="NoteLanes/UI/Results"]
+one_shot = true
+
+[node name="NoteFeedbackLabel" parent="NoteLanes/UI" instance=ExtResource("10_aw6xi")]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 288.0
+offset_right = 464.0
+offset_bottom = 416.0
+
+[node name="NoteLanes2" type="Node2D" parent="."]
+process_mode = 1
+position = Vector2(704, 0)
+script = SubResource("GDScript_4bw30")
+lane_identifier = 2
+
+[node name="NoteLanes" type="Node2D" parent="NoteLanes2"]
+position = Vector2(256, 352)
+
+[node name="NoteLane1" parent="NoteLanes2/NoteLanes" instance=ExtResource("8_jgrw4")]
+position = Vector2(-192, 288)
+identifier_color = Color(1, 0, 0, 1)
+initial_position = -192
+note_source = 2
+
+[node name="NoteLane2" parent="NoteLanes2/NoteLanes" instance=ExtResource("8_jgrw4")]
+position = Vector2(-64, 288)
+lane_position = "CENTER_LEFT"
+identifier_color = Color(1, 1, 0, 1)
+initial_position = -64
+note_source = 2
+
+[node name="NoteLane3" parent="NoteLanes2/NoteLanes" instance=ExtResource("8_jgrw4")]
+position = Vector2(64, 288)
+lane_position = "CENTER_RIGHT"
+identifier_color = Color(0, 1, 0, 1)
+initial_position = 64
+note_source = 2
+
+[node name="NoteLane4" parent="NoteLanes2/NoteLanes" instance=ExtResource("8_jgrw4")]
+position = Vector2(192, 288)
+lane_position = "RIGHT"
+identifier_color = Color(0, 0, 1, 1)
+initial_position = 192
+note_source = 2
+
+[node name="UI" type="Control" parent="NoteLanes2"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Results" type="Control" parent="NoteLanes2/UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_top = 64.0
+offset_right = 512.0
+offset_bottom = 640.0
+script = ExtResource("9_qai40")
+lane_identifier = 2
+metadata/_edit_group_ = true
+
+[node name="Results" type="Label" parent="NoteLanes2/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 512.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 40
+text = "Results"
+
+[node name="Perfect" type="Label" parent="NoteLanes2/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 320.0
+offset_bottom = 192.0
+text = "Perfect: "
+vertical_alignment = 1
+
+[node name="PerfectResult" type="Label" parent="NoteLanes2/UI/Results/Perfect"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Good" type="Label" parent="NoteLanes2/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 256.0
+text = "Good: "
+vertical_alignment = 1
+
+[node name="GoodResult" type="Label" parent="NoteLanes2/UI/Results/Good"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Miss" type="Label" parent="NoteLanes2/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 256.0
+offset_right = 320.0
+offset_bottom = 320.0
+text = "Miss: "
+vertical_alignment = 1
+
+[node name="MissResult" type="Label" parent="NoteLanes2/UI/Results/Miss"]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRate" type="Label" parent="NoteLanes2/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 448.0
+offset_right = 288.0
+offset_bottom = 512.0
+text = "Hit Rate: "
+vertical_alignment = 1
+
+[node name="HitRatePercentResult" type="Label" parent="NoteLanes2/UI/Results/HitRate"]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0.00%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HitRateIntegerResult" type="Label" parent="NoteLanes2/UI/Results/HitRate"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 48.0
+offset_right = 384.0
+offset_bottom = 71.0
+theme_override_font_sizes/font_size = 16
+text = "0 / 0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Rating" type="Label" parent="NoteLanes2/UI/Results"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 384.0
+offset_right = 288.0
+offset_bottom = 448.0
+text = "Rating:"
+vertical_alignment = 1
+
+[node name="RatingPercentResult" type="Label" parent="NoteLanes2/UI/Results/Rating"]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "0.00%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VisibilityTimer" type="Timer" parent="NoteLanes2/UI/Results"]
+one_shot = true
+
+[node name="NoteFeedbackLabel" parent="NoteLanes2/UI" instance=ExtResource("10_aw6xi")]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 288.0
+offset_right = 464.0
+offset_bottom = 416.0
+lane_identifier = 2
+
+[connection signal="pressed" from="UI/HomeButton" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="timeout" from="NoteLanes/UI/Results/VisibilityTimer" to="NoteLanes/UI/Results" method="_on_visiblity_timer_timeout"]
+[connection signal="timeout" from="NoteLanes2/UI/Results/VisibilityTimer" to="NoteLanes2/UI/Results" method="_on_visiblity_timer_timeout"]

@@ -1,5 +1,9 @@
 extends Node2D
 
+#what 'player' these grouped lanes belong to
+#1 means player 1 and 2 means player 2
+@export var lane_identifier: int = 1
+
 @onready var note_lanes: Node = $NoteLanes
 
 @onready var note_lane_1: Node = $NoteLanes/NoteLane1
@@ -9,11 +13,6 @@ extends Node2D
 
 @onready var ui: Node = $UI
 
-@onready var image_displayer: Node = $UI/ImageDisplayer
-@onready var video_player: Node = $UI/VideoPlayer
-
-@onready var video_player_offset: Node = $UI/VideoPlayer/VideoPlayerOffset
-
 var seconds_per_beat: float = 0 #Important for syncing tweens to the beat!
 
 func _ready() -> void:
@@ -22,15 +21,8 @@ func _ready() -> void:
 	SignalHandler.connect("move_lane", Callable(self, "move_lane"))
 	SignalHandler.connect("set_note_lane_setting_auto_mode", Callable(self, "set_note_lane_auto_mode"))
 	SignalHandler.connect("get_song_seconds_per_beat", Callable(self, "set_seconds_per_beat"))
-	SignalHandler.connect("song_started", Callable(self, "song_started"))
-	SignalHandler.connect("song_ended", Callable(self, "song_ended"))
-	$UI.theme = GlobalData.global_settings["theme"]
-	video_player.stream = null
 	
-	if GlobalData.song_info["video_offset"] <= 0.05:
-		video_player.play()
-	else:
-		video_player_offset.start(GlobalData.song_info["video_offset"])
+	ui.theme = GlobalData.global_settings["theme"]
 		
 	if GlobalData.global_settings["upscroll"]:
 		note_lanes.rotation_degrees = -180
@@ -95,45 +87,3 @@ func reset_lanes() -> void:
 	note_lane_2.position.x = 192
 	note_lane_3.position.x = 320
 	note_lane_4.position.x = 448
-	video_player.stream = null
-	
-func load_image() -> void:
-	var image_path: String = GlobalData.song_info["image_src"]
-	if FileAccess.file_exists(image_path):
-		var image: Image = Image.load_from_file(GlobalData.song_info["image_src"])
-		var texture: Texture = ImageTexture.create_from_image(image)
-		image_displayer.texture = texture
-		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(image_displayer, "modulate", Color(1.0, 1.0, 1.0, 0.5), 2)
-	else:
-		return
-	
-func load_video() -> void:
-	var video_path: String = GlobalData.song_info["video_src"]
-	if FileAccess.file_exists(video_path):
-		if video_path.get_extension() == "ogv":
-			var ogv: VideoStreamTheora = VideoStreamTheora.new()
-			ogv.set_file(video_path)
-			video_player.stream = ogv
-			image_displayer.visible = false
-		else:
-			SignalHandler.emit_signal("send_error", "Video format not supported, unable to play video!")
-			return
-	else:
-		return
-
-func song_started() -> void:
-	load_image()
-	load_video()
-	if video_player.stream:
-		if GlobalData.song_info["video_offset"] <= 0.05:
-			video_player.play()
-		else:
-			video_player_offset.start(GlobalData.song_info["video_offset"])
-
-func _on_video_player_offset_timeout() -> void:
-	video_player.play()
-
-func song_ended() -> void:
-	video_player.stop()
-	image_displayer.modulate = Color(1.0, 1.0, 1.0, 0.0)
