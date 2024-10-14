@@ -116,6 +116,7 @@ offset_top = 64.0
 offset_right = 896.0
 offset_bottom = 640.0
 script = ExtResource("5_blj8g")
+metadata/_edit_group_ = true
 
 [node name="Results" type="Label" parent="UI/Results"]
 layout_mode = 0

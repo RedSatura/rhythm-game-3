@@ -5,5 +5,5 @@
 [node name="Conductor" type="AudioStreamPlayer"]
 process_mode = 1
 autoplay = true
-bus = &"Delayer"
+bus = &"MainMusic"
 script = ExtResource("1_jv58c")

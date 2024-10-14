@@ -29,6 +29,7 @@ func save_data() -> void:
 	config.set_value("Audio", "master_volume", GlobalData.global_settings["master_volume"])
 	
 	config.set_value("Gameplay", "scroll_speed", GlobalData.global_settings["scroll_speed"])
+	config.set_value("Gameplay", "upscroll", GlobalData.global_settings["upscroll"])
 	
 	var error: int = config.save("user://save_data/game_data.cfg")
 	
@@ -61,6 +62,7 @@ func load_data() -> void:
 			GlobalData.global_settings["master_volume"] = config.get_value("Audio", "master_volume", 1.0)
 			
 			GlobalData.global_settings["scroll_speed"] = config.get_value("Gameplay", "scroll_speed", 1.0)
+			GlobalData.global_settings["upscroll"] = config.get_value("Gameplay", "upscroll", false)
 			
 			#im sorry
 			var key_scancode_1: InputEventKey = InputEventKey.new()

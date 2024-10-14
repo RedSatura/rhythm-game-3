@@ -30,6 +30,9 @@ var disabled_beats_left: int = 0
 var perfect: bool = false
 var good: bool = false
 
+var early: bool = false
+var late: bool = true
+
 enum LaneState {
 	ACTIVE,
 	DISABLED,
@@ -92,10 +95,13 @@ func handle_input_on_note() -> void:
 
 func _on_note_detector_area_entered(area: Area2D) -> void:
 	current_note = area
+	early = true
 	good = true
 
 func _on_note_detector_area_exited(_area: Area2D) -> void:
 	current_note = null
+	early = false
+	late = false
 	good = false
 
 func measure_occured() -> void:
@@ -130,10 +136,12 @@ func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_id
 
 func _on_perfect_area_area_entered(_area: Area2D) -> void:
 	good = false
+	early = false
 	perfect = true
 
 func _on_perfect_area_area_exited(_area: Area2D) -> void:
 	good = true
+	late = true
 	perfect = false
 
 func _on_area_2d_area_entered(_area: Area2D) -> void:

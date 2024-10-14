@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b454pq7tnb4lv" path="res://scenes/title/ui/options/options/handlers/controls/input_changer_button.tscn" id="3_bncf2"]
 
 [node name="ControlsOptionHandler" type="Control"]
+custom_minimum_size = Vector2(0, 232)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 384.0
@@ -32,8 +33,8 @@ vertical_alignment = 1
 
 [node name="InputChangerButton" parent="Controls/LeftLane" instance=ExtResource("3_bncf2")]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 352.0
+offset_left = 248.0
+offset_right = 360.0
 input_action_name = "lane_left"
 
 [node name="CenterLeftLane" type="Label" parent="Controls"]
@@ -48,8 +49,8 @@ vertical_alignment = 1
 
 [node name="InputChangerButton" parent="Controls/CenterLeftLane" instance=ExtResource("3_bncf2")]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 352.0
+offset_left = 248.0
+offset_right = 360.0
 text = "F"
 input_action_name = "lane_center_left"
 
@@ -66,8 +67,8 @@ vertical_alignment = 1
 
 [node name="InputChangerButton" parent="Controls/CenterRightLane" instance=ExtResource("3_bncf2")]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 352.0
+offset_left = 248.0
+offset_right = 360.0
 text = "J"
 input_action_name = "lane_center_right"
 
@@ -83,8 +84,8 @@ vertical_alignment = 1
 
 [node name="InputChangerButton" parent="Controls/RightLane" instance=ExtResource("3_bncf2")]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 352.0
+offset_left = 248.0
+offset_right = 360.0
 text = "K"
 input_action_name = "lane_right"
 
@@ -100,8 +101,8 @@ vertical_alignment = 1
 
 [node name="InputChangerButton" parent="Controls/Pause" instance=ExtResource("3_bncf2")]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 352.0
+offset_left = 248.0
+offset_right = 360.0
 text = "P"
 input_action_name = "pause"
 
@@ -117,8 +118,8 @@ vertical_alignment = 1
 
 [node name="InputChangerButton" parent="Controls/Restart" instance=ExtResource("3_bncf2")]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 352.0
+offset_left = 248.0
+offset_right = 360.0
 text = "R"
 input_action_name = "restart"
 

@@ -1,9 +1,11 @@
 extends Node2D
 
-@onready var note_lane_1: Node = $NoteLane1
-@onready var note_lane_2: Node = $NoteLane2
-@onready var note_lane_3: Node = $NoteLane3
-@onready var note_lane_4: Node = $NoteLane4
+@onready var note_lanes: Node = $NoteLanes
+
+@onready var note_lane_1: Node = $NoteLanes/NoteLane1
+@onready var note_lane_2: Node = $NoteLanes/NoteLane2
+@onready var note_lane_3: Node = $NoteLanes/NoteLane3
+@onready var note_lane_4: Node = $NoteLanes/NoteLane4
 
 @onready var ui: Node = $UI
 @onready var lyric_label: Node = $UI/LyricLabel
@@ -26,10 +28,16 @@ func _ready() -> void:
 	SignalHandler.connect("song_ended", Callable(self, "song_ended"))
 	$UI.theme = GlobalData.global_settings["theme"]
 	video_player.stream = null
+	
 	if GlobalData.song_info["video_offset"] <= 0.05:
 		video_player.play()
 	else:
 		video_player_offset.start(GlobalData.song_info["video_offset"])
+		
+	if GlobalData.global_settings["upscroll"]:
+		note_lanes.rotation_degrees = -180
+		note_lanes.scale.x = -1
+		note_lanes.position.y = 368
 
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works

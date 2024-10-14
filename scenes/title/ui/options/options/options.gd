@@ -2,20 +2,27 @@ extends Panel
 
 @export var slide_value: int = 448
 
-@onready var fullscreen_option: Node = $Display/Fullscreen
+@onready var dark_mode_option: Node = $ScrollContainer/Control/Display/DarkMode
 
-@onready var scroll_speed_slider: Node = $Gameplay/ScrollSpeed/ScrollSpeedSlider
-@onready var scroll_speed_value_label: Node = $Gameplay/ScrollSpeed/ScrollSpeedValueLabel
+@onready var fullscreen_option: Node = $ScrollContainer/Control/Display/Fullscreen
+
+@onready var master_volume_slider: Node = $ScrollContainer/Control/Sound/Volume/MasterVolumeSlider
+@onready var master_volume_value_label: Node = $ScrollContainer/Control/Sound/Volume/MasterVolumeValueLabel
+
+@onready var scroll_speed_slider: Node = $ScrollContainer/Control/Gameplay/ScrollSpeed/ScrollSpeedSlider
+@onready var scroll_speed_value_label: Node = $ScrollContainer/Control/Gameplay/ScrollSpeed/ScrollSpeedValueLabel
+@onready var upscroll_option: Node = $ScrollContainer/Control/Gameplay/Upscroll
 
 var current_theme_path: String = ""
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalHandler.connect("toggle_show_title_screen_options", Callable(self, "toggle_options_visibility"))
 	if GlobalData.global_settings["theme_name"] == "dark":
-		$Display/DarkMode.button_pressed = true
-	$Sound/Volume/MasterVolumeSlider.value = GlobalData.global_settings["master_volume"]
+		dark_mode_option.button_pressed = true
+	master_volume_slider.value = GlobalData.global_settings["master_volume"]
 	scroll_speed_slider.value = GlobalData.global_settings["scroll_speed"]
 	fullscreen_option.button_pressed = GlobalData.global_settings["fullscreen"]
+	upscroll_option.button_pressed = GlobalData.global_settings["upscroll"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -43,6 +50,7 @@ func _on_global_volume_slider_value_changed(value: float) -> void:
 	#change master volume
 	#audio related stuff should be handled by the conductor or similar nodes
 	GlobalData.global_settings["master_volume"] = value
+	master_volume_value_label.text = "%3.2f" % value
 	DataSaver.save_data()
 
 func _on_fullscreen_toggled(toggled_on: bool) -> void:
@@ -58,3 +66,11 @@ func _on_scroll_speed_slider_value_changed(value: float) -> void:
 	GlobalData.global_settings["scroll_speed"] = value
 	DataSaver.save_data()
 	scroll_speed_value_label.text = "%3.2f" % value
+
+
+func _on_upscroll_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		GlobalData.global_settings["upscroll"] = true
+	else:
+		GlobalData.global_settings["upscroll"] = false
+	DataSaver.save_data()

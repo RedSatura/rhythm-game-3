@@ -37,4 +37,5 @@ var global_settings: Dictionary = {
 	"master_volume": 1.0, 
 	#Gameplay settings
 	"scroll_speed": 1.0,
+	"upscroll": false
 }
