@@ -195,19 +195,18 @@ initial_position = -192
 [node name="NoteLane2" parent="NoteLanes/NoteLanes" instance=ExtResource("8_jgrw4")]
 position = Vector2(-64, 288)
 lane_position = "CENTER_LEFT"
-identifier_color = Color(1, 1, 0, 1)
+identifier_color = Color(0, 1, 0, 1)
 initial_position = -64
 
 [node name="NoteLane3" parent="NoteLanes/NoteLanes" instance=ExtResource("8_jgrw4")]
 position = Vector2(64, 288)
 lane_position = "CENTER_RIGHT"
-identifier_color = Color(0, 1, 0, 1)
+identifier_color = Color(0, 0, 1, 1)
 initial_position = 64
 
 [node name="NoteLane4" parent="NoteLanes/NoteLanes" instance=ExtResource("8_jgrw4")]
 position = Vector2(192, 288)
 lane_position = "RIGHT"
-identifier_color = Color(0, 0, 1, 1)
 initial_position = 192
 
 [node name="UI" type="Control" parent="NoteLanes"]
@@ -357,28 +356,28 @@ position = Vector2(256, 352)
 
 [node name="NoteLane1" parent="NoteLanes2/NoteLanes" instance=ExtResource("8_jgrw4")]
 position = Vector2(-192, 288)
-identifier_color = Color(1, 0, 0, 1)
+identifier_color = Color(0, 1, 1, 1)
 initial_position = -192
 note_source = 2
 
 [node name="NoteLane2" parent="NoteLanes2/NoteLanes" instance=ExtResource("8_jgrw4")]
 position = Vector2(-64, 288)
 lane_position = "CENTER_LEFT"
-identifier_color = Color(1, 1, 0, 1)
+identifier_color = Color(1, 0, 1, 1)
 initial_position = -64
 note_source = 2
 
 [node name="NoteLane3" parent="NoteLanes2/NoteLanes" instance=ExtResource("8_jgrw4")]
 position = Vector2(64, 288)
 lane_position = "CENTER_RIGHT"
-identifier_color = Color(0, 1, 0, 1)
+identifier_color = Color(1, 1, 0, 1)
 initial_position = 64
 note_source = 2
 
 [node name="NoteLane4" parent="NoteLanes2/NoteLanes" instance=ExtResource("8_jgrw4")]
 position = Vector2(192, 288)
 lane_position = "RIGHT"
-identifier_color = Color(0, 0, 1, 1)
+identifier_color = Color(0, 0, 0, 1)
 initial_position = 192
 note_source = 2
 

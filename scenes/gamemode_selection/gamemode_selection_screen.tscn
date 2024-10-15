@@ -1,0 +1,105 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0e4883hd3684"]
+
+[ext_resource type="Script" path="res://scenes/gamemode_selection/gamemode_selection_screen.gd" id="1_r5tnb"]
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="2_r7j40"]
+[ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="2_sh224"]
+
+[node name="GamemodeSelectionScreen" type="Node2D"]
+script = ExtResource("1_r5tnb")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("2_r7j40")
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="SelectGamemode" type="Label" parent="UI"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 1280.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 32
+text = "Select A Game Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Transition" parent="UI" instance=ExtResource("2_sh224")]
+visible = false
+
+[node name="GamemodeContainer" type="HBoxContainer" parent="UI"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 1216.0
+offset_bottom = 656.0
+
+[node name="Singleplayer" type="Button" parent="UI"]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 0
+offset_left = 192.0
+offset_top = 160.0
+offset_right = 576.0
+offset_bottom = 656.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../MultiplayerClassic")
+
+[node name="Singleplayer" type="Label" parent="UI/Singleplayer"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 368.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 36
+text = "Single Player"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="UI/Singleplayer"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 352.0
+offset_right = 368.0
+offset_bottom = 480.0
+theme_override_font_sizes/font_size = 24
+text = "Play by yourself!
+Try to get a high rating!"
+horizontal_alignment = 1
+
+[node name="MultiplayerClassic" type="Button" parent="UI"]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 0
+offset_left = 704.0
+offset_top = 160.0
+offset_right = 1088.0
+offset_bottom = 656.0
+
+[node name="MultiplayerClassic" type="Label" parent="UI/MultiplayerClassic"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 368.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 36
+text = "Multi Player (Classic)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="UI/MultiplayerClassic"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 352.0
+offset_right = 368.0
+offset_bottom = 480.0
+theme_override_font_sizes/font_size = 24
+text = "Play with a friend!
+Battle for the highest rating!"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="UI/Singleplayer" to="." method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="UI/MultiplayerClassic" to="." method="_on_multiplayer_classic_pressed"]

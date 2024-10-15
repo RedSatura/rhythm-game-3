@@ -12,6 +12,9 @@ extends Node2D
 
 @export var initial_position: int = 0
 
+#the higher the difficulty, the more likely it hits a note
+@export var difficulty: int = 0
+
 #basically where the note comes from when playing two-player
 #so player 1 gets notes from 1 and player 2 gets notes from 2
 #if you get confused note_source is basically equivalent to lane_identifier from its parents

@@ -49,7 +49,7 @@ func _on_pressed() -> void:
 	
 func song_validated() -> void:
 	if on_focus:
-		SignalHandler.emit_signal("set_transition_status", false, "res://scenes/stage/two_player_stage.tscn")
+		SignalHandler.emit_signal("set_transition_status", false, "res://scenes/gamemode_selection/gamemode_selection_screen.tscn")
 
 func _process(_delta: float) -> void:
 	match scroll_state:
