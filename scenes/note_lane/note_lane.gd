@@ -152,7 +152,7 @@ func enable_lane() -> void:
 	lane_background.modulate = Color(0.25, 0.25, 0.25, 1.0)
 
 func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventScreenTouch:
+	if event is InputEventScreenTouch && !auto_mode:
 		match lane_position:
 			"LEFT":
 					handle_input_on_note()
@@ -195,7 +195,22 @@ func stop_tweens() -> void:
 	pass
 
 func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
-	if auto_mode:
+	if in_editor:
 		if current_note != null:
 			current_note.queue_free()
 			current_note = null
+	else:
+		if auto_mode:
+			var chance: int = randi_range(0, 100)
+			if chance <= difficulty:
+				current_note.queue_free()
+				current_note = null
+				var perfect_chance: int = randi_range(0, 100)
+				if perfect_chance * 1.2 <= difficulty:
+					SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
+					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+					fade_feedback_background()
+				else:
+					SignalHandler.emit_signal("note_hit", "GOOD", note_source)
+					hit_feedback_background.material.set_shader_parameter("background_color", good_color)
+					fade_feedback_background()

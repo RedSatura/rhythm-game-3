@@ -25,6 +25,8 @@ script/source = "extends Node2D
 #what 'player' these grouped lanes belong to
 #1 means player 1 and 2 means player 2
 @export var lane_identifier: int = 1
+@export var cpu_active: bool = false
+@export var cpu_difficulty: int = 0
 
 @onready var note_lanes: Node = $NoteLanes
 
@@ -50,6 +52,20 @@ func _ready() -> void:
 		note_lanes.rotation_degrees = -180
 		note_lanes.scale.x = -1
 		note_lanes.position.y = 368
+		
+	if cpu_active:
+		set_note_lane_cpu()
+		
+func set_note_lane_cpu() -> void:
+	note_lane_1.difficulty = cpu_difficulty
+	note_lane_2.difficulty = cpu_difficulty
+	note_lane_3.difficulty = cpu_difficulty
+	note_lane_4.difficulty = cpu_difficulty
+	
+	note_lane_1.auto_mode = true
+	note_lane_2.auto_mode = true
+	note_lane_3.auto_mode = true
+	note_lane_4.auto_mode = true
 
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works
@@ -350,6 +366,8 @@ process_mode = 1
 position = Vector2(704, 0)
 script = SubResource("GDScript_4bw30")
 lane_identifier = 2
+cpu_active = true
+cpu_difficulty = 95
 
 [node name="NoteLanes" type="Node2D" parent="NoteLanes2"]
 position = Vector2(256, 352)
