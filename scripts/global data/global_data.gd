@@ -43,3 +43,7 @@ var global_settings: Dictionary = {
 	"scroll_speed": 1.0,
 	"upscroll": false
 }
+
+var game_settings: Dictionary = {
+	"cpu_difficulty": 98,
+}

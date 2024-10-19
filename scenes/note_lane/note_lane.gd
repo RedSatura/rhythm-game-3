@@ -58,6 +58,9 @@ func _ready() -> void:
 	lane_identifier.color = Color(identifier_color.r, identifier_color.g, identifier_color.b, 0.5)
 	$UI.theme = GlobalData.global_settings["theme"]
 	note_spawn_position.position.y = GlobalData.global_settings["scroll_speed"] * -1024
+	
+func set_identifier_color(color: Color) -> void:
+	lane_identifier.color = Color(color.r, color.g, color.b, 0.75)
 
 func spawn_note() -> void:
 	if lane_state == LaneState.ACTIVE:
@@ -203,14 +206,15 @@ func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 		if auto_mode:
 			var chance: int = randi_range(0, 100)
 			if chance <= difficulty:
-				current_note.queue_free()
-				current_note = null
-				var perfect_chance: int = randi_range(0, 100)
-				if perfect_chance * 1.2 <= difficulty:
-					SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
-					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-					fade_feedback_background()
-				else:
-					SignalHandler.emit_signal("note_hit", "GOOD", note_source)
-					hit_feedback_background.material.set_shader_parameter("background_color", good_color)
-					fade_feedback_background()
+				if current_note:
+					current_note.queue_free()
+					current_note = null
+					var perfect_chance: int = randi_range(0, 100)
+					if perfect_chance * 1.2 <= difficulty:
+						SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
+						hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+						fade_feedback_background()
+					else:
+						SignalHandler.emit_signal("note_hit", "GOOD", note_source)
+						hit_feedback_background.material.set_shader_parameter("background_color", good_color)
+						fade_feedback_background()

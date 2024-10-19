@@ -17,9 +17,10 @@ radius = 32.0
 radius = 56.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm3ef"]
-size = Vector2(128, 16)
+size = Vector2(128, 80)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3418p"]
+radius = 52.0
 
 [node name="NoteLane" type="Node2D"]
 position = Vector2(64, 640)
@@ -83,11 +84,10 @@ position = Vector2(0, -1024)
 wait_time = 2.0
 
 [node name="MissDetector" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MissDetector"]
-position = Vector2(0, 120)
+position = Vector2(0, 152)
 shape = SubResource("RectangleShape2D_pm3ef")
 
 [node name="LaneIdentifier" type="Polygon2D" parent="."]
@@ -96,9 +96,10 @@ polygon = PackedVector2Array(-64, 64, 64, 64, 64, 80, -64, 80)
 [node name="AutoHitArea" type="Area2D" parent="."]
 position = Vector2(0, 11)
 collision_layer = 0
-metadata/_edit_group_ = true
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AutoHitArea"]
+position = Vector2(0, 45)
 shape = SubResource("CircleShape2D_3418p")
 
 [connection signal="area_entered" from="PerfectArea" to="." method="_on_perfect_area_area_entered"]

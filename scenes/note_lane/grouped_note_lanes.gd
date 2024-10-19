@@ -3,13 +3,23 @@ extends Node2D
 #what 'player' these grouped lanes belong to
 #1 means player 1 and 2 means player 2
 @export var lane_identifier: int = 1
+@export var cpu_active: bool = false
+@export var cpu_difficulty: int = 0
+
+@export var identifier_color_1: Color = Color.WHITE
+@export var identifier_color_2: Color = Color.WHITE
+@export var identifier_color_3: Color = Color.WHITE
+@export var identifier_color_4: Color = Color.WHITE
 
 @onready var note_lanes: Node = $NoteLanes
+@onready var results: Node = $UI/Results
 
 @onready var note_lane_1: Node = $NoteLanes/NoteLane1
 @onready var note_lane_2: Node = $NoteLanes/NoteLane2
 @onready var note_lane_3: Node = $NoteLanes/NoteLane3
 @onready var note_lane_4: Node = $NoteLanes/NoteLane4
+
+@onready var note_feedback_label: Node = $UI/NoteFeedbackLabel
 
 @onready var ui: Node = $UI
 
@@ -28,6 +38,41 @@ func _ready() -> void:
 		note_lanes.rotation_degrees = -180
 		note_lanes.scale.x = -1
 		note_lanes.position.y = 368
+		
+	if cpu_active:
+		cpu_difficulty = GlobalData.game_settings["cpu_difficulty"]
+		set_note_lane_cpu()
+		
+	set_note_lane_identifier_colors()
+	set_lane_idenitifier_data()
+	set_children_identifiers()
+		
+func set_note_lane_cpu() -> void:
+	note_lane_1.difficulty = cpu_difficulty
+	note_lane_2.difficulty = cpu_difficulty
+	note_lane_3.difficulty = cpu_difficulty
+	note_lane_4.difficulty = cpu_difficulty
+	
+	note_lane_1.auto_mode = true
+	note_lane_2.auto_mode = true
+	note_lane_3.auto_mode = true
+	note_lane_4.auto_mode = true
+	
+func set_children_identifiers() -> void:
+	note_feedback_label.lane_identifier = lane_identifier
+	results.lane_identifier = lane_identifier
+
+func set_note_lane_identifier_colors() -> void:
+	note_lane_1.set_identifier_color(identifier_color_1)
+	note_lane_2.set_identifier_color(identifier_color_2)
+	note_lane_3.set_identifier_color(identifier_color_3)
+	note_lane_4.set_identifier_color(identifier_color_4)
+	
+func set_lane_idenitifier_data() -> void:
+	note_lane_1.note_source = lane_identifier
+	note_lane_2.note_source = lane_identifier
+	note_lane_3.note_source = lane_identifier
+	note_lane_4.note_source = lane_identifier
 
 func spawn_note_on_lane(lane_number: int) -> void:
 	#man this solution is terrible but it works
