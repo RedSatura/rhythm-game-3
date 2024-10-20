@@ -2,6 +2,8 @@ extends Node2D
 
 #what 'player' these grouped lanes belong to
 #1 means player 1 and 2 means player 2
+@export var in_editor: bool = false
+
 @export var lane_identifier: int = 1
 @export var cpu_active: bool = false
 @export var cpu_difficulty: int = 0
@@ -43,9 +45,18 @@ func _ready() -> void:
 		cpu_difficulty = GlobalData.game_settings["cpu_difficulty"]
 		set_note_lane_cpu()
 		
+	if in_editor:
+		set_editor_specific_behavior()
+		
 	set_note_lane_identifier_colors()
 	set_lane_idenitifier_data()
 	set_children_identifiers()
+	
+func set_editor_specific_behavior() -> void:
+	note_lane_1.in_editor = true
+	note_lane_2.in_editor = true
+	note_lane_3.in_editor = true
+	note_lane_4.in_editor = true
 		
 func set_note_lane_cpu() -> void:
 	note_lane_1.difficulty = cpu_difficulty

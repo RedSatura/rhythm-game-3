@@ -17,7 +17,7 @@ radius = 32.0
 radius = 56.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm3ef"]
-size = Vector2(128, 80)
+size = Vector2(128, 144)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3418p"]
 radius = 52.0
@@ -85,9 +85,10 @@ wait_time = 2.0
 
 [node name="MissDetector" type="Area2D" parent="."]
 collision_layer = 0
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MissDetector"]
-position = Vector2(0, 152)
+position = Vector2(0, 184)
 shape = SubResource("RectangleShape2D_pm3ef")
 
 [node name="LaneIdentifier" type="Polygon2D" parent="."]

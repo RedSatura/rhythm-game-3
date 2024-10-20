@@ -58,12 +58,6 @@ func song_validated() -> void:
 	
 func reset_to_defaults() -> void:
 	pass
-
-func _on_play_song_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/stage/stage.tscn")
-
-func _on_editor_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/editor/song_editor.tscn")
 	
 func change_theme(theme: Theme) -> void:
 	$UI.theme = theme

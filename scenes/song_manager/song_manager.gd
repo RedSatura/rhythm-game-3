@@ -92,7 +92,7 @@ func get_next_commands(_beat_pos: int) -> void:
 
 func get_commands() -> void:
 	var regex: RegEx = RegEx.new()
-	regex.compile("[^,]+?(?=\\,)")
+	regex.compile("[^;]+?(?=\\;)")
 	var result: Array = regex.search_all(line_content)
 	#if command_processing_enabled:
 	process_commands(result)
@@ -110,7 +110,9 @@ func process_commands(commands: Array) -> void:
 			var type_result: String = type_matches.get_string()
 			#Get command parameters
 			var parameter_regex: RegEx = RegEx.new()
-			parameter_regex.compile("(?<=\\/).*?(?=\\+)|(?<=\\+).*?(?=\\+)|(?<=\\+).*?(?=\\,)")
+			#(?<=\\/).*?(?=\\+)|(?<=\\+).*?(?=\\+)|(?<=\\+).*?(?=\\;)|(?<=\\/).*?(?=\\;)
+			#i owe microsoft copilot one for this
+			parameter_regex.compile("(?<=\\/)[^+;]+|(?<=\\+)[^+;]+|(?<=\\/)[^;]+(?=;)|(?<=\\/).*?(?=;)")
 			var parameter_result: Array = parameter_regex.search_all(x.get_string())
 
 			match type_result:
@@ -165,6 +167,8 @@ func process_commands(commands: Array) -> void:
 										break
 									_:
 										break
+						elif parameter_result.size() == 2: #hold notes
+							pass
 						else:
 							SignalHandler.emit_signal("send_error", "Too few or too many parameters!")
 				_:

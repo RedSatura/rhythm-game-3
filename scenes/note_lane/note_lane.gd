@@ -70,6 +70,16 @@ func spawn_note() -> void:
 		new_note.global_position = note_spawn_position.global_position
 	else:
 		SignalHandler.emit_signal("send_error", "Cannot spawn note when lane is disabled.")
+		
+func spawn_hold_note(duration: int) -> void:
+	if lane_state == LaneState.ACTIVE:
+		var new_note: Node = load("res://scenes/note_lane/note/hold_note/hold_note.tscn").instantiate()
+		new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
+		add_child(new_note)
+		new_note.global_position = note_spawn_position.global_position
+		new_note.duration = note_spawn_position.global_position
+	else:
+		pass
 	
 func _on_note_cooldown_timer_timeout() -> void:
 	spawn_note()

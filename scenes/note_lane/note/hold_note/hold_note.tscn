@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://qdnfleok68vr"]
+
+[ext_resource type="Script" path="res://scenes/note_lane/note/hold_note/hold_note.gd" id="1_cy3q2"]
+[ext_resource type="Texture2D" uid="uid://c2f4gd58q2jxy" path="res://assets/textures/note_bg.png" id="1_dfrdi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kwjyg"]
+radius = 1.0
+
+[node name="HoldNote" type="Area2D"]
+monitoring = false
+script = ExtResource("1_cy3q2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_dfrdi")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kwjyg")

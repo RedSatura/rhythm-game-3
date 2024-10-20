@@ -46,4 +46,9 @@ var global_settings: Dictionary = {
 
 var game_settings: Dictionary = {
 	"cpu_difficulty": 98,
+	"cpu_1_active": false,
+	"cpu_2_active": false,
+	"cpu_1_difficulty": 0,
+	"cpu_2_difficulty": 0,
+	"gamemode": "singleplayer",
 }
