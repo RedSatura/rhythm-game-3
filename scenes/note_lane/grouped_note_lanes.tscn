@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjmw7flxngjsm"]
+[gd_scene load_steps=7 format=3 uid="uid://cjmw7flxngjsm"]
 
 [ext_resource type="Script" path="res://scenes/note_lane/grouped_note_lanes.gd" id="1_i6bsn"]
 [ext_resource type="PackedScene" uid="uid://cxhghnc6fqebu" path="res://scenes/note_lane/note_lane.tscn" id="2_hciq1"]
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="3_lif60"]
 [ext_resource type="Script" path="res://scenes/stage/ui/results/results_handler.gd" id="4_3f8kl"]
 [ext_resource type="PackedScene" uid="uid://xamq4vqi72yj" path="res://scenes/ui/note_feedback_label/note_feedback_label.tscn" id="4_skl7c"]
+[ext_resource type="PackedScene" uid="uid://dqqtrh5ubk3py" path="res://scenes/note_lane/effect_manager/effect_manager.tscn" id="6_h7pjk"]
 
 [node name="NoteLanes" type="Node2D"]
 process_mode = 1
@@ -44,6 +46,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("3_lif60")
 
 [node name="Results" type="Control" parent="UI"]
 visible = false
@@ -174,5 +177,13 @@ offset_left = 48.0
 offset_top = 288.0
 offset_right = 464.0
 offset_bottom = 416.0
+text = "Good
+x20"
+
+[node name="EffectManager" parent="UI" instance=ExtResource("6_h7pjk")]
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 448.0
+offset_bottom = 256.0
 
 [connection signal="timeout" from="UI/Results/VisibilityTimer" to="UI/Results" method="_on_visiblity_timer_timeout"]

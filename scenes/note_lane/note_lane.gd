@@ -32,9 +32,13 @@ extends Node2D
 
 @onready var lane_identifier: Node = $LaneIdentifier
 
+@onready var effect_cooldown_timer: Node = $EffectCooldown
+
 var current_note: Area2D = null
 
 var disabled_beats_left: int = 0
+
+var effect_active: bool = false
 
 var perfect: bool = false
 var good: bool = false
@@ -228,3 +232,17 @@ func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 						SignalHandler.emit_signal("note_hit", "GOOD", note_source)
 						hit_feedback_background.material.set_shader_parameter("background_color", good_color)
 						fade_feedback_background()
+
+func process_effect(effect: int) -> void:
+	if !effect_active:
+		match effect:
+			0: #None
+				pass
+			1: #Note Speed Increase (+25%)
+				note_spawn_position.position.y *= 1.25
+				effect_active = true
+				effect_cooldown_timer.start()
+
+func _on_effect_cooldown_timeout() -> void:
+	effect_active = false
+	note_spawn_position.position.y = -1024 * GlobalData.global_settings["scroll_speed"]

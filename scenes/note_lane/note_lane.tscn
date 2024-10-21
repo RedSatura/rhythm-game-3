@@ -103,6 +103,10 @@ monitorable = false
 position = Vector2(0, 45)
 shape = SubResource("CircleShape2D_3418p")
 
+[node name="EffectCooldown" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
 [connection signal="area_entered" from="PerfectArea" to="." method="_on_perfect_area_area_entered"]
 [connection signal="area_exited" from="PerfectArea" to="." method="_on_perfect_area_area_exited"]
 [connection signal="area_entered" from="NoteDetector" to="." method="_on_note_detector_area_entered"]
@@ -111,3 +115,4 @@ shape = SubResource("CircleShape2D_3418p")
 [connection signal="timeout" from="NoteCooldownTimer" to="." method="_on_note_cooldown_timer_timeout"]
 [connection signal="area_entered" from="MissDetector" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_entered" from="AutoHitArea" to="." method="_on_auto_hit_area_area_entered"]
+[connection signal="timeout" from="EffectCooldown" to="." method="_on_effect_cooldown_timeout"]

@@ -22,6 +22,7 @@ extends Node2D
 @onready var note_lane_4: Node = $NoteLanes/NoteLane4
 
 @onready var note_feedback_label: Node = $UI/NoteFeedbackLabel
+@onready var effect_manager: Node = $UI/EffectManager
 
 @onready var ui: Node = $UI
 
@@ -33,6 +34,7 @@ func _ready() -> void:
 	SignalHandler.connect("move_lane", Callable(self, "move_lane"))
 	SignalHandler.connect("set_note_lane_setting_auto_mode", Callable(self, "set_note_lane_auto_mode"))
 	SignalHandler.connect("get_song_seconds_per_beat", Callable(self, "set_seconds_per_beat"))
+	SignalHandler.connect("send_effect", Callable(self, "process_effect"))
 	
 	ui.theme = GlobalData.global_settings["theme"]
 		
@@ -43,6 +45,7 @@ func _ready() -> void:
 		
 	if cpu_active:
 		cpu_difficulty = GlobalData.game_settings["cpu_difficulty"]
+		effect_manager.cpu_active = true
 		set_note_lane_cpu()
 		
 	if in_editor:
@@ -51,6 +54,16 @@ func _ready() -> void:
 	set_note_lane_identifier_colors()
 	set_lane_idenitifier_data()
 	set_children_identifiers()
+	effect_manager.lane_identifier = lane_identifier
+	effect_manager.difficulty = cpu_difficulty
+	
+#i have sinned against programming best practices
+func process_effect(target: int, effect: int) -> void:
+	if lane_identifier == target:
+		note_lane_1.process_effect(effect)
+		note_lane_2.process_effect(effect)
+		note_lane_3.process_effect(effect)
+		note_lane_4.process_effect(effect)
 	
 func set_editor_specific_behavior() -> void:
 	note_lane_1.in_editor = true

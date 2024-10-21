@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqqtrh5ubk3py"]
+
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="1_vfwbd"]
+[ext_resource type="Script" path="res://scenes/note_lane/effect_manager/effect_manager.gd" id="2_k185p"]
+
+[node name="EffectManager" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 384.0
+offset_bottom = 128.0
+theme = ExtResource("1_vfwbd")
+script = ExtResource("2_k185p")
+
+[node name="SelectedEffect" type="Label" parent="."]
+layout_mode = 0
+offset_right = 384.0
+offset_bottom = 32.0
+theme_override_font_sizes/font_size = 20
+text = "Selected Effect"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActiveEffectLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 384.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 22
+text = "None"
+horizontal_alignment = 1
+vertical_alignment = 1

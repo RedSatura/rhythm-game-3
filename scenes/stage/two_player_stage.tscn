@@ -85,7 +85,6 @@ vertical_alignment = 1
 in_editor = false
 
 [node name="NoteLanes" parent="." instance=ExtResource("8_rpkr8")]
-cpu_active = true
 identifier_color_2 = Color(0, 1, 0, 1)
 identifier_color_3 = Color(0, 0, 1, 1)
 identifier_color_4 = Color(1, 1, 1, 1)

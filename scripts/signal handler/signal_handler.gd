@@ -59,8 +59,14 @@ signal update_lyric(text: String)
 signal set_note_lane_setting_auto_mode(status: bool)
 
 signal set_transition_status(status: bool, path: String)
+#endregion
 
 #region title_screen
 signal toggle_show_title_screen_options(status: bool)
 signal set_song_selection_visibility(status: bool)
+#endregion
+
+#region modified_multiplayer
+signal send_effect(target: int, effect: int)
+signal effect_ended
 #endregion
