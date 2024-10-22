@@ -1,16 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://qdnfleok68vr"]
+[gd_scene load_steps=7 format=3 uid="uid://qdnfleok68vr"]
 
 [ext_resource type="Script" path="res://scenes/note_lane/note/hold_note/hold_note.gd" id="1_cy3q2"]
 [ext_resource type="Texture2D" uid="uid://c2f4gd58q2jxy" path="res://assets/textures/note_bg.png" id="1_dfrdi"]
+[ext_resource type="Script" path="res://scenes/note_lane/note/hold_note/starting_note.gd" id="2_ci81y"]
+[ext_resource type="Script" path="res://scenes/note_lane/note/hold_note/ending_note.gd" id="4_fqoph"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kwjyg"]
 radius = 1.0
 
-[node name="HoldNote" type="Area2D"]
-monitoring = false
+[sub_resource type="CircleShape2D" id="CircleShape2D_hvdya"]
+radius = 4.0
+
+[node name="HoldNote" type="Node2D"]
 script = ExtResource("1_cy3q2")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_right = 32.0
+offset_bottom = 384.0
+scale = Vector2(1, -1)
+
+[node name="StartingNote" type="Area2D" parent="."]
+monitoring = false
+script = ExtResource("2_ci81y")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartingNote"]
+shape = SubResource("CircleShape2D_kwjyg")
+
+[node name="TextureRect" type="TextureRect" parent="StartingNote"]
+self_modulate = Color(0.9, 0.9, 0.9, 1)
 offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
@@ -19,5 +38,26 @@ texture = ExtResource("1_dfrdi")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_kwjyg")
+[node name="EndingNote" type="Area2D" parent="."]
+position = Vector2(0, -384)
+monitoring = false
+script = ExtResource("4_fqoph")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndingNote"]
+shape = SubResource("CircleShape2D_hvdya")
+
+[node name="TextureRect" type="TextureRect" parent="EndingNote"]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_dfrdi")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="process_hold_note_miss_release" from="StartingNote" to="." method="process_hold_note_miss_release"]
+[connection signal="process_starting_note_input" from="StartingNote" to="." method="_on_starting_note_process_starting_note_input"]
+[connection signal="process_starting_note_miss" from="StartingNote" to="." method="_on_starting_note_process_starting_note_miss"]
+[connection signal="process_ending_note_input" from="EndingNote" to="." method="_on_ending_note_process_ending_note_input"]
+[connection signal="process_ending_note_miss" from="EndingNote" to="." method="_on_ending_note_process_ending_note_miss"]

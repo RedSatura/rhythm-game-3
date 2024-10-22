@@ -12,9 +12,10 @@ var effect_selection_active: bool = false
 enum Effects {
 	NONE,
 	NOTE_SPEED_INCREASE,
+	NOTE_FADEOUT,
 }
 
-var effect_names: Array = ["None", "Note Speed Increase"]
+var effect_names: Array = ["None", "Note Speed Increase", "Note Fadeout"]
 
 var active_effect: int = Effects.NONE
 

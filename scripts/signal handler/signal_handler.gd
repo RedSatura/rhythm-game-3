@@ -52,9 +52,12 @@ signal change_theme(theme: Theme)
 
 #region note_lanes
 signal spawn_note(lane: int)
+signal spawn_hold_note(lane: int, duration: int)
 signal disable_lane(lane: int, duration: int)
 signal move_lane(lane: int, movement: int, duration: int)
 signal update_lyric(text: String)
+
+signal hold_note_completed(target_lane: String)
 
 signal set_note_lane_setting_auto_mode(status: bool)
 

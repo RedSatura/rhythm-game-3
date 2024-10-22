@@ -26,4 +26,8 @@ shape = SubResource("CircleShape2D_mxjhr")
 position = Vector2(-2.86102e-06, -2.86102e-06)
 scale = Vector2(6.4, 6.4)
 
+[node name="NoteFadeoutTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="NoteFadeoutTimer" to="." method="_on_note_fadeout_timer_timeout"]

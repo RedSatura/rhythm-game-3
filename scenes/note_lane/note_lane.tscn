@@ -62,7 +62,6 @@ texture = ExtResource("2_t7pny")
 expand_mode = 1
 
 [node name="PerfectArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 monitorable = false
 
@@ -70,7 +69,6 @@ monitorable = false
 shape = SubResource("CircleShape2D_qbr3x")
 
 [node name="NoteDetector" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 monitorable = false
 
@@ -100,7 +98,7 @@ collision_layer = 0
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AutoHitArea"]
-position = Vector2(0, 45)
+position = Vector2(0, 41)
 shape = SubResource("CircleShape2D_3418p")
 
 [node name="EffectCooldown" type="Timer" parent="."]

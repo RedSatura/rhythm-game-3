@@ -1,0 +1,4 @@
+extends Area2D
+
+signal process_ending_note_input
+signal process_ending_note_miss

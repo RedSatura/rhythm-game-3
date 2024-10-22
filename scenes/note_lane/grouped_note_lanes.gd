@@ -30,6 +30,7 @@ var seconds_per_beat: float = 0 #Important for syncing tweens to the beat!
 
 func _ready() -> void:
 	SignalHandler.connect("spawn_note", Callable(self, "spawn_note_on_lane"))
+	SignalHandler.connect("spawn_hold_note", Callable(self, "spawn_hold_note_on_lane"))
 	SignalHandler.connect("disable_lane", Callable(self, "disable_lane"))
 	SignalHandler.connect("move_lane", Callable(self, "move_lane"))
 	SignalHandler.connect("set_note_lane_setting_auto_mode", Callable(self, "set_note_lane_auto_mode"))
@@ -112,6 +113,22 @@ func spawn_note_on_lane(lane_number: int) -> void:
 			note_lane_3.spawn_note()
 		4:
 			note_lane_4.spawn_note()
+		_:
+			pass
+			
+func spawn_hold_note_on_lane(lane_number: int, duration: int) -> void:
+	match lane_number:
+		0:
+			var random_number: int = RandomNumberGenerator.new().randi_range(1, 4)
+			spawn_note_on_lane(random_number)
+		1:
+			note_lane_1.spawn_hold_note(duration)
+		2:
+			note_lane_2.spawn_hold_note(duration)
+		3:
+			note_lane_3.spawn_hold_note(duration)
+		4:
+			note_lane_4.spawn_hold_note(duration)
 		_:
 			pass
 

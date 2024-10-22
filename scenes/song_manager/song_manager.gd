@@ -168,7 +168,10 @@ func process_commands(commands: Array) -> void:
 									_:
 										break
 						elif parameter_result.size() == 2: #hold notes
-							pass
+							var cached_params: Array = [] #stores parameters
+							for value: RegExMatch in parameter_result:
+								cached_params.push_back(value.get_string())
+							SignalHandler.emit_signal("spawn_hold_note", int(cached_params[0]), int(cached_params[1]))
 						else:
 							SignalHandler.emit_signal("send_error", "Too few or too many parameters!")
 				_:
