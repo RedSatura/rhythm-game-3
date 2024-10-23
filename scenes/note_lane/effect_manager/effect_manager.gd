@@ -34,7 +34,7 @@ func beat_occured(pos: int) -> void:
 	if cpu_active && pos % 2 == 0 && active:
 		run_cpu()
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if active:
 		if lane_identifier == 1:
 			if Input.is_action_just_pressed("switch_effect_1"):
@@ -62,10 +62,8 @@ func song_ended() -> void:
 
 func run_cpu() -> void:
 	if lane_identifier == 1:
-		pass
-	elif lane_identifier == 2:
 		var chance: int = randi_range(0, 100)
-		if chance + (difficulty / 10) >= 80:
+		if chance + (difficulty / 10.0) >= 80:
 			if active_effect >= Effects.size() - 1:
 				active_effect = 0
 				active_effect_label.text = effect_names[active_effect]
@@ -74,5 +72,18 @@ func run_cpu() -> void:
 				active_effect_label.text = effect_names[active_effect]
 				
 		var selection_chance: int = randi_range(0, 100)
-		if selection_chance + (difficulty / 20) >= 95:
+		if selection_chance + (difficulty / 20.0) >= 95:
+			SignalHandler.emit_signal("send_effect", 2, active_effect)
+	elif lane_identifier == 2:
+		var chance: int = randi_range(0, 100)
+		if chance + (difficulty / 10.0) >= 80:
+			if active_effect >= Effects.size() - 1:
+				active_effect = 0
+				active_effect_label.text = effect_names[active_effect]
+			else:
+				active_effect += 1
+				active_effect_label.text = effect_names[active_effect]
+				
+		var selection_chance: int = randi_range(0, 100)
+		if selection_chance + (difficulty / 20.0) >= 95:
 			SignalHandler.emit_signal("send_effect", 1, active_effect)

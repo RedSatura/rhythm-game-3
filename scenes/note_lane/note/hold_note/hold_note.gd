@@ -22,6 +22,10 @@ func _ready() -> void:
 	starting_movement_speed = Vector2(distance_to_target.x / 1.25, distance_to_target.y / 1.25)
 	ending_movement_speed = Vector2(distance_to_target.x / 1.25, distance_to_target.y / 1.25)
 	color_rect_movement_speed = Vector2(distance_to_target.x / 1.25, distance_to_target.y / 1.25)
+	#ending_note.position.y = -100
+	ending_note.position.y = ((GlobalData.global_settings["scroll_speed"] * -1024 / 4.0) * duration) / GlobalData.song_info["beat_mode"]
+	color_rect.size.y = ((GlobalData.global_settings["scroll_speed"] * 1024 / 4.0) * duration) / GlobalData.song_info["beat_mode"]
+	#color_rect.size.y = 100
 	
 func _physics_process(delta: float) -> void:
 	if starting_note != null:

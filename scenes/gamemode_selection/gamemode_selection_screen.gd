@@ -23,7 +23,7 @@ func _on_multiplayer_modified_pressed() -> void:
 	GlobalData.game_settings["gamemode"] = "multiplayer_modified"
 	SignalHandler.emit_signal("set_transition_status", false, "res://scenes/stage/two_player_stage.tscn")
 
-func set_gamemode_status(status: bool) -> void:
+func set_gamemode_status(_status: bool) -> void:
 	pass
 
 func _on_home_button_pressed() -> void:

@@ -84,9 +84,9 @@ func spawn_hold_note(duration: int) -> void:
 	if lane_state == LaneState.ACTIVE:
 		var new_note: Node = load("res://scenes/note_lane/note/hold_note/hold_note.tscn").instantiate()
 		new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
+		new_note.duration = duration
 		add_child(new_note)
 		new_note.global_position = note_spawn_position.global_position
-		new_note.duration = duration
 	else:
 		pass
 		
@@ -95,7 +95,7 @@ func hold_note_completed(target_lane: String) -> void:
 		SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
 		if !in_editor:
 			hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-		fade_feedback_background()
+			fade_feedback_background()
 	
 func _on_note_cooldown_timer_timeout() -> void:
 	spawn_note()
@@ -227,16 +227,6 @@ func _on_perfect_area_area_exited(_area: Area2D) -> void:
 	late = true
 	perfect = false
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	SignalHandler.emit_signal("note_hit", "MISS", note_source)
-	if !in_editor:
-		hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
-	if area.has_signal("process_starting_note_miss"):
-		area.emit_signal("process_starting_note_miss")
-	elif area.has_signal("process_ending_note_miss"):
-		area.emit_signal("process_ending_note_miss")
-	fade_feedback_background()
-
 func fade_feedback_background() -> void:
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_method(set_fade_value, 1.0, 0.0, 0.5)
@@ -254,8 +244,8 @@ func stop_tweens() -> void:
 func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 	if in_editor:
 		if current_note != null:
-			if current_note.has_method("process_hold_note_input"):
-				current_note.process_hold_note_input()
+			if current_note.has_signal("process_starting_note_input"):
+				current_note.emit_signal("process_starting_note_input", lane_position)
 			else:
 				current_note.queue_free()
 				current_note = null
@@ -264,8 +254,17 @@ func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 			var chance: int = randi_range(0, 100)
 			if chance <= difficulty:
 				if current_note:
-					if current_note.has_method("process_hold_note_input"):
-						current_note.process_hold_note_input()
+					if current_note.has_signal("process_starting_note_input"):
+						current_note.emit_signal("process_starting_note_input", lane_position)
+						#var perfect_chance: int = randi_range(0, 100)
+						#if perfect_chance * 1.2 <= difficulty:
+							#SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
+							#hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+							#fade_feedback_background()
+						#else:
+							#SignalHandler.emit_signal("note_hit", "GOOD", note_source)
+							#hit_feedback_background.material.set_shader_parameter("background_color", good_color)
+							#fade_feedback_background()
 					else:
 						current_note.queue_free()
 						current_note = null
@@ -299,3 +298,13 @@ func _on_effect_cooldown_timeout() -> void:
 	effect_active = false
 	note_fadeout = false
 	note_spawn_position.position.y = -1024 * GlobalData.global_settings["scroll_speed"]
+
+func _on_miss_detector_area_entered(area: Area2D) -> void:
+	SignalHandler.emit_signal("note_hit", "MISS", note_source)
+	if !in_editor:
+		hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+	if area.has_signal("process_starting_note_miss"):
+		area.emit_signal("process_starting_note_miss")
+	elif area.has_signal("process_ending_note_miss"):
+		area.emit_signal("process_ending_note_miss")
+	fade_feedback_background()

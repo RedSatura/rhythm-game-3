@@ -120,7 +120,7 @@ func spawn_hold_note_on_lane(lane_number: int, duration: int) -> void:
 	match lane_number:
 		0:
 			var random_number: int = RandomNumberGenerator.new().randi_range(1, 4)
-			spawn_note_on_lane(random_number)
+			spawn_hold_note_on_lane(random_number, duration)
 		1:
 			note_lane_1.spawn_hold_note(duration)
 		2:

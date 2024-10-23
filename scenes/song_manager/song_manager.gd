@@ -165,7 +165,7 @@ func process_commands(commands: Array) -> void:
 									1:	#Param 1: Spawns note on numbered lane.
 										SignalHandler.emit_signal("spawn_note", int(value.get_string()))
 										break
-									_:
+									_: 
 										break
 						elif parameter_result.size() == 2: #hold notes
 							var cached_params: Array = [] #stores parameters
