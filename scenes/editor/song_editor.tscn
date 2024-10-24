@@ -395,6 +395,18 @@ visible = false
 position = Vector2(1664, 0)
 in_editor = true
 
+[node name="NoteLane1" parent="NoteLanes/NoteLanes" index="0"]
+in_editor = true
+
+[node name="NoteLane2" parent="NoteLanes/NoteLanes" index="1"]
+in_editor = true
+
+[node name="NoteLane3" parent="NoteLanes/NoteLanes" index="2"]
+in_editor = true
+
+[node name="NoteLane4" parent="NoteLanes/NoteLanes" index="3"]
+in_editor = true
+
 [node name="Results" parent="NoteLanes/UI" index="0"]
 in_editor = true
 

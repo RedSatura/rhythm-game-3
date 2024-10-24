@@ -98,10 +98,20 @@ func spawn_hold_note(duration: int) -> void:
 		
 func hold_note_completed(target_lane: String) -> void:
 	if target_lane == lane_position:
-		SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
 		if !in_editor:
 			hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-		fade_feedback_background()
+			if note_source == 1:
+				SignalHandler.emit_signal("note_hit", "PERFECT", 1)
+			elif note_source == 2:
+				SignalHandler.emit_signal("note_hit", "PERFECT", 2)
+			fade_feedback_background()
+		if auto_mode && !in_editor:
+			hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+			if note_source == 1:
+				SignalHandler.emit_signal("note_hit", "PERFECT", 1)
+			elif note_source == 2:
+				SignalHandler.emit_signal("note_hit", "PERFECT", 2)
+			fade_feedback_background()
 		current_note = null
 	
 func _on_note_cooldown_timer_timeout() -> void:
@@ -139,47 +149,72 @@ func _unhandled_input(_event: InputEvent) -> void:
 						handle_input_on_note()
 		#hold notes
 		if note_source == 1:
-			if Input.is_action_just_released("lane_left_1"):
-				if current_note != null:
-					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release", note_source)
-			elif Input.is_action_just_released("lane_center_left_1"):
-				if current_note != null:
-					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release", note_source)
-			elif Input.is_action_just_released("lane_right_1"):
-				if current_note != null:
-					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release", note_source)
-			elif Input.is_action_just_released("lane_right_1"):
-				if current_note != null:
-					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release", note_source)
+			match lane_position:
+				"LEFT":
+					if Input.is_action_just_released("lane_left_1"):
+						if current_note != null:
+							if current_note.has_signal("process_hold_note_miss_release"):
+								current_note.emit_signal("process_hold_note_miss_release", note_source)
+								current_note = null
+				"CENTER_LEFT":
+					if Input.is_action_just_released("lane_center_left_1"):
+						if current_note != null:
+							if current_note.has_signal("process_hold_note_miss_release"):
+								current_note.emit_signal("process_hold_note_miss_release", note_source)
+								current_note = null
+				"CENTER_RIGHT":
+					if Input.is_action_just_released("lane_right_1"):
+						if current_note != null:
+							if current_note.has_signal("process_hold_note_miss_release"):
+								current_note.emit_signal("process_hold_note_miss_release", note_source)
+								current_note = null
+				"RIGHT":
+					if Input.is_action_just_released("lane_right_1"):
+						if current_note != null:
+							if current_note.has_signal("process_hold_note_miss_release"):
+								current_note.emit_signal("process_hold_note_miss_release", note_source)
+								current_note = null
 		elif note_source == 2:
-			if Input.is_action_just_released("lane_left_2"):
-				if current_note != null:
-					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release", note_source)
-			elif Input.is_action_just_released("lane_center_left_2"):
-				if current_note != null:
-					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release", note_source)
-			elif Input.is_action_just_released("lane_right_2"):
-				if current_note != null:
-					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release", note_source)
-			elif Input.is_action_just_released("lane_right_2"):
-				if current_note != null:
-					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release", note_source)
+			match lane_position:
+				"LEFT":
+					if Input.is_action_just_released("lane_left_2"):
+						if current_note != null:
+							if current_note.has_signal("process_hold_note_miss_release"):
+								current_note.emit_signal("process_hold_note_miss_release", note_source)
+								current_note = null
+				"CENTER_LEFT":
+					if Input.is_action_just_released("lane_center_left_2"):
+						if current_note != null:
+							if current_note.has_signal("process_hold_note_miss_release"):
+								current_note.emit_signal("process_hold_note_miss_release", note_source)
+								current_note = null
+				"CENTER_RIGHT":
+					if Input.is_action_just_released("lane_right_2"):
+						if current_note != null:
+							if current_note.has_signal("process_hold_note_miss_release"):
+								current_note.emit_signal("process_hold_note_miss_release", note_source)
+								current_note = null
+				"RIGHT":
+					if Input.is_action_just_released("lane_right_2"):
+						if current_note != null:
+							if current_note.has_signal("process_hold_note_miss_release"):
+								current_note.emit_signal("process_hold_note_miss_release", note_source)
+								current_note = null
 				
 func handle_input_on_note() -> void:
 	if current_note != null:
-		if current_note.has_signal("process_starting_note_input"):
+		if note_source == 1:
+			if current_note.has_signal("process_starting_note_input"):
 				current_note.emit_signal("process_starting_note_input", lane_position)
-		else:
-			current_note.queue_free()
-			current_note = null
+			else:
+				current_note.queue_free()
+				current_note = null
+		elif note_source == 2:
+			if current_note.has_signal("process_starting_note_input"):
+				current_note.emit_signal("process_starting_note_input", lane_position)
+			else:
+				current_note.queue_free()
+				current_note = null
 	
 		if early:
 			SignalHandler.emit_signal("note_hit", "EARLY", note_source)
@@ -203,6 +238,7 @@ func _on_note_detector_area_entered(area: Area2D) -> void:
 		early = false
 		late = false
 		good = false
+		perfect = false
 	else:
 		current_note = area
 		early = true
