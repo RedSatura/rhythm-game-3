@@ -14,6 +14,8 @@ var target_lane: String = ""
 
 var is_held: bool = false
 
+var note_collisions_disabled: bool = false
+
 @onready var starting_note: Node = $StartingNote
 @onready var ending_note: Node = $EndingNote
 @onready var color_rect: Node = $ColorRect
@@ -46,7 +48,7 @@ func _physics_process(delta: float) -> void:
 	if is_held:
 		color_rect.size.y -= ending_movement_speed.y * delta
 
-func process_hold_note_miss_release() -> void:
+func process_hold_note_miss_release(_source: int) -> void:
 	is_held = false
 	self.modulate = Color(1.0, 1.0, 1.0, 0.5)
 	starting_movement_speed = ending_movement_speed
@@ -62,4 +64,6 @@ func _on_starting_note_process_starting_note_input(lane: String) -> void:
 func _on_starting_note_process_starting_note_miss() -> void:
 	is_held = false
 	self.modulate = Color(1.0, 1.0, 1.0, 0.5)
+	starting_note.get_node("CollisionShape2D").set_deferred("disabled", true)
 	starting_movement_speed = ending_movement_speed
+	color_rect_movement_speed = ending_movement_speed

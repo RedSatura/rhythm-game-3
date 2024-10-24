@@ -42,6 +42,7 @@ var effect_active: bool = false
 #effect statuses
 var note_fadeout: bool = false
 
+
 var perfect: bool = false
 var good: bool = false
 
@@ -81,21 +82,27 @@ func spawn_note() -> void:
 		SignalHandler.emit_signal("send_error", "Cannot spawn note when lane is disabled.")
 		
 func spawn_hold_note(duration: int) -> void:
-	if lane_state == LaneState.ACTIVE:
-		var new_note: Node = load("res://scenes/note_lane/note/hold_note/hold_note.tscn").instantiate()
-		new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
-		new_note.duration = duration
-		add_child(new_note)
-		new_note.global_position = note_spawn_position.global_position
+	if duration > 0:
+		if lane_state == LaneState.ACTIVE:
+			var new_note: Node = load("res://scenes/note_lane/note/hold_note/hold_note.tscn").instantiate()
+			new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
+			new_note.duration = duration
+			add_child(new_note)
+			new_note.global_position = note_spawn_position.global_position
+			lane_state = LaneState.DISABLED
+			disabled_beats_left = duration
+		else:
+			pass
 	else:
-		pass
+		SignalHandler.emit_signal("send_error", "Cannot spawn hold note when duration is 0 or less!")
 		
 func hold_note_completed(target_lane: String) -> void:
 	if target_lane == lane_position:
 		SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
 		if !in_editor:
 			hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-			fade_feedback_background()
+		fade_feedback_background()
+		current_note = null
 	
 func _on_note_cooldown_timer_timeout() -> void:
 	spawn_note()
@@ -135,24 +142,45 @@ func _unhandled_input(_event: InputEvent) -> void:
 			if Input.is_action_just_released("lane_left_1"):
 				if current_note != null:
 					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release")
+						current_note.emit_signal("process_hold_note_miss_release", note_source)
 			elif Input.is_action_just_released("lane_center_left_1"):
 				if current_note != null:
 					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release")
+						current_note.emit_signal("process_hold_note_miss_release", note_source)
 			elif Input.is_action_just_released("lane_right_1"):
 				if current_note != null:
 					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release")
+						current_note.emit_signal("process_hold_note_miss_release", note_source)
 			elif Input.is_action_just_released("lane_right_1"):
 				if current_note != null:
 					if current_note.has_signal("process_hold_note_miss_release"):
-						current_note.emit_signal("process_hold_note_miss_release")
+						current_note.emit_signal("process_hold_note_miss_release", note_source)
 		elif note_source == 2:
-			pass
+			if Input.is_action_just_released("lane_left_2"):
+				if current_note != null:
+					if current_note.has_signal("process_hold_note_miss_release"):
+						current_note.emit_signal("process_hold_note_miss_release", note_source)
+			elif Input.is_action_just_released("lane_center_left_2"):
+				if current_note != null:
+					if current_note.has_signal("process_hold_note_miss_release"):
+						current_note.emit_signal("process_hold_note_miss_release", note_source)
+			elif Input.is_action_just_released("lane_right_2"):
+				if current_note != null:
+					if current_note.has_signal("process_hold_note_miss_release"):
+						current_note.emit_signal("process_hold_note_miss_release", note_source)
+			elif Input.is_action_just_released("lane_right_2"):
+				if current_note != null:
+					if current_note.has_signal("process_hold_note_miss_release"):
+						current_note.emit_signal("process_hold_note_miss_release", note_source)
 				
 func handle_input_on_note() -> void:
 	if current_note != null:
+		if current_note.has_signal("process_starting_note_input"):
+				current_note.emit_signal("process_starting_note_input", lane_position)
+		else:
+			current_note.queue_free()
+			current_note = null
+	
 		if early:
 			SignalHandler.emit_signal("note_hit", "EARLY", note_source)
 			if !in_editor:
@@ -168,19 +196,21 @@ func handle_input_on_note() -> void:
 			if !in_editor:
 				hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
 			fade_feedback_background()
-			
-		if current_note.has_signal("process_starting_note_input"):
-			current_note.emit_signal("process_starting_note_input", lane_position)
-		else:
-			current_note.queue_free()
-			current_note = null
 
 func _on_note_detector_area_entered(area: Area2D) -> void:
-	current_note = area
-	early = true
-	good = true
+	if area.has_signal("process_ending_note_input"):
+		current_note = null
+		early = false
+		late = false
+		good = false
+	else:
+		current_note = area
+		early = true
+		good = true
 
-func _on_note_detector_area_exited(_area: Area2D) -> void:
+func _on_note_detector_area_exited(area: Area2D) -> void:
+	if area.has_signal("process_starting_note_miss"):
+		pass
 	current_note = null
 	early = false
 	late = false
@@ -197,12 +227,12 @@ func beat_occured(_pos: int) -> void:
 	
 func disable_lane(duration: int = 0) -> void:
 	lane_state = LaneState.DISABLED
-	lane_background.modulate = Color(0, 0)
 	disabled_beats_left = duration
+	lane_background.modulate = Color(0, 0)
 	
 func enable_lane() -> void:
 	lane_state = LaneState.ACTIVE
-	lane_background.modulate = Color(0.25, 0.25, 0.25, 1.0)
+	#lane_background.modulate = Color(0.25, 0.25, 0.25, 1.0)
 
 func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch && !auto_mode:
@@ -256,15 +286,15 @@ func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 				if current_note:
 					if current_note.has_signal("process_starting_note_input"):
 						current_note.emit_signal("process_starting_note_input", lane_position)
-						#var perfect_chance: int = randi_range(0, 100)
-						#if perfect_chance * 1.2 <= difficulty:
-							#SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
-							#hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-							#fade_feedback_background()
-						#else:
-							#SignalHandler.emit_signal("note_hit", "GOOD", note_source)
-							#hit_feedback_background.material.set_shader_parameter("background_color", good_color)
-							#fade_feedback_background()
+						var perfect_chance: int = randi_range(0, 100)
+						if perfect_chance * 1.2 <= difficulty:
+							SignalHandler.emit_signal("note_hit", "PERFECT", note_source)
+							hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+							fade_feedback_background()
+						else:
+							SignalHandler.emit_signal("note_hit", "GOOD", note_source)
+							hit_feedback_background.material.set_shader_parameter("background_color", good_color)
+							fade_feedback_background()
 					else:
 						current_note.queue_free()
 						current_note = null
