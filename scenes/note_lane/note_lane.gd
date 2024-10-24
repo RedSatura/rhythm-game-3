@@ -96,23 +96,19 @@ func spawn_hold_note(duration: int) -> void:
 	else:
 		SignalHandler.emit_signal("send_error", "Cannot spawn hold note when duration is 0 or less!")
 		
-func hold_note_completed(target_lane: String) -> void:
+func hold_note_completed(source: int, target_lane: String) -> void:
 	if target_lane == lane_position:
-		if !in_editor:
-			hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-			if note_source == 1:
-				SignalHandler.emit_signal("note_hit", "PERFECT", 1)
-			elif note_source == 2:
-				SignalHandler.emit_signal("note_hit", "PERFECT", 2)
-			fade_feedback_background()
-		if auto_mode && !in_editor:
-			hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-			if note_source == 1:
-				SignalHandler.emit_signal("note_hit", "PERFECT", 1)
-			elif note_source == 2:
-				SignalHandler.emit_signal("note_hit", "PERFECT", 2)
-			fade_feedback_background()
-		current_note = null
+		if note_source == source:
+			if !in_editor:
+				if note_source == 1:
+					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+					SignalHandler.emit_signal("note_hit", "PERFECT", 1)
+					fade_feedback_background()
+				elif note_source == 2:
+					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+					SignalHandler.emit_signal("note_hit", "PERFECT", 2)
+					fade_feedback_background()
+			current_note = null
 	
 func _on_note_cooldown_timer_timeout() -> void:
 	spawn_note()
@@ -205,13 +201,13 @@ func handle_input_on_note() -> void:
 	if current_note != null:
 		if note_source == 1:
 			if current_note.has_signal("process_starting_note_input"):
-				current_note.emit_signal("process_starting_note_input", lane_position)
+				current_note.emit_signal("process_starting_note_input", note_source, lane_position)
 			else:
 				current_note.queue_free()
 				current_note = null
 		elif note_source == 2:
 			if current_note.has_signal("process_starting_note_input"):
-				current_note.emit_signal("process_starting_note_input", lane_position)
+				current_note.emit_signal("process_starting_note_input", note_source, lane_position)
 			else:
 				current_note.queue_free()
 				current_note = null
@@ -311,7 +307,7 @@ func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 	if in_editor:
 		if current_note != null:
 			if current_note.has_signal("process_starting_note_input"):
-				current_note.emit_signal("process_starting_note_input", lane_position)
+				current_note.emit_signal("process_starting_note_input", note_source, lane_position)
 			else:
 				current_note.queue_free()
 				current_note = null
@@ -321,7 +317,7 @@ func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 			if chance <= difficulty:
 				if current_note:
 					if current_note.has_signal("process_starting_note_input"):
-						current_note.emit_signal("process_starting_note_input", lane_position)
+						current_note.emit_signal("process_starting_note_input", note_source, lane_position)
 						var perfect_chance: int = randi_range(0, 100)
 						if perfect_chance * 1.2 <= difficulty:
 							SignalHandler.emit_signal("note_hit", "PERFECT", note_source)

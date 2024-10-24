@@ -11,6 +11,7 @@ var ending_movement_speed: Vector2 = Vector2.ZERO
 var color_rect_movement_speed: Vector2 = Vector2.ZERO
 
 var target_lane: String = ""
+var note_source: int = 1
 
 var is_held: bool = false
 
@@ -42,7 +43,7 @@ func _physics_process(delta: float) -> void:
 		
 	if starting_note != null && ending_note != null && is_held:
 		if starting_note.position.y <= ending_note.position.y: #this is a terrible idea but i'm out of ideas
-			SignalHandler.emit_signal("hold_note_completed", target_lane)
+			SignalHandler.emit_signal("hold_note_completed", note_source, target_lane)
 			queue_free()
 	
 	if is_held:
@@ -55,11 +56,12 @@ func process_hold_note_miss_release(_source: int) -> void:
 	color_rect_movement_speed = ending_movement_speed
 	ending_note.get_node("CollisionShape2D").set_deferred("disabled", true)
 
-func _on_starting_note_process_starting_note_input(lane: String) -> void:
+func _on_starting_note_process_starting_note_input(source: int, lane: String) -> void:
 	target_lane = lane
 	starting_movement_speed = Vector2.ZERO
 	color_rect_movement_speed = Vector2.ZERO
 	is_held = true
+	note_source = source
 
 func _on_starting_note_process_starting_note_miss() -> void:
 	is_held = false
