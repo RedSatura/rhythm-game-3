@@ -66,6 +66,6 @@ func _on_starting_note_process_starting_note_input(source: int, lane: String) ->
 func _on_starting_note_process_starting_note_miss() -> void:
 	is_held = false
 	self.modulate = Color(1.0, 1.0, 1.0, 0.5)
-	starting_note.get_node("CollisionShape2D").set_deferred("disabled", true)
+	#starting_note.get_node("CollisionShape2D").set_deferred("disabled", true)
 	starting_movement_speed = ending_movement_speed
 	color_rect_movement_speed = ending_movement_speed

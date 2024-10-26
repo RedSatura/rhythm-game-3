@@ -216,12 +216,16 @@ func handle_input_on_note() -> void:
 		if note_source == 1:
 			if current_note.has_signal("process_starting_note_input"):
 				current_note.emit_signal("process_starting_note_input", note_source, lane_position)
+			elif current_note.has_signal("process_ending_note_input"):
+				pass
 			else:
 				current_note.queue_free()
 				current_note = null
 		elif note_source == 2:
 			if current_note.has_signal("process_starting_note_input"):
 				current_note.emit_signal("process_starting_note_input", note_source, lane_position)
+			elif current_note.has_signal("process_ending_note_input"):
+				pass
 			else:
 				current_note.queue_free()
 				current_note = null
@@ -244,7 +248,7 @@ func handle_input_on_note() -> void:
 
 func _on_note_detector_area_entered(area: Area2D) -> void:
 	if area.has_signal("process_ending_note_input"):
-		pass
+		current_note = null
 	else:
 		current_note = area
 		early = true
@@ -372,11 +376,19 @@ func _on_effect_cooldown_timeout() -> void:
 	note_spawn_position.position.y = -1024 * GlobalData.global_settings["scroll_speed"]
 
 func _on_miss_detector_area_entered(area: Area2D) -> void:
-	SignalHandler.emit_signal("note_hit", "MISS", note_source)
-	if !in_editor:
-		hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
 	if area.has_signal("process_starting_note_miss"):
+		SignalHandler.emit_signal("note_hit", "MISS", note_source)
 		area.emit_signal("process_starting_note_miss")
+		if !in_editor:
+			hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+			fade_feedback_background()
 	elif area.has_signal("process_ending_note_miss"):
-		area.emit_signal("process_ending_note_miss")
-	fade_feedback_background()
+		SignalHandler.emit_signal("note_hit", "MISS", note_source)
+		if !in_editor:
+			hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+			fade_feedback_background()
+	else:
+		SignalHandler.emit_signal("note_hit", "MISS", note_source)
+		if !in_editor:
+			hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+			fade_feedback_background()
