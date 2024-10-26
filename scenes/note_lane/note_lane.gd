@@ -89,8 +89,6 @@ func spawn_hold_note(duration: int) -> void:
 			new_note.duration = duration
 			add_child(new_note)
 			new_note.global_position = note_spawn_position.global_position
-			lane_state = LaneState.DISABLED
-			disabled_beats_left = duration
 		else:
 			pass
 	else:
@@ -149,25 +147,33 @@ func _unhandled_input(_event: InputEvent) -> void:
 				"LEFT":
 					if Input.is_action_just_released("lane_left_1"):
 						if current_note != null:
-							if current_note.has_signal("process_hold_note_miss_release"):
+							if current_note.has_signal("process_ending_note_input"):
+								pass
+							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"CENTER_LEFT":
 					if Input.is_action_just_released("lane_center_left_1"):
 						if current_note != null:
-							if current_note.has_signal("process_hold_note_miss_release"):
+							if current_note.has_signal("process_ending_note_input"):
+								pass
+							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"CENTER_RIGHT":
 					if Input.is_action_just_released("lane_right_1"):
 						if current_note != null:
-							if current_note.has_signal("process_hold_note_miss_release"):
+							if current_note.has_signal("process_ending_note_input"):
+								pass
+							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"RIGHT":
 					if Input.is_action_just_released("lane_right_1"):
 						if current_note != null:
-							if current_note.has_signal("process_hold_note_miss_release"):
+							if current_note.has_signal("process_ending_note_input"):
+								pass
+							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 		elif note_source == 2:
@@ -175,25 +181,33 @@ func _unhandled_input(_event: InputEvent) -> void:
 				"LEFT":
 					if Input.is_action_just_released("lane_left_2"):
 						if current_note != null:
-							if current_note.has_signal("process_hold_note_miss_release"):
+							if current_note.has_signal("process_ending_note_input"):
+								pass
+							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"CENTER_LEFT":
 					if Input.is_action_just_released("lane_center_left_2"):
 						if current_note != null:
-							if current_note.has_signal("process_hold_note_miss_release"):
+							if current_note.has_signal("process_ending_note_input"):
+								pass
+							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"CENTER_RIGHT":
 					if Input.is_action_just_released("lane_right_2"):
 						if current_note != null:
-							if current_note.has_signal("process_hold_note_miss_release"):
+							if current_note.has_signal("process_ending_note_input"):
+								pass
+							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"RIGHT":
 					if Input.is_action_just_released("lane_right_2"):
 						if current_note != null:
-							if current_note.has_signal("process_hold_note_miss_release"):
+							if current_note.has_signal("process_ending_note_input"):
+								pass
+							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				
@@ -230,11 +244,7 @@ func handle_input_on_note() -> void:
 
 func _on_note_detector_area_entered(area: Area2D) -> void:
 	if area.has_signal("process_ending_note_input"):
-		current_note = null
-		early = false
-		late = false
-		good = false
-		perfect = false
+		pass
 	else:
 		current_note = area
 		early = true
