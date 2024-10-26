@@ -4,6 +4,7 @@ extends Button
 @export var song_title: String = ""
 @export var song_artist: String = ""
 @export var song_difficulty: int = 5
+@export var text_scroll_speed: int = 100
 
 @onready var title_scroll: Node = $TitleScroll
 @onready var title_scroll_timer: Node = $TitleScroll/Timer
@@ -51,12 +52,12 @@ func song_validated() -> void:
 	if on_focus:
 		SignalHandler.emit_signal("set_transition_status", false, "res://scenes/gamemode_selection/gamemode_selection_screen.tscn")
 
-func _process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	match scroll_state:
 		ScrollState.BEGIN:
 			pass
 		ScrollState.MOVING:
-			title_scroll.scroll_horizontal += 1
+			title_scroll.scroll_horizontal += text_scroll_speed * delta
 			if title_scroll.scroll_horizontal + 432 >= title_scroll_h.max_value:
 				title_scroll_timer.start()
 				scroll_state = ScrollState.END
@@ -67,7 +68,7 @@ func _process(_delta: float) -> void:
 		ArtistScrollState.BEGIN:
 			pass
 		ArtistScrollState.MOVING:
-			artist_scroll.scroll_horizontal += 1
+			artist_scroll.scroll_horizontal += text_scroll_speed * delta
 			if artist_scroll.scroll_horizontal + 176 >= artist_scroll_h.max_value:
 				artist_scroll_timer.start()
 				artist_scroll_state = ArtistScrollState.END

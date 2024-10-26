@@ -31,6 +31,13 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 	
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var evLocal: InputEvent = make_input_local(event)
+		if !Rect2(Vector2(0,0), size).has_point(evLocal.position):
+			release_focus()
+			SignalHandler.emit_signal("toggle_show_title_screen_options", false)
+	
 func toggle_options_visibility(status: bool) -> void:
 	var tween: Tween = get_tree().create_tween()
 	if status:

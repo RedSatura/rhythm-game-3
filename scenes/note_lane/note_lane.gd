@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var lane_position: String = "LEFT"
+@export var lane_position: String = ""
 @export var auto_mode: bool = false
 @export var in_editor: bool = false
 
@@ -67,51 +67,7 @@ func _ready() -> void:
 	$UI.theme = GlobalData.global_settings["theme"]
 	note_spawn_position.position.y = GlobalData.global_settings["scroll_speed"] * -1024
 	
-func set_identifier_color(color: Color) -> void:
-	lane_identifier.color = Color(color.r, color.g, color.b, 0.75)
-
-func spawn_note() -> void:
-	if lane_state == LaneState.ACTIVE:
-		var new_note: Node = load("res://scenes/note_lane/note/note.tscn").instantiate()
-		new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
-		add_child(new_note)
-		new_note.global_position = note_spawn_position.global_position
-		if note_fadeout:
-			new_note.note_fadeout_timer.start()
-	else:
-		SignalHandler.emit_signal("send_error", "Cannot spawn note when lane is disabled.")
-		
-func spawn_hold_note(duration: int) -> void:
-	if duration > 0:
-		if lane_state == LaneState.ACTIVE:
-			var new_note: Node = load("res://scenes/note_lane/note/hold_note/hold_note.tscn").instantiate()
-			new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
-			new_note.duration = duration
-			add_child(new_note)
-			new_note.global_position = note_spawn_position.global_position
-		else:
-			pass
-	else:
-		SignalHandler.emit_signal("send_error", "Cannot spawn hold note when duration is 0 or less!")
-		
-func hold_note_completed(source: int, target_lane: String) -> void:
-	if target_lane == lane_position:
-		if note_source == source:
-			if !in_editor:
-				if note_source == 1:
-					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-					SignalHandler.emit_signal("note_hit", "PERFECT", 1)
-					fade_feedback_background()
-				elif note_source == 2:
-					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
-					SignalHandler.emit_signal("note_hit", "PERFECT", 2)
-					fade_feedback_background()
-			current_note = null
-	
-func _on_note_cooldown_timer_timeout() -> void:
-	spawn_note()
-	
-func _unhandled_input(_event: InputEvent) -> void:
+func _physics_process(delta: float) -> void:
 	if lane_state == LaneState.ACTIVE && !auto_mode:
 		if note_source == 1:
 			match lane_position:
@@ -210,6 +166,50 @@ func _unhandled_input(_event: InputEvent) -> void:
 							elif current_note.has_signal("process_hold_note_miss_release"):
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
+	
+func set_identifier_color(color: Color) -> void:
+	lane_identifier.color = Color(color.r, color.g, color.b, 0.75)
+
+func spawn_note() -> void:
+	if lane_state == LaneState.ACTIVE:
+		var new_note: Node = load("res://scenes/note_lane/note/note.tscn").instantiate()
+		new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
+		add_child(new_note)
+		new_note.global_position = note_spawn_position.global_position
+		if note_fadeout:
+			new_note.note_fadeout_timer.start()
+	else:
+		SignalHandler.emit_signal("send_error", "Cannot spawn note when lane is disabled.")
+		
+func spawn_hold_note(duration: int) -> void:
+	if duration > 0:
+		if lane_state == LaneState.ACTIVE:
+			var new_note: Node = load("res://scenes/note_lane/note/hold_note/hold_note.tscn").instantiate()
+			new_note.distance_to_target = Vector2(note_detector.position.x - note_spawn_position.position.x, note_detector.position.y - note_spawn_position.position.y)
+			new_note.duration = duration
+			add_child(new_note)
+			new_note.global_position = note_spawn_position.global_position
+		else:
+			pass
+	else:
+		SignalHandler.emit_signal("send_error", "Cannot spawn hold note when duration is 0 or less!")
+		
+func hold_note_completed(source: int, target_lane: String) -> void:
+	if target_lane == lane_position:
+		if note_source == source:
+			if !in_editor:
+				if note_source == 1:
+					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+					SignalHandler.emit_signal("note_hit", "PERFECT", 1)
+					fade_feedback_background()
+				elif note_source == 2:
+					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
+					SignalHandler.emit_signal("note_hit", "PERFECT", 2)
+					fade_feedback_background()
+			current_note = null
+	
+func _on_note_cooldown_timer_timeout() -> void:
+	spawn_note()
 				
 func handle_input_on_note() -> void:
 	if current_note != null:
@@ -224,6 +224,7 @@ func handle_input_on_note() -> void:
 		elif note_source == 2:
 			if current_note.has_signal("process_starting_note_input"):
 				current_note.emit_signal("process_starting_note_input", note_source, lane_position)
+				current_note = null
 			elif current_note.has_signal("process_ending_note_input"):
 				pass
 			else:
@@ -279,18 +280,6 @@ func disable_lane(duration: int = 0) -> void:
 func enable_lane() -> void:
 	lane_state = LaneState.ACTIVE
 	#lane_background.modulate = Color(0.25, 0.25, 0.25, 1.0)
-
-func _on_note_detector_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventScreenTouch && !auto_mode:
-		match lane_position:
-			"LEFT":
-					handle_input_on_note()
-			"CENTER_LEFT":
-					handle_input_on_note()
-			"CENTER_RIGHT":
-					handle_input_on_note()
-			"RIGHT":
-					handle_input_on_note()
 
 func _on_perfect_area_area_entered(_area: Area2D) -> void:
 	good = false

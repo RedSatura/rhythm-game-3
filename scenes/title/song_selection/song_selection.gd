@@ -95,7 +95,7 @@ func set_visibility(status: bool) -> void:
 
 func _on_minimize_pressed() -> void:
 	SignalHandler.emit_signal("set_song_selection_visibility", false)
-
+	SignalHandler.emit_signal("toggle_show_title_screen_options", false)
 
 func _on_open_custom_song_pressed() -> void:
 	file_dialog.popup()

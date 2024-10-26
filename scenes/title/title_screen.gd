@@ -68,6 +68,7 @@ func _on_song_editor_pressed() -> void:
 
 func _on_play_pressed() -> void:
 	SignalHandler.emit_signal("set_song_selection_visibility", true)
+	SignalHandler.emit_signal("toggle_show_title_screen_options", false)
 
 func song_selection_visibility_status(status: bool) -> void:
 	if status:

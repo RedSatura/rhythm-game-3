@@ -21,8 +21,8 @@ metadata/_edit_vertical_guides_ = [-424.0]
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 8.0
+offset_bottom = 8.0
 theme = ExtResource("3_qigky")
 
 [node name="Panel" type="Panel" parent="UI"]

@@ -21,6 +21,7 @@ position = Vector2(256, 352)
 
 [node name="NoteLane1" parent="NoteLanes" instance=ExtResource("2_hciq1")]
 position = Vector2(-192, 288)
+lane_position = "LEFT"
 identifier_color = Color(1, 0, 0, 1)
 initial_position = -192
 

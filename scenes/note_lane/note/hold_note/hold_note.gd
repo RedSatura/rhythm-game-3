@@ -62,6 +62,7 @@ func _on_starting_note_process_starting_note_input(source: int, lane: String) ->
 	color_rect_movement_speed = Vector2.ZERO
 	is_held = true
 	note_source = source
+	self.modulate = Color.MAGENTA
 
 func _on_starting_note_process_starting_note_miss() -> void:
 	is_held = false

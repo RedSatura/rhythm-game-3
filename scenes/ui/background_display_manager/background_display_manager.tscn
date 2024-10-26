@@ -19,6 +19,7 @@ offset_right = 1280.0
 offset_bottom = 720.0
 mouse_filter = 2
 expand = true
+buffering_msec = 200
 
 [node name="VideoPlayerOffset" type="Timer" parent="VideoPlayer"]
 one_shot = true
