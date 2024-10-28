@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://cy0hcyuyxp8sr"]
+[gd_scene load_steps=15 format=3 uid="uid://cy0hcyuyxp8sr"]
 
 [ext_resource type="Script" path="res://scenes/editor/song_editor.gd" id="1_m8jub"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_28ch4"]
+[ext_resource type="PackedScene" uid="uid://iqnrykqog0g0" path="res://scenes/ui/background_display_manager/background_display_manager.tscn" id="5_i0pq8"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
 [ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="6_gcys7"]
@@ -369,6 +370,24 @@ horizontal_scroll_mode = 0
 [node name="MessagesContainer" type="VBoxContainer" parent="UI/ScrollContainer"]
 layout_mode = 2
 
+[node name="BackgroundDisplayManager" parent="UI" instance=ExtResource("5_i0pq8")]
+offset_left = 1472.0
+offset_right = 2752.0
+
+[node name="LyricLabel" type="Label" parent="UI"]
+z_index = 100
+offset_left = 1664.0
+offset_top = 64.0
+offset_right = 2688.0
+offset_bottom = 131.0
+theme_override_colors/font_shadow_color = Color(0.329, 0.329, 0.329, 0.719)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 24
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SongPicker" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 1
@@ -394,6 +413,8 @@ visible = false
 [node name="NoteLanes" parent="." instance=ExtResource("6_esn1d")]
 position = Vector2(1664, 0)
 in_editor = true
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="NoteLane1" parent="NoteLanes/NoteLanes" index="0"]
 in_editor = true

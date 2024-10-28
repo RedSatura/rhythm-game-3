@@ -21,6 +21,8 @@ extends Node2D
 @onready var messages_container: Node = $UI/ScrollContainer/MessagesContainer
 @onready var song_manager_viewport: Node = $UI/SongManagerViewport
 
+@onready var lyric_label: Node = $UI/LyricLabel
+
 @onready var spinbox: Node = $UI/Play/SpinBox #spinbox for setting current beat in song
 
 var file: FileAccess = null
@@ -44,6 +46,7 @@ func _ready() -> void:
 	SignalHandler.connect("song_validated", Callable(self, "process_song_validation"))
 	SignalHandler.connect("beat_occured", Callable(self, "process_beat"))
 	SignalHandler.connect("song_started", Callable(self, "song_started"))
+	SignalHandler.connect("update_lyric", Callable(self, "update_lyric"))
 	$UI.theme = GlobalData.global_settings["theme"]
 	song_manager_viewport.visible = false
 	song_validator.highlighting_color = highlighting_color
@@ -55,6 +58,9 @@ func _on_open_pressed() -> void:
 func _on_save_pressed() -> void:
 	save_song()
 		
+func update_lyric(lyric: String) -> void:
+	lyric_label.text = lyric
+	
 func save_song() -> void:
 	OS.request_permissions()
 	if FileAccess.file_exists(file_path):
