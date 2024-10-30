@@ -376,6 +376,7 @@ offset_right = 2752.0
 
 [node name="LyricLabel" type="Label" parent="UI"]
 z_index = 100
+layout_mode = 0
 offset_left = 1664.0
 offset_top = 64.0
 offset_right = 2688.0

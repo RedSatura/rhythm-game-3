@@ -51,6 +51,9 @@ func _ready() -> void:
 	song_manager_viewport.visible = false
 	song_validator.highlighting_color = highlighting_color
 	code_edit.grab_focus()
+	
+	if GlobalData.global_settings["upscroll"]:
+		lyric_label.position.y = 596
 
 func _on_open_pressed() -> void:
 	song_picker.popup()
