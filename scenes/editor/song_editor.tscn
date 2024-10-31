@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cy0hcyuyxp8sr"]
+[gd_scene load_steps=17 format=3 uid="uid://cy0hcyuyxp8sr"]
 
 [ext_resource type="Script" path="res://scenes/editor/song_editor.gd" id="1_m8jub"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
@@ -23,6 +23,13 @@ events = [SubResource("InputEventAction_yfhqm")]
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n18v5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5agte"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_7iufh"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_ffet8"]
+events = [SubResource("InputEventKey_7iufh")]
 
 [node name="SongEditor" type="Node2D"]
 script = ExtResource("1_m8jub")
@@ -327,6 +334,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_oule7")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_meuqb")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_n18v5")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_5agte")
+shortcut = SubResource("Shortcut_ffet8")
 icon = ExtResource("5_xkohr")
 icon_alignment = 1
 expand_icon = true

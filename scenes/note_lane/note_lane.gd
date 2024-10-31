@@ -35,6 +35,7 @@ extends Node2D
 @onready var effect_cooldown_timer: Node = $EffectCooldown
 
 var current_note: Area2D = null
+var past_hold_note: Area2D = null
 
 var disabled_beats_left: int = 0
 
@@ -67,7 +68,7 @@ func _ready() -> void:
 	$UI.theme = GlobalData.global_settings["theme"]
 	note_spawn_position.position.y = GlobalData.global_settings["scroll_speed"] * -1024
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if lane_state == LaneState.ACTIVE && !auto_mode:
 		if note_source == 1:
 			match lane_position:
@@ -106,6 +107,10 @@ func _physics_process(delta: float) -> void:
 							if current_note.has_signal("process_ending_note_input"):
 								pass
 							elif current_note.has_signal("process_hold_note_miss_release"):
+								if current_note != past_hold_note:
+									SignalHandler.emit_signal("note_hit", "MISS", note_source)
+									hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+									fade_feedback_background()
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"CENTER_LEFT":
@@ -114,6 +119,10 @@ func _physics_process(delta: float) -> void:
 							if current_note.has_signal("process_ending_note_input"):
 								pass
 							elif current_note.has_signal("process_hold_note_miss_release"):
+								if current_note != past_hold_note:
+									SignalHandler.emit_signal("note_hit", "MISS", note_source)
+									hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+									fade_feedback_background()
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"CENTER_RIGHT":
@@ -122,6 +131,10 @@ func _physics_process(delta: float) -> void:
 							if current_note.has_signal("process_ending_note_input"):
 								pass
 							elif current_note.has_signal("process_hold_note_miss_release"):
+								if current_note != past_hold_note:
+									SignalHandler.emit_signal("note_hit", "MISS", note_source)
+									hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+									fade_feedback_background()
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"RIGHT":
@@ -130,6 +143,10 @@ func _physics_process(delta: float) -> void:
 							if current_note.has_signal("process_ending_note_input"):
 								pass
 							elif current_note.has_signal("process_hold_note_miss_release"):
+								if current_note != past_hold_note:
+									SignalHandler.emit_signal("note_hit", "MISS", note_source)
+									hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+									fade_feedback_background()
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 		elif note_source == 2:
@@ -140,6 +157,10 @@ func _physics_process(delta: float) -> void:
 							if current_note.has_signal("process_ending_note_input"):
 								pass
 							elif current_note.has_signal("process_hold_note_miss_release"):
+								if current_note != past_hold_note:
+									SignalHandler.emit_signal("note_hit", "MISS", note_source)
+									hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+									fade_feedback_background()
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"CENTER_LEFT":
@@ -148,6 +169,10 @@ func _physics_process(delta: float) -> void:
 							if current_note.has_signal("process_ending_note_input"):
 								pass
 							elif current_note.has_signal("process_hold_note_miss_release"):
+								if current_note != past_hold_note:
+									SignalHandler.emit_signal("note_hit", "MISS", note_source)
+									hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+									fade_feedback_background()
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"CENTER_RIGHT":
@@ -156,6 +181,10 @@ func _physics_process(delta: float) -> void:
 							if current_note.has_signal("process_ending_note_input"):
 								pass
 							elif current_note.has_signal("process_hold_note_miss_release"):
+								if current_note != past_hold_note:
+									SignalHandler.emit_signal("note_hit", "MISS", note_source)
+									hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+									fade_feedback_background()
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 				"RIGHT":
@@ -164,6 +193,10 @@ func _physics_process(delta: float) -> void:
 							if current_note.has_signal("process_ending_note_input"):
 								pass
 							elif current_note.has_signal("process_hold_note_miss_release"):
+								if current_note != past_hold_note:
+									SignalHandler.emit_signal("note_hit", "MISS", note_source)
+									hit_feedback_background.material.set_shader_parameter("background_color", miss_color)
+									fade_feedback_background()
 								current_note.emit_signal("process_hold_note_miss_release", note_source)
 								current_note = null
 	
@@ -207,6 +240,7 @@ func hold_note_completed(source: int, target_lane: String) -> void:
 					SignalHandler.emit_signal("note_hit", "PERFECT", 2)
 					fade_feedback_background()
 			current_note = null
+			past_hold_note = null
 	
 func _on_note_cooldown_timer_timeout() -> void:
 	spawn_note()
@@ -216,6 +250,7 @@ func handle_input_on_note() -> void:
 		if note_source == 1:
 			if current_note.has_signal("process_starting_note_input"):
 				current_note.emit_signal("process_starting_note_input", note_source, lane_position)
+				past_hold_note = current_note
 			elif current_note.has_signal("process_ending_note_input"):
 				pass
 			else:
@@ -255,9 +290,7 @@ func _on_note_detector_area_entered(area: Area2D) -> void:
 		early = true
 		good = true
 
-func _on_note_detector_area_exited(area: Area2D) -> void:
-	if area.has_signal("process_starting_note_miss"):
-		pass
+func _on_note_detector_area_exited(_area: Area2D) -> void:
 	current_note = null
 	early = false
 	late = false
