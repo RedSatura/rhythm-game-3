@@ -23,6 +23,10 @@ func save_data() -> void:
 	config.set_value("Keybinds", "lane_center_left_1", GlobalData.global_settings["key_lane_center_left_1"])
 	config.set_value("Keybinds", "lane_center_right_1", GlobalData.global_settings["key_lane_center_right_1"])
 	config.set_value("Keybinds", "lane_right_1", GlobalData.global_settings["key_lane_right_1"])
+	config.set_value("Keybinds", "lane_left_2", GlobalData.global_settings["key_lane_left_2"])
+	config.set_value("Keybinds", "lane_center_left_2", GlobalData.global_settings["key_lane_center_left_2"])
+	config.set_value("Keybinds", "lane_center_right_2", GlobalData.global_settings["key_lane_center_right_2"])
+	config.set_value("Keybinds", "lane_right_2", GlobalData.global_settings["key_lane_right_2"])
 	config.set_value("Keybinds", "pause", GlobalData.global_settings["key_pause"])
 	config.set_value("Keybinds", "restart", GlobalData.global_settings["key_restart"])
 	
@@ -56,6 +60,10 @@ func load_data() -> void:
 			GlobalData.global_settings["key_lane_center_left_1"] = config.get_value("Keybinds", "lane_center_left_1")
 			GlobalData.global_settings["key_lane_center_right_1"] = config.get_value("Keybinds", "lane_center_right_1")
 			GlobalData.global_settings["key_lane_right_1"] = config.get_value("Keybinds", "lane_right_1")
+			GlobalData.global_settings["key_lane_left_2"] = config.get_value("Keybinds", "lane_left_2")
+			GlobalData.global_settings["key_lane_center_left_2"] = config.get_value("Keybinds", "lane_center_left_2")
+			GlobalData.global_settings["key_lane_center_right_2"] = config.get_value("Keybinds", "lane_center_right_2")
+			GlobalData.global_settings["key_lane_right_2"] = config.get_value("Keybinds", "lane_right_2")
 			GlobalData.global_settings["key_pause"] = config.get_value("Keybinds", "pause")
 			GlobalData.global_settings["key_restart"] = config.get_value("Keybinds", "restart")
 			

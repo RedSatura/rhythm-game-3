@@ -6,7 +6,6 @@
 [node name="Options" type="Panel"]
 offset_right = 448.0
 offset_bottom = 720.0
-scale = Vector2(1.00291, 1)
 script = ExtResource("2_4wi5n")
 
 [node name="Options" type="Label" parent="."]
@@ -41,13 +40,14 @@ text = "Made with Godot Engine 4.3"
 layout_mode = 0
 offset_left = 16.0
 offset_top = 64.0
-offset_right = 431.0
+offset_right = 440.0
 offset_bottom = 656.0
+follow_focus = true
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 0
+vertical_scroll_mode = 2
 
 [node name="Control" type="Control" parent="ScrollContainer"]
-custom_minimum_size = Vector2(416, 1024)
+custom_minimum_size = Vector2(416, 696)
 layout_mode = 2
 
 [node name="Display" type="Label" parent="ScrollContainer/Control"]
@@ -89,9 +89,9 @@ offset_bottom = 328.0
 [node name="Sound" type="Label" parent="ScrollContainer/Control"]
 layout_mode = 0
 offset_left = 7.93036
-offset_top = 328.0
+offset_top = 528.0
 offset_right = 74.9304
-offset_bottom = 359.0
+offset_bottom = 559.0
 theme_override_font_sizes/font_size = 22
 text = "Sound"
 metadata/_edit_group_ = true
@@ -128,9 +128,9 @@ vertical_alignment = 1
 [node name="Gameplay" type="Label" parent="ScrollContainer/Control"]
 layout_mode = 0
 offset_left = 7.93036
-offset_top = 392.0
+offset_top = 592.0
 offset_right = 119.93
-offset_bottom = 424.0
+offset_bottom = 624.0
 theme_override_font_sizes/font_size = 22
 text = "Gameplay"
 vertical_alignment = 1

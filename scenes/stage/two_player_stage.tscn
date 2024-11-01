@@ -92,7 +92,6 @@ identifier_color_4 = Color(1, 1, 1, 1)
 [node name="NoteLanes2" parent="." instance=ExtResource("8_rpkr8")]
 position = Vector2(704, 0)
 lane_identifier = 2
-cpu_active = true
 identifier_color_1 = Color(0, 1, 1, 1)
 identifier_color_2 = Color(1, 0, 1, 1)
 identifier_color_3 = Color(1, 1, 0, 1)

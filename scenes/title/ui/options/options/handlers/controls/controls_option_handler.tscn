@@ -21,110 +21,209 @@ theme_override_font_sizes/font_size = 22
 text = "Controls
 "
 
-[node name="LeftLane" type="Label" parent="Controls"]
+[node name="Player1" type="Label" parent="Controls"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 32.0
+offset_right = 78.0
+offset_bottom = 58.0
+theme_override_font_sizes/font_size = 18
+text = "Player 1"
+
+[node name="LeftLane" type="Label" parent="Controls/Player1"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 24.0
 offset_right = 80.0
-offset_bottom = 64.0
+offset_bottom = 56.0
 theme_override_font_sizes/font_size = 16
 text = "Left Lane"
 vertical_alignment = 1
 
-[node name="InputChangerButton" parent="Controls/LeftLane" instance=ExtResource("3_bncf2")]
+[node name="InputChangerButton" parent="Controls/Player1/LeftLane" instance=ExtResource("3_bncf2")]
 layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 input_action_name = "lane_left_1"
 
-[node name="CenterLeftLane" type="Label" parent="Controls"]
+[node name="CenterLeftLane" type="Label" parent="Controls/Player1"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 64.0
+offset_top = 56.0
 offset_right = 136.0
-offset_bottom = 96.0
+offset_bottom = 88.0
 theme_override_font_sizes/font_size = 16
 text = "Center Left Lane"
 vertical_alignment = 1
 
-[node name="InputChangerButton" parent="Controls/CenterLeftLane" instance=ExtResource("3_bncf2")]
+[node name="InputChangerButton" parent="Controls/Player1/CenterLeftLane" instance=ExtResource("3_bncf2")]
 layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 text = "F"
 input_action_name = "lane_center_left_1"
 
-[node name="CenterRightLane" type="Label" parent="Controls"]
+[node name="CenterRightLane" type="Label" parent="Controls/Player1"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 96.0
+offset_top = 88.0
 offset_right = 146.0
-offset_bottom = 128.0
+offset_bottom = 120.0
 scale = Vector2(1, 0.987555)
 theme_override_font_sizes/font_size = 16
 text = "Center Right Lane"
 vertical_alignment = 1
 
-[node name="InputChangerButton" parent="Controls/CenterRightLane" instance=ExtResource("3_bncf2")]
+[node name="InputChangerButton" parent="Controls/Player1/CenterRightLane" instance=ExtResource("3_bncf2")]
 layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 text = "J"
 input_action_name = "lane_center_right_1"
 
-[node name="RightLane" type="Label" parent="Controls"]
+[node name="RightLane" type="Label" parent="Controls/Player1"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 128.0
+offset_top = 120.0
 offset_right = 162.0
-offset_bottom = 160.0
+offset_bottom = 152.0
 theme_override_font_sizes/font_size = 16
 text = "Right Lane"
 vertical_alignment = 1
 
-[node name="InputChangerButton" parent="Controls/RightLane" instance=ExtResource("3_bncf2")]
+[node name="InputChangerButton" parent="Controls/Player1/RightLane" instance=ExtResource("3_bncf2")]
 layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 text = "K"
 input_action_name = "lane_right_1"
 
-[node name="Pause" type="Label" parent="Controls"]
+[node name="Player2" type="Label" parent="Controls"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 160.0
+offset_top = 184.0
+offset_right = 78.0
+offset_bottom = 210.0
+theme_override_font_sizes/font_size = 18
+text = "Player 2"
+
+[node name="LeftLane" type="Label" parent="Controls/Player2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 24.0
+offset_right = 80.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 16
+text = "Left Lane"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/Player2/LeftLane" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+input_action_name = "lane_left_2"
+
+[node name="CenterLeftLane" type="Label" parent="Controls/Player2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 136.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 16
+text = "Center Left Lane"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/Player2/CenterLeftLane" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+text = "F"
+input_action_name = "lane_center_left_2"
+
+[node name="CenterRightLane" type="Label" parent="Controls/Player2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 88.0
+offset_right = 146.0
+offset_bottom = 120.0
+scale = Vector2(1, 0.987555)
+theme_override_font_sizes/font_size = 16
+text = "Center Right Lane"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/Player2/CenterRightLane" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+text = "J"
+input_action_name = "lane_center_right_2"
+
+[node name="RightLane" type="Label" parent="Controls/Player2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 120.0
+offset_right = 162.0
+offset_bottom = 152.0
+theme_override_font_sizes/font_size = 16
+text = "Right Lane"
+vertical_alignment = 1
+
+[node name="InputChangerButton" parent="Controls/Player2/RightLane" instance=ExtResource("3_bncf2")]
+layout_mode = 0
+offset_left = 248.0
+offset_right = 360.0
+text = "K"
+input_action_name = "lane_right_2"
+
+[node name="General" type="Label" parent="Controls"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 336.0
+offset_right = 77.0
+offset_bottom = 362.0
+theme_override_font_sizes/font_size = 18
+text = "General"
+
+[node name="Pause" type="Label" parent="Controls/General"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 24.0
 offset_right = 55.0
-offset_bottom = 192.0
+offset_bottom = 56.0
 theme_override_font_sizes/font_size = 16
 text = "Pause"
 vertical_alignment = 1
 
-[node name="InputChangerButton" parent="Controls/Pause" instance=ExtResource("3_bncf2")]
+[node name="InputChangerButton" parent="Controls/General/Pause" instance=ExtResource("3_bncf2")]
 layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 text = "P"
 input_action_name = "pause"
 
-[node name="Restart" type="Label" parent="Controls"]
+[node name="Restart" type="Label" parent="Controls/General"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 192.0
-offset_right = 48.0
-offset_bottom = 223.0
+offset_top = 56.0
+offset_right = 65.0
+offset_bottom = 87.0
 theme_override_font_sizes/font_size = 16
 text = "Restart"
 vertical_alignment = 1
 
-[node name="InputChangerButton" parent="Controls/Restart" instance=ExtResource("3_bncf2")]
+[node name="InputChangerButton" parent="Controls/General/Restart" instance=ExtResource("3_bncf2")]
 layout_mode = 0
 offset_left = 248.0
 offset_right = 360.0
 text = "R"
 input_action_name = "restart"
 
-[connection signal="focus_exited" from="Controls/LeftLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
-[connection signal="focus_exited" from="Controls/CenterLeftLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
-[connection signal="focus_exited" from="Controls/CenterRightLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
-[connection signal="focus_exited" from="Controls/RightLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
-[connection signal="focus_exited" from="Controls/Pause/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Player1/LeftLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Player1/CenterLeftLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Player1/CenterRightLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Player1/RightLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Player2/LeftLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Player2/CenterLeftLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Player2/CenterRightLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/Player2/RightLane/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
+[connection signal="focus_exited" from="Controls/General/Pause/InputChangerButton" to="." method="_on_input_changer_button_focus_exited"]
