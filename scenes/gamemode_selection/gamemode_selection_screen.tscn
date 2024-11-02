@@ -170,9 +170,128 @@ flat = true
 expand_icon = true
 
 [node name="GamemodePlayerButtons" type="Control" parent="UI"]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="PlayerPlayer" type="Button" parent="UI/GamemodePlayerButtons"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 160.0
+offset_right = 416.0
+offset_bottom = 576.0
+focus_neighbor_top = NodePath("../MultiplayerReturn")
+focus_neighbor_bottom = NodePath("../PlayerComputer")
+metadata/_edit_group_ = true
+
+[node name="PlayerPlayer" type="Label" parent="UI/GamemodePlayerButtons/PlayerPlayer"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 312.0
+offset_bottom = 56.0
+text = "Player / Player"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="UI/GamemodePlayerButtons/PlayerPlayer"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 240.0
+offset_right = 304.0
+offset_bottom = 400.0
+text = "Play against another player!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PlayerComputer" type="Button" parent="UI/GamemodePlayerButtons"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 160.0
+offset_right = 800.0
+offset_bottom = 576.0
+focus_neighbor_top = NodePath("../PlayerPlayer")
+focus_neighbor_bottom = NodePath("../ComputerComputer")
+
+[node name="PlayerComputer" type="Label" parent="UI/GamemodePlayerButtons/PlayerComputer"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 312.0
+offset_bottom = 56.0
+text = "Player / Comp"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="UI/GamemodePlayerButtons/PlayerComputer"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 240.0
+offset_right = 312.0
+offset_bottom = 408.0
+text = "Play against the computer!
+"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Difficulty" type="Label" parent="UI/GamemodePlayerButtons/PlayerComputer"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 352.0
+offset_right = 96.0
+offset_bottom = 416.0
+theme_override_font_sizes/font_size = 16
+text = "Difficulty
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DifficultySlider" type="HSlider" parent="UI/GamemodePlayerButtons/PlayerComputer/Difficulty"]
+layout_mode = 0
+offset_left = 96.0
+offset_right = 304.0
+offset_bottom = 64.0
+rounded = true
+
+[node name="ComputerComputer" type="Button" parent="UI/GamemodePlayerButtons"]
+layout_mode = 0
+offset_left = 864.0
+offset_top = 160.0
+offset_right = 1184.0
+offset_bottom = 576.0
+focus_neighbor_top = NodePath("../PlayerComputer")
+focus_neighbor_bottom = NodePath("../MultiplayerReturn")
+metadata/_edit_group_ = true
+
+[node name="ComputerComputer" type="Label" parent="UI/GamemodePlayerButtons/ComputerComputer"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 320.0
+offset_bottom = 56.0
+text = "Comp / Comp"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="UI/GamemodePlayerButtons/ComputerComputer"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 240.0
+offset_right = 304.0
+offset_bottom = 400.0
+text = "Watch two bots battle it out!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="MultiplayerReturn" type="Button" parent="UI/GamemodePlayerButtons"]
+layout_mode = 0
+offset_left = 616.0
+offset_top = 616.0
+offset_right = 664.0
+offset_bottom = 664.0
+focus_neighbor_top = NodePath("../ComputerComputer")
+focus_neighbor_bottom = NodePath("../PlayerPlayer")
+text = "X"
 
 [node name="FPSLabel" parent="." instance=ExtResource("5_7xrc0")]
 offset_left = 1176.0
@@ -184,3 +303,8 @@ offset_bottom = 112.0
 [connection signal="pressed" from="UI/GamemodeButtons/MultiplayerClassic" to="." method="_on_multiplayer_classic_pressed"]
 [connection signal="pressed" from="UI/GamemodeButtons/MultiplayerModified" to="." method="_on_multiplayer_modified_pressed"]
 [connection signal="pressed" from="UI/HomeButton" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="UI/GamemodePlayerButtons/PlayerPlayer" to="." method="_on_player_player_pressed"]
+[connection signal="pressed" from="UI/GamemodePlayerButtons/PlayerComputer" to="." method="_on_player_computer_pressed"]
+[connection signal="value_changed" from="UI/GamemodePlayerButtons/PlayerComputer/Difficulty/DifficultySlider" to="." method="_on_difficulty_slider_value_changed"]
+[connection signal="pressed" from="UI/GamemodePlayerButtons/ComputerComputer" to="." method="_on_computer_computer_pressed"]
+[connection signal="pressed" from="UI/GamemodePlayerButtons/MultiplayerReturn" to="." method="_on_multiplayer_return_pressed"]

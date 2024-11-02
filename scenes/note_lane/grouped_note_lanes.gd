@@ -46,7 +46,13 @@ func _ready() -> void:
 		
 	if cpu_active:
 		cpu_difficulty = GlobalData.game_settings["cpu_difficulty"]
-		effect_manager.cpu_active = true
+		set_note_lane_cpu()
+		
+	if GlobalData.game_settings["cpu_1_active"] && lane_identifier == 1:
+		cpu_difficulty = GlobalData.game_settings["cpu_1_difficulty"]
+		set_note_lane_cpu()
+	elif GlobalData.game_settings["cpu_2_active"] && lane_identifier == 2:
+		cpu_difficulty = GlobalData.game_settings["cpu_2_difficulty"]
 		set_note_lane_cpu()
 		
 	if in_editor:
