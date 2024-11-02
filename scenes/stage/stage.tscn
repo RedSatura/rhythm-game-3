@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://brjf80vt8yjyu"]
+[gd_scene load_steps=12 format=3 uid="uid://brjf80vt8yjyu"]
 
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_je8j5"]
 [ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="2_ge13s"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="3_fb8qo"]
 [ext_resource type="Texture2D" uid="uid://cr543j8pmsdcb" path="res://assets/icons/pause-svgrepo-com.svg" id="4_hqsi5"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="6_0b2l7"]
+[ext_resource type="PackedScene" uid="uid://cd855a3hfy7c0" path="res://scenes/utils/fps_label/fps_label.tscn" id="9_m60vs"]
 [ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="10_6mjfg"]
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="12_0l0mw"]
 
@@ -90,6 +91,12 @@ metadata/_edit_lock_ = true
 [node name="NoteLanes" parent="." instance=ExtResource("10_6mjfg")]
 position = Vector2(384, 0)
 metadata/_edit_lock_ = true
+
+[node name="FPSLabel" parent="." instance=ExtResource("9_m60vs")]
+offset_left = 1168.0
+offset_top = 64.0
+offset_right = 1264.0
+offset_bottom = 112.0
 
 [connection signal="pressed" from="UI/HomeButton" to="." method="_on_home_button_pressed"]
 [connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]

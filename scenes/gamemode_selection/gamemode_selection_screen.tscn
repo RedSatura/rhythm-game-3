@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0e4883hd3684"]
+[gd_scene load_steps=8 format=3 uid="uid://b0e4883hd3684"]
 
 [ext_resource type="Script" path="res://scenes/gamemode_selection/gamemode_selection_screen.gd" id="1_r5tnb"]
 [ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="2_r7j40"]
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="2_sh224"]
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="4_kwsgb"]
+[ext_resource type="PackedScene" uid="uid://cd855a3hfy7c0" path="res://scenes/utils/fps_label/fps_label.tscn" id="5_7xrc0"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_gbc25"]
 device = -1
@@ -57,9 +58,9 @@ offset_bottom = 40.0
 [node name="Singleplayer" type="Button" parent="UI/GamemodeButtons"]
 custom_minimum_size = Vector2(384, 0)
 layout_mode = 0
-offset_left = 48.0
+offset_left = 128.0
 offset_top = 160.0
-offset_right = 432.0
+offset_right = 512.0
 offset_bottom = 656.0
 focus_neighbor_top = NodePath(".")
 focus_neighbor_bottom = NodePath("../MultiplayerClassic")
@@ -90,12 +91,12 @@ horizontal_alignment = 1
 [node name="MultiplayerClassic" type="Button" parent="UI/GamemodeButtons"]
 custom_minimum_size = Vector2(384, 0)
 layout_mode = 0
-offset_left = 448.0
+offset_left = 768.0
 offset_top = 160.0
-offset_right = 832.0
+offset_right = 1152.0
 offset_bottom = 656.0
 focus_neighbor_top = NodePath("../Singleplayer")
-focus_neighbor_bottom = NodePath("../MultiplayerModified")
+focus_neighbor_bottom = NodePath(".")
 metadata/_edit_group_ = true
 
 [node name="MultiplayerClassic" type="Label" parent="UI/GamemodeButtons/MultiplayerClassic"]
@@ -105,7 +106,7 @@ offset_top = 16.0
 offset_right = 376.0
 offset_bottom = 80.0
 theme_override_font_sizes/font_size = 36
-text = "Multi Player (Classic)"
+text = "Multi Player"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -121,6 +122,7 @@ Battle for the highest rating!"
 horizontal_alignment = 1
 
 [node name="MultiplayerModified" type="Button" parent="UI/GamemodeButtons"]
+visible = false
 layout_mode = 0
 offset_left = 848.0
 offset_top = 160.0
@@ -171,6 +173,12 @@ expand_icon = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="FPSLabel" parent="." instance=ExtResource("5_7xrc0")]
+offset_left = 1176.0
+offset_top = 64.0
+offset_right = 1272.0
+offset_bottom = 112.0
 
 [connection signal="pressed" from="UI/GamemodeButtons/Singleplayer" to="." method="_on_singleplayer_pressed"]
 [connection signal="pressed" from="UI/GamemodeButtons/MultiplayerClassic" to="." method="_on_multiplayer_classic_pressed"]

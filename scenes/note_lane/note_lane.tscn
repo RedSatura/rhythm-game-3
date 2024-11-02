@@ -109,7 +109,6 @@ one_shot = true
 [connection signal="area_exited" from="PerfectArea" to="." method="_on_perfect_area_area_exited"]
 [connection signal="area_entered" from="NoteDetector" to="." method="_on_note_detector_area_entered"]
 [connection signal="area_exited" from="NoteDetector" to="." method="_on_note_detector_area_exited"]
-[connection signal="input_event" from="NoteDetector" to="." method="_on_note_detector_input_event"]
 [connection signal="timeout" from="NoteCooldownTimer" to="." method="_on_note_cooldown_timer_timeout"]
 [connection signal="area_entered" from="MissDetector" to="." method="_on_miss_detector_area_entered"]
 [connection signal="area_entered" from="AutoHitArea" to="." method="_on_auto_hit_area_area_entered"]

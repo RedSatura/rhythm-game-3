@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d4glp02ecl6x5"]
+[gd_scene load_steps=11 format=3 uid="uid://d4glp02ecl6x5"]
 
 [ext_resource type="Script" path="res://scenes/title/title_screen.gd" id="1_kubb5"]
 [ext_resource type="PackedScene" uid="uid://bltgltqli3hk0" path="res://scenes/song_validator/song_validator.tscn" id="3_283yi"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="8_1j1aq"]
 [ext_resource type="Script" path="res://scenes/title/song_selection/song_selection.gd" id="8_td63i"]
 [ext_resource type="PackedScene" uid="uid://bf5cho0i8da4p" path="res://scenes/title/song_selection/song_item/song_item.tscn" id="9_1h54w"]
+[ext_resource type="PackedScene" uid="uid://cd855a3hfy7c0" path="res://scenes/utils/fps_label/fps_label.tscn" id="9_rimti"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rx4e8"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -245,6 +246,9 @@ visible = false
 layout_mode = 0
 
 [node name="SongPreviewer" type="AudioStreamPlayer" parent="."]
+
+[node name="FPSLabel" parent="." instance=ExtResource("9_rimti")]
+offset_left = 8.0
 
 [connection signal="pressed" from="UI/TitleObjects/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="UI/TitleObjects/SongEditor" to="." method="_on_song_editor_pressed"]

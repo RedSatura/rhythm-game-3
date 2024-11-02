@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cy0hcyuyxp8sr"]
+[gd_scene load_steps=18 format=3 uid="uid://cy0hcyuyxp8sr"]
 
 [ext_resource type="Script" path="res://scenes/editor/song_editor.gd" id="1_m8jub"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="2_cdhk3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cbdrwyxdt2ook" path="res://assets/icons/house-bold-svgrepo-com.svg" id="5_xkohr"]
 [ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="6_esn1d"]
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="6_gcys7"]
+[ext_resource type="PackedScene" uid="uid://cd855a3hfy7c0" path="res://scenes/utils/fps_label/fps_label.tscn" id="8_vycgd"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_yfhqm"]
 action = &"save"
@@ -442,6 +443,12 @@ in_editor = true
 
 [node name="NoteFeedbackLabel" parent="NoteLanes/UI" index="1"]
 in_editor = true
+
+[node name="FPSLabel" parent="." instance=ExtResource("8_vycgd")]
+offset_left = 1168.0
+offset_top = 672.0
+offset_right = 1272.0
+offset_bottom = 720.0
 
 [connection signal="text_changed" from="UI/CodeEdit" to="." method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="UI/Open" to="." method="_on_open_pressed"]

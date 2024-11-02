@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6tqws6dplutf"]
+[gd_scene load_steps=12 format=3 uid="uid://c6tqws6dplutf"]
 
 [ext_resource type="Script" path="res://scenes/stage/stage.gd" id="1_7b66k"]
 [ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="1_seetj"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dbcpcm0ua5g8p" path="res://scenes/transition/transition.tscn" id="5_7vj72"]
 [ext_resource type="PackedScene" uid="uid://ieks0tgggfiu" path="res://scenes/song_manager/song_manager.tscn" id="7_jp11s"]
 [ext_resource type="PackedScene" uid="uid://cjmw7flxngjsm" path="res://scenes/note_lane/grouped_note_lanes.tscn" id="8_rpkr8"]
+[ext_resource type="PackedScene" uid="uid://cd855a3hfy7c0" path="res://scenes/utils/fps_label/fps_label.tscn" id="9_nrfsx"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_gbc25"]
 device = -1
@@ -96,6 +97,12 @@ identifier_color_1 = Color(0, 1, 1, 1)
 identifier_color_2 = Color(1, 0, 1, 1)
 identifier_color_3 = Color(1, 1, 0, 1)
 identifier_color_4 = Color(0, 0, 0, 1)
+
+[node name="FPSLabel" parent="." instance=ExtResource("9_nrfsx")]
+offset_left = 1176.0
+offset_top = 64.0
+offset_right = 1264.0
+offset_bottom = 112.0
 
 [connection signal="pressed" from="UI/HomeButton" to="." method="_on_home_button_pressed"]
 [connection signal="pressed" from="UI/PauseButton" to="." method="_on_pause_button_pressed"]
