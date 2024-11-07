@@ -380,8 +380,10 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 
 [node name="BackgroundDisplayManager" parent="UI" instance=ExtResource("5_i0pq8")]
-offset_left = 1472.0
-offset_right = 2752.0
+offset_left = 1536.0
+offset_top = -8.0
+offset_right = 2816.0
+offset_bottom = 712.0
 
 [node name="LyricLabel" type="Label" parent="UI"]
 z_index = 100

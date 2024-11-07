@@ -28,7 +28,7 @@ func _input(_event: InputEvent) -> void:
 		pause_song()
 
 func process_song_end() -> void:
-	pass
+	lyric_label.text = ""
 
 func pause_song() -> void:
 	if get_tree().paused:

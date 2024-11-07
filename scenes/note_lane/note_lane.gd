@@ -34,6 +34,8 @@ extends Node2D
 
 @onready var effect_cooldown_timer: Node = $EffectCooldown
 
+@onready var hit_sound: Node = $HitSound
+
 var current_note: Area2D = null
 var past_hold_note: Area2D = null
 
@@ -65,6 +67,7 @@ func _ready() -> void:
 	good = false
 	current_note = null
 	lane_identifier.color = Color(identifier_color.r, identifier_color.g, identifier_color.b, 0.5)
+	self.position.x = initial_position
 	$UI.theme = GlobalData.global_settings["theme"]
 	note_spawn_position.position.y = GlobalData.global_settings["scroll_speed"] * -1024
 	
@@ -239,6 +242,8 @@ func hold_note_completed(source: int, target_lane: String) -> void:
 					hit_feedback_background.material.set_shader_parameter("background_color", perfect_color)
 					SignalHandler.emit_signal("note_hit", "PERFECT", 2)
 					fade_feedback_background()
+			else:
+				hit_sound.play()
 			current_note = null
 			past_hold_note = null
 	
@@ -334,7 +339,7 @@ func set_fade_value(value: float) -> void:
 
 func move_lane(movement_value: int = 0, duration: float = 0) -> void:
 	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(self, "position", Vector2(initial_position + movement_value, self.position.y), duration)
+	tween.tween_property(self, "position", Vector2(self.position.x + movement_value, self.position.y), duration)
 
 func stop_tweens() -> void:
 	pass
@@ -344,9 +349,11 @@ func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 		if current_note != null:
 			if current_note.has_signal("process_starting_note_input"):
 				current_note.emit_signal("process_starting_note_input", note_source, lane_position)
+				hit_sound.play()
 			else:
 				current_note.queue_free()
 				current_note = null
+				hit_sound.play()
 	else:
 		if auto_mode:
 			var chance: int = randi_range(0, 100)
@@ -375,6 +382,7 @@ func _on_auto_hit_area_area_entered(_area: Area2D) -> void:
 							SignalHandler.emit_signal("note_hit", "GOOD", note_source)
 							hit_feedback_background.material.set_shader_parameter("background_color", good_color)
 							fade_feedback_background()
+					
 
 func process_effect(effect: int) -> void:
 	if !effect_active:

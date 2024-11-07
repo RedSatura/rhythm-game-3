@@ -299,6 +299,13 @@ offset_top = 64.0
 offset_right = 1272.0
 offset_bottom = 112.0
 
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_left = 160.0
+offset_top = 240.0
+offset_right = 480.0
+offset_bottom = 496.0
+
 [connection signal="pressed" from="UI/GamemodeButtons/Singleplayer" to="." method="_on_singleplayer_pressed"]
 [connection signal="pressed" from="UI/GamemodeButtons/MultiplayerClassic" to="." method="_on_multiplayer_classic_pressed"]
 [connection signal="pressed" from="UI/GamemodeButtons/MultiplayerModified" to="." method="_on_multiplayer_modified_pressed"]
