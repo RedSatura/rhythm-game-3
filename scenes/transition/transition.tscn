@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/transition/transition.gd" id="1_lfcsr"]
 
 [node name="Transition" type="ColorRect"]
+process_mode = 3
 z_index = 100
 offset_right = 1280.0
 offset_bottom = 720.0

@@ -71,7 +71,7 @@ func _ready() -> void:
 	$UI.theme = GlobalData.global_settings["theme"]
 	note_spawn_position.position.y = GlobalData.global_settings["scroll_speed"] * -1024
 	
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
 	if lane_state == LaneState.ACTIVE && !auto_mode:
 		if note_source == 1:
 			match lane_position:

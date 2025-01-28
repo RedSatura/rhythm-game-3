@@ -88,7 +88,7 @@ func set_visibility(status: bool) -> void:
 	if status:
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "position", Vector2(320, 64), 0.3).set_trans(Tween.TRANS_SINE)
-		$SongSelection/SongItemContainer/Gateway.grab_focus()
+		$SongSelection/SongItemContainer/OpenCustomSong.grab_focus()
 	else:
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "position", Vector2(320, 720), 0.3).set_trans(Tween.TRANS_SINE)

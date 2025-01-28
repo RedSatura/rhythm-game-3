@@ -26,10 +26,6 @@ func _ready() -> void:
 	scroll_speed_slider.value = GlobalData.global_settings["scroll_speed"]
 	fullscreen_option.button_pressed = GlobalData.global_settings["fullscreen"]
 	upscroll_option.button_pressed = GlobalData.global_settings["upscroll"]
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
