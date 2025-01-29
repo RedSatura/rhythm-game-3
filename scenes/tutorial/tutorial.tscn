@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://7q7nglnbi54f"]
+
+[ext_resource type="Script" path="res://scenes/tutorial/tutorial.gd" id="1_7tus8"]
+[ext_resource type="Theme" uid="uid://8awncr10kw81" path="res://styles/dark_theme.tres" id="1_i4gwr"]
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 576.0
+offset_bottom = 256.0
+theme = ExtResource("1_i4gwr")
+script = ExtResource("1_7tus8")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 48
+text = "test messages"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

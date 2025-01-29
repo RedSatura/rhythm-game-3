@@ -54,7 +54,7 @@ offset_top = 328.0
 offset_right = 640.0
 offset_bottom = 373.0
 theme_override_font_sizes/font_size = 32
-text = "v0.6.1a"
+text = "v0.6.2"
 
 [node name="Play" type="Button" parent="UI/TitleObjects"]
 layout_mode = 0

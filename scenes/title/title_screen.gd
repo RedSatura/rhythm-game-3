@@ -54,7 +54,8 @@ func song_validated() -> void:
 	elif ResourceLoader.exists(GlobalData.song_info["audio_src"]):
 		song_previewer.stream = ResourceLoader.load(GlobalData.song_info["audio_src"])
 	
-	song_previewer.play()
+	if song_previewer:
+		song_previewer.play()
 	
 func reset_to_defaults() -> void:
 	pass

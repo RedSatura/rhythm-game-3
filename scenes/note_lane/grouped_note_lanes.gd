@@ -22,7 +22,6 @@ extends Node2D
 @onready var note_lane_4: Node = $NoteLanes/NoteLane4
 
 @onready var note_feedback_label: Node = $UI/NoteFeedbackLabel
-@onready var effect_manager: Node = $UI/EffectManager
 
 @onready var ui: Node = $UI
 
@@ -61,8 +60,6 @@ func _ready() -> void:
 	set_note_lane_identifier_colors()
 	set_lane_idenitifier_data()
 	set_children_identifiers()
-	effect_manager.lane_identifier = lane_identifier
-	effect_manager.difficulty = cpu_difficulty
 	
 #i have sinned against programming best practices
 func process_effect(target: int, effect: int) -> void:
